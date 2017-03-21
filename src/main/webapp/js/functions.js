@@ -5,7 +5,7 @@ angular.module('ExPrep').factory(
 				'$filter',
 				function($http, $filter) {
 					function send(url) {
-						return $http.post("/exprepapp/cmd?" + url).success(
+						return $http.post("/prepa/cmd?" + url).success(
 								function(data) {
 									return data;
 								})
