@@ -1,0 +1,91 @@
+.navbar-brand {
+  padding: 0px;
+}
+.navbar-brand>img {
+  height: 110%;
+  padding: 15px;
+  width: auto;
+}
+
+/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+  padding-top: 2rem;
+}
+
+/* Credibility status bar */
+#status-div1{
+	text-align:center;
+}
+
+#status-div2{
+	text-align:center;
+}
+
+#status-div3{
+	text-align:center;
+}
+
+#question-div{
+	text-align: center;
+}
+
+#button-div{
+	text-align:center;
+	margin-top: 30px;
+}
+
+#btn-add-question {
+    width: 240px;
+  margin: 0 auto;
+}
+
+
+#form-div {align-content: center;
+margin-left: 10px;
+margin-right: 10px;}
+
+.container {text-align: center}
+
+.table-responsive {margin-top: 30px}
+
+/* Typography */
+h1 {
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 30px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 500;
+	line-height: 26px;
+}
+h3 {
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 14px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 500;
+	line-height: 15px;
+}
+p {
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 14px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 400;
+	line-height: 20px;
+}
+blockquote {
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 21px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 400;
+	line-height: 30px;
+}
+pre {
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 13px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 400;
+	line-height: 18px;
+}

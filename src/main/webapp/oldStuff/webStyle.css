@@ -1,0 +1,11 @@
+Bodywrapper{
+	padding-top: 30px;
+	margin-top: 30px;
+}
+body{
+	margin-top: 50px;
+}
+
+.clickableTH{
+	cursor:pointer;
+}
