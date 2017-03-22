@@ -20,7 +20,7 @@ public abstract class AbstractCmdServlet implements CmdServletIF{
 
 	}
 	
-	protected void sendJsonResult(String jsonResult) throws IOException {
+	public void sendJsonResult(String jsonResult) throws IOException {
 	    response.setContentType("application/json;charset=utf-8");
 	    response.setCharacterEncoding("utf-8");
 	    if (null != jsonResult) {

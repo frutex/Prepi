@@ -74,6 +74,10 @@ public class NutzerDAO {
 		return nutzerList;
 	}
 	
+	public static Nutzer getOneNutzerByName(String name){
+		return getNutzerByName(name).get(0);
+	}
+	
 	
 	
 }

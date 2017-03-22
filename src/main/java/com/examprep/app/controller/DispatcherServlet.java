@@ -8,26 +8,33 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.examprep.app.util.AuthService;
 
 public class DispatcherServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private AuthService authenticator = new AuthService();
 
 	@Override
 	protected void doPost(HttpServletRequest request, final HttpServletResponse response)
 			throws ServletException, IOException {
 
-		CmdServletIF cmd = getCommand(this, request, response);
+		if (authenticator.checkAuth(request.getParameter("token"))) {
+			CmdServletIF cmd = getCommand(this, request, response);
 
-		try {
+			try {
 
-			// LOG.debug("DispatcherServlet execute:" + cmd);
-			if (null != cmd) {
-				cmd.execute();
+				// LOG.debug("DispatcherServlet execute:" + cmd);
+				if (null != cmd) {
+					cmd.execute();
+				}
+
+			} catch (Exception e) {
+
+				e.printStackTrace();
 			}
-
-		} catch (Exception e) {
-
-			e.printStackTrace();
+		} else {
+			CmdServletIF cmd = getCommand(this, request, response);
+			cmd.sendJsonResult("{\"successfull\":false,\"token\":\"Authentication token is wrong. You are being logged out. \"}");
 		}
 
 		// response.sendRedirect(result);
@@ -50,9 +57,9 @@ public class DispatcherServlet extends HttpServlet {
 
 		if (command.equalsIgnoreCase("login")) {
 			result = new LoginCmd(servlet, request, response);
-		}  else if (command.equalsIgnoreCase("checkAuthToken")) {
+		} else if (command.equalsIgnoreCase("checkAuthToken")) {
 			result = new CheckAuthTokenCmd(servlet, request, response);
-		}  
+		}
 		return result;
 	}
 }

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport"
 	content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-<title>ExPrep Login</title>
+<title>ExPrep</title>
 
 
 
@@ -27,31 +27,105 @@
 <script src="js/controllers.js"></script>
 <script src="js/services.js"></script>
 <script src="js/constants.js"></script>
-<script src="js/functions.js"></script>
+<script src="js/scriptCtrl.js"></script>
 <script src="js/authenticator.js"></script>
+<script src="js/requestFactory.js"></script>
+<script src="js/dashCtrl.js"></script>
 
 <!-- Stylesheets -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <link href="css/style.css" rel="stylesheet">
 
+
 </head>
 <body ng-app="ExPrep" ng-controller="ScriptCtrl" ng-init="checkAuth()">
 
+<!-- Navbar  -->
+	<nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
+  		<div class="container-fluid">
+   		 <!-- Brand and toggle get grouped for better mobile display -->
+    		<div class="navbar-header">
+      			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        			<span class="sr-only">Toggle navigation</span>
+    				<span class="icon-bar"></span>
+    			    <span class="icon-bar"></span>
+   				     <span class="icon-bar"></span>
+   			  </button>
+      <a class="navbar-brand" href="#">ExPrep</a>
+    </div>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-left">
+        <li class="active"><a href="#">Dashboard <span class="sr-only">(current)</span></a></li>
+        <li><a href="#">Explore!</a></li> 
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+      <!-- Input -->
+      <li>
+        <form class="form-inline my-2 my-lg-0 navbar-form navbar-left">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Fragen durchsuchen">
+        </div>
+        <button type="submit" class="btn searchbtn">Suchen</button>
+      </form>
+      </li>
+      <!-- / Input -->
+      <!-- Dropdown -->
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li> <a class="dropdown-item" href="#">Frage hinzufügen</a></li>
+            <li> <a class="dropdown-item" href="#">Meine Fragen</a></li>
+            <li><a class="dropdown-item" href="#">Optionen</a></li>
+            <li role="separator" class="divider"></li>
+            <li> <a class="dropdown-item" href="#">Logout</a></li>
+          </ul>
+        </li>
+        <!-- /Dropdown -->
+      </ul>
+    </div>
+    <!-- /.navbar-collapse -->
+  </div>
+  <!-- /.container-fluid -->
+</nav>
+<!-- /Navbar -->
+
 
 	<!-- Main Page -->
-	<div id="mainDiv" ng-show="authenticated">
-
-		<!-- NavBar -->
-		<nav class="navbar navbar-inverse navbar-fixed-top">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="">ExPrep</a>
+	<div class="mainDiv" id="mainDiv" ng-show="authenticated">
+	
+	<!-- Dashboard -->
+	<div id="dashboard" ng-show="isShown(&quot;dashboard&quot;)" ng-controller="DashCtrl" ng-init="loadUserData()">
+	<div class="jumbotron">
+      <div class="container">
+        <h1 class="credibilityHeadline">DEINE AKTUELLE CREDIBILITY</h1>
+        <p></p>
+        <div class="row">
+        	<div class="col-md-4" id="status-div1">
+        	<h2>10</h2>Level
+        	</div>
+        	<div class="col-md-4" id="status-div2">
+        	<h2>250</h2>Danke!
+        	</div>
+       		<div class="col-md-4" id="status-div3">
+       		<h2>17</h2>Fragen
 			</div>
-			<div class="navbar-collapse navbar-right" id="navbarCollapse">
-				<li><a href="#" ng-click="logout()"><span
-						class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-			</div>
-		</nav>
+		</div>
+    	<hr>
+    	
+    	<div class="progress">
+  			<div class="progress-bar" role="progressbar" aria-valuenow="70"
+  			aria-valuemin="0" aria-valuemax="100" style="width:70%">
+    			<span class="sr-only">70% Complete</span>
+  			</div>
+		</div>
+      </div>
+    </div>
+	</div>
+	<!-- /Dashboard -->
+	
+	
 	</div>
 	<!-- /Main Page -->
 
