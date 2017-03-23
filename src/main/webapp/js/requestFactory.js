@@ -3,9 +3,10 @@ angular.module('ExPrep').factory(
 		[
 				'$http',
 				'$filter',
-				function($http, $filter) {
+				'AuthService',
+				function($http, $filter, AuthService) {
 					function send(url) {
-						return $http.post("/prepa/cmd?" + url).success(
+						return $http.post("/prepa/cmd?" + url + '&token=' + AuthService.getUserToken()).success(
 								function(data) {
 									return data;
 								})
@@ -17,15 +18,20 @@ angular.module('ExPrep').factory(
 
 					}
 					
-					function checkAuthToken(username, token) {
-						return send("c=checkAuthToken&username=" + username
-								+ "&token=" + token);
+					function checkAuthToken() {
+						return send("c=checkAuthToken");
+
+					}
+					
+					function loadUserData() {
+						return send("c=loadUserData");
 
 					}
 
 					return {
 						send : send,
 						login : login,
-						checkAuthToken : checkAuthToken
+						checkAuthToken : checkAuthToken,
+						loadUserData : loadUserData
 					};
 				} ]);

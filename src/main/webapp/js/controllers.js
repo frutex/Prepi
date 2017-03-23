@@ -20,7 +20,7 @@ angular.module('ExPrep')
 })
 */
 
-
+/*
 .controller('LoginCtrl', function($scope, $state, AuthService) {
   $scope.data = {};
 
@@ -35,6 +35,8 @@ angular.module('ExPrep')
   };
 })
 
+*/
+/*
 .controller('DashCtrl', function($scope, $state, $http, AuthService) {
   $scope.logout = function() {
     AuthService.logout();
@@ -66,3 +68,5 @@ angular.module('ExPrep')
       });
   };
 });
+
+*/
