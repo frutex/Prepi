@@ -16,7 +16,8 @@ public class AuthService {
 			try {
 				Nutzer nutzer = NutzerDAO.getOneNutzerByName(name);
 				String genToken = cryp.generateUserToken(nutzer, cryp.token);
-				if (genToken.matches(token)) {
+				if (genToken.equalsIgnoreCase(token)) {
+					int i = 0;
 					return true;
 				}
 			} catch (Exception e) {

@@ -98,5 +98,7 @@ public class Nutzer {
 		this.klausurfrage = klausurfrage;
 	}
 	
+	public totalNutzer 
+	
 	
 }

@@ -18,11 +18,9 @@ public class DispatcherServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, final HttpServletResponse response)
 			throws ServletException, IOException {
 
-		if (authenticator.checkAuth(request.getParameter("token"))) {
-			CmdServletIF cmd = getCommand(this, request, response);
-
+		if (request.getParameter("c").equalsIgnoreCase("login")) {
 			try {
-
+				LoginCmd cmd = new LoginCmd(this, request, response);
 				// LOG.debug("DispatcherServlet execute:" + cmd);
 				if (null != cmd) {
 					cmd.execute();
@@ -32,9 +30,26 @@ public class DispatcherServlet extends HttpServlet {
 
 				e.printStackTrace();
 			}
-		} else {
-			CmdServletIF cmd = getCommand(this, request, response);
-			cmd.sendJsonResult("{\"successfull\":false,\"token\":\"Authentication token is wrong. You are being logged out. \"}");
+		} else if (request.getParameter("token") != null) {
+			if (authenticator.checkAuth(request.getParameter("token"))) {
+				CmdServletIF cmd = getCommand(this, request, response);
+
+				try {
+
+					// LOG.debug("DispatcherServlet execute:" + cmd);
+					if (null != cmd) {
+						cmd.execute();
+					}
+
+				} catch (Exception e) {
+
+					e.printStackTrace();
+				}
+			} else {
+				CmdServletIF cmd = getCommand(this, request, response);
+				cmd.sendJsonResult(
+						"{\"successfull\":false,\"token\":\"Authentication token is wrong. You are being logged out. \"}");
+			}
 		}
 
 		// response.sendRedirect(result);
@@ -59,6 +74,8 @@ public class DispatcherServlet extends HttpServlet {
 			result = new LoginCmd(servlet, request, response);
 		} else if (command.equalsIgnoreCase("checkAuthToken")) {
 			result = new CheckAuthTokenCmd(servlet, request, response);
+		}else if (command.equalsIgnoreCase("loadUserData")) {
+			result = new LoadUserDataCmd(servlet, request, response);
 		}
 		return result;
 	}
