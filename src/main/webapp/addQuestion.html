@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="Add Question ExPrep">
+<meta name="author" content="Christopher Tunkel">
+<!-- <link rel="icon" href="images/favicon.ico"> -->
+
+<title>Add Question</title>
+
+<!-- JQuery -->
+<script src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
+
+
+<!-- Angular and Bootstrap JS -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.2/ui-bootstrap-tpls.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.4.2/angular-ui-router.js"></script>
+
+
+<!-- your app's js -->
+<script src="js/app.js"></script>
+<script src="js/controllers.js"></script>
+<script src="js/services.js"></script>
+<script src="js/constants.js"></script>
+<script src="js/authenticator.js"></script>
+<script src="js/requestFactory.js"></script>
+<script src="js/authCtrl.js"></script>
+<script src="js/addQuestionCtrl.js"></script>
+
+<!-- Bootstrap core CSS -->
+<link href="css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Custom styles for this template -->
+<link href="css/dashboard.css" rel="stylesheet">
+</head>
+
+<body ng-controller="AuthCtrl" ng-init="checkAuth()">
+
+	<div ng-controller="AddQuestionCtrl">
+		<nav
+			class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
+			<button class="navbar-toggler navbar-toggler-right" type="button"
+				data-toggle="collapse" data-target="#navbarsExampleDefault"
+				aria-controls="navbarsExampleDefault" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<a class="navbar-brand" href="#">ExPrep</a>
+			<div class="collapse navbar-collapse" id="navbarsExampleDefault">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item"><a class="nav-link" href="#">Dashboard</a>
+					</li>
+					<li class="nav-item"><a class="nav-link" href="#">Explore</a></li>
+					<li class="nav-item dropdown active"><a
+						class="nav-link dropdown-toggle" href="http://example.com"
+						id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+						aria-expanded="false">Menü</a>
+						<div class="dropdown-menu" aria-labelledby="dropdown01">
+							<a class="dropdown-item active" href="#">Frage hinzufügen <span
+								class="sr-only">(current)</span></a> <a class="dropdown-item"
+								href="#">Meine Fragen</a> <a class="dropdown-item" href="#">Optionen</a>
+							<a class="dropdown-item" href="#">Logout</a>
+						</div></li>
+				</ul>
+				<form class="form-inline my-2 my-lg-0">
+					<input class="form-control mr-sm-2" type="text"
+						placeholder="Fragen durchsuchen">
+					<button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Suchen</button>
+				</form>
+			</div>
+		</nav>
+
+		<!-- Main jumbotron for account information and progress bar for credibility level -->
+		<div class="jumbotron">
+			<div class="container">
+				<h1>FRAGE HINZUFÜGEN</h1>
+			</div>
+		</div>
+
+		<!-- Add Question Formular -->
+		<div id="form-div">
+			<form>
+				<div class="form-group">
+					<label for="text"></label> <input type="text" class="form-control"
+						placeholder="Fragentitel" ng-model="frage" id="frage"> <label
+						for="text"></label> <input type="text" class="form-control"
+						placeholder="Modul" ng-model="modul" id="modul"> <label
+						for="text"></label> <input type="text" class="form-control"
+						placeholder="Dozent" ng-model="dozent" id="dozent"> <label
+						for="text"></label> <input type="text" class="form-control"
+						placeholder="Hochschule" ng-model="hochschule" id="hochschule">
+					<label for="date"></label> <input type="date" class="form-control"
+						placeholder="Datum" ng-model="datum" id="datum">
+				</div>
+			</form>
+		</div>
+		<!-- Submit Button Formular -->
+		<div id="button-div">
+			<button type="submit" id="btn-add-question"
+				class="btn btn-primary btn-lg" ng-click="addQuestion()">Frage
+				hinzufügen &raquo;</button>
+		</div>
+
+		<hr>
+
+
+		<footer>
+			<p>&copy; ExPrep 2017 - Bjarne Obst, Christopher Tunkel, Daniel
+				Köhler</p>
+		</footer>
+
+	</div>
+</body>
+</html>

@@ -1,20 +1,17 @@
 angular.module('ExPrep').controller(
-		'DashCtrl',
+		'AddQuestionCtrl',
 		[ '$http', '$scope', 'RequestFactory', 'AuthService',
 				function($http, $scope, RequestFactory, AuthService) {
 
-			
-					$scope.userData;
-					$scope.loadUserData = function() {
-						token = AuthService.getUserToken();
-						
-						RequestFactory.loadUserData()
+					$scope.hochschulen;
+					$scope.dozenten;
+					$scope.startup = function(){
+						RequestFactory.loadHochschulen()
 						.success(
 								function(data) {
 									if (data.successfull) {
-										$scope.userData = data.data;
+										$scope.hochschulen = data.data;
 									} else {
-										$scope.userData = data;
 										alert(data.data);
 										// $scope.$apply;
 									}

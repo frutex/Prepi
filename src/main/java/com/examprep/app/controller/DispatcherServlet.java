@@ -75,7 +75,7 @@ public class DispatcherServlet extends HttpServlet {
 		} else if (command.equalsIgnoreCase("checkAuthToken")) {
 			result = new CheckAuthTokenCmd(servlet, request, response);
 		}else if (command.equalsIgnoreCase("loadUserData")) {
-			result = new LoadUserDataCmd(servlet, request, response);
+			result = new GetUserDataCmd(servlet, request, response);
 		}
 		return result;
 	}
