@@ -97,8 +97,7 @@ public class Nutzer {
 	public void setKlausurfragen(ForeignCollection<KlausurFrage> klausurfrage) {
 		this.klausurfrage = klausurfrage;
 	}
-	
-	public totalNutzer 
+
 	
 	
 }
