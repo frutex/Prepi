@@ -18,6 +18,11 @@ angular.module('ExPrep').factory(
 
 					}
 					
+					function getHochschulen() {
+						return send("c=getHochschulen");
+
+					}
+					
 					function checkAuthToken() {
 						return send("c=checkAuthToken");
 
@@ -32,6 +37,7 @@ angular.module('ExPrep').factory(
 						send : send,
 						login : login,
 						checkAuthToken : checkAuthToken,
-						loadUserData : loadUserData
+						loadUserData : loadUserData,
+						getHochschulen : getHochschulen
 					};
 				} ]);

@@ -61,15 +61,15 @@
 					</a></li>
 					<li class="nav-item"><a class="nav-link" href="#">Explore</a></li>
 					<li class="nav-item dropdown"><a
-						class="nav-link dropdown-toggle" href="http://example.com"
-						id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
-						aria-expanded="false">Menü</a>
+						class="nav-link dropdown-toggle" href="" id="dropdown01"  role="button"
+						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menü</a>
 						<div class="dropdown-menu" aria-labelledby="dropdown01">
 							<a class="dropdown-item" href="#">Frage hinzufügen</a> <a
 								class="dropdown-item" href="#">Meine Fragen</a> <a
 								class="dropdown-item" href="#">Optionen</a> <a
 								class="dropdown-item" href="#">Logout</a>
 						</div></li>
+						
 				</ul>
 				<form class="form-inline my-2 my-lg-0">
 					<input class="form-control mr-sm-2" type="text"
@@ -114,7 +114,7 @@
 			<h1>DEINE FRAGEN</h1>
 			<div id="button-div">
 				<p>
-					<a class="btn btn-primary btn-lg" id="btn-add-question" href="#"
+					<a class="btn btn-primary btn-lg" id="btn-add-question" ng-click="addQuestion()"
 						role="button">Frage hinzufügen &raquo;</a>
 				</p>
 			</div>
