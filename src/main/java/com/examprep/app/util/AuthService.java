@@ -3,7 +3,8 @@ package com.examprep.app.util;
 import java.util.List;
 
 import com.examprep.app.bean.Nutzer;
-import com.examprep.app.dao.NutzerDAO;
+
+import com.examprep.app.persistencelayer.NutzerServletMapper;
 
 public class AuthService {
 
@@ -14,7 +15,7 @@ public class AuthService {
 		if (token != "" && token.contains("|")) {
 			String name = token.split("\\|")[0];
 			try {
-				Nutzer nutzer = NutzerDAO.getOneNutzerByName(name);
+				Nutzer nutzer = NutzerServletMapper.getOneNutzerByName(name);
 				String genToken = cryp.generateUserToken(nutzer, cryp.token);
 				if (genToken.equalsIgnoreCase(token)) {
 					int i = 0;

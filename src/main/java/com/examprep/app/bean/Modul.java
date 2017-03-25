@@ -5,12 +5,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.examprep.app.persistencelayer.daoimpl.CredibilityDaoImpl;
+import com.examprep.app.persistencelayer.daoimpl.ModulDaoImpl;
 import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
-@DatabaseTable(tableName = "Modul")
+@DatabaseTable(tableName = "Modul", daoClass = ModulDaoImpl.class)
 public class Modul {
 	
 	@DatabaseField(generatedId = true, columnName = "m_id")

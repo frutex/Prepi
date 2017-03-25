@@ -15,12 +15,15 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.examprep.app.persistencelayer.daoimpl.CredibilityDaoImpl;
+import com.examprep.app.persistencelayer.daoimpl.DozentDaoImpl;
 import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
+import com.j256.ormlite.table.DatabaseTable;
 
 @Entity
-@Table(name = "Dozent")
+@DatabaseTable(tableName = "Dozent", daoClass = DozentDaoImpl.class)
 
 public class Dozent implements Serializable{
 	

@@ -1,11 +1,11 @@
-package com.examprep.app.dao;
+package com.examprep.app.persistencelayer;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.examprep.app.bean.Hochschule;
-import com.examprep.app.bean.Modul;
+import com.examprep.app.bean.KlausurFrage;
 import com.examprep.app.bean.Nutzer;
 import com.examprep.app.util.CryptoHelpClass;
 import com.examprep.app.util.SessionFactory;
@@ -13,15 +13,10 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.support.ConnectionSource;
 
-public class NutzerDAO {
-
+public class NutzerServletMapper {
 	
 	static SessionFactory sess = new SessionFactory();
 	static ConnectionSource connSource = sess.createConnection();
-	
-	public NutzerDAO(){
-		super();
-	}
 	
 	public static Nutzer createNutzer(String name, String vorname, String email, String password, Hochschule hochschule){
 		CryptoHelpClass cryp = new CryptoHelpClass();
@@ -45,7 +40,7 @@ public class NutzerDAO {
 		}
 
 		
-		
+
 		return nutzer;
 	}
 	
@@ -78,6 +73,5 @@ public class NutzerDAO {
 		return getNutzerByName(name).get(0);
 	}
 	
-	
-	
 }
+

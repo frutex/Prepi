@@ -1,7 +1,11 @@
 package com.examprep.app.bean;
 
+import com.examprep.app.persistencelayer.daoimpl.CredibilityDaoImpl;
+import com.examprep.app.persistencelayer.daoimpl.DozentAnHochschuleDaoImpl;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 
+@DatabaseTable(tableName = "DozentAnHochschule", daoClass = DozentAnHochschuleDaoImpl.class)
 public class DozentAnHochschule {
 	@DatabaseField(generatedId = true, columnName = "dah_id")
 	private int dah_id;

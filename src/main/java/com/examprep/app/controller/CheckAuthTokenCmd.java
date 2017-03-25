@@ -8,7 +8,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.examprep.app.bean.Nutzer;
-import com.examprep.app.dao.NutzerDAO;
+
+import com.examprep.app.persistencelayer.NutzerServletMapper;
 import com.examprep.app.util.CryptoHelpClass;
 
 // class to get user data
@@ -34,7 +35,7 @@ public class CheckAuthTokenCmd extends AbstractCmdServlet {
 
 			if (!name.equals(null)) {
 
-				List<Nutzer> nutzerList = NutzerDAO.getNutzerByName(name);
+				List<Nutzer> nutzerList = NutzerServletMapper.getNutzerByName(name);
 				if (nutzerList.size() > 1) {
 					res = "{\"successfull\":false,\"response\":\"Too many users with your Email found, please contact the HelpDesk.\"}";
 					this.sendJsonResult(res);
