@@ -8,8 +8,8 @@ import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
 import com.examprep.app.bean.*;
-import com.examprep.app.persistencelayer.ModulServletMapper;
-import com.examprep.app.persistencelayer.NutzerServletMapper;
+import com.examprep.app.persistencelayer.PersistenceQuery;
+
 
 
 public class DBTest {
@@ -19,7 +19,7 @@ public class DBTest {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		ModulServletMapper.createModul("new Modul");
+		PersistenceQuery.createModul("new Modul");
 	}
 
 }

@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.examprep.app.bean.Nutzer;
-import com.examprep.app.persistencelayer.NutzerServletMapper;
+import com.examprep.app.persistencelayer.PersistenceQuery;
 import com.examprep.app.util.JSONConverter;
 
 // class to get user data
@@ -23,7 +23,7 @@ public class GetUserDataCmd extends AbstractCmdServlet {
 		String res = "";
 
 		try {
-			Nutzer nutzer = NutzerServletMapper.getOneNutzerByName(name);
+			Nutzer nutzer = PersistenceQuery.getOneNutzerByName(name);
 			String nutzerJSON = JSONConverter.toJSON(nutzer);
 
 			res = "{\"successfull\":" + "true" + ",\"data\":" + nutzerJSON + "}";

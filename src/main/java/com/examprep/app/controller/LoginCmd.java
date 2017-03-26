@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.examprep.app.bean.Nutzer;
-import com.examprep.app.persistencelayer.NutzerServletMapper;
+import com.examprep.app.persistencelayer.PersistenceQuery;
 import com.examprep.app.util.CryptoHelpClass;
 
 // class to get user data
@@ -31,7 +31,7 @@ public class LoginCmd extends AbstractCmdServlet {
 		// HttpSession session = request.getSession(true);
 		try {
 
-			List<Nutzer> nutzerList = NutzerServletMapper.getNutzerByName(name);
+			List<Nutzer> nutzerList = PersistenceQuery.getNutzerByName(name);
 			if (nutzerList.size() > 1) {
 				res = "{\"successfull\":false,\"token\":\"Too many users found, please contact the HelpDesk.\"}";
 				this.sendJsonResult(res);
