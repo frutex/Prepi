@@ -11,7 +11,9 @@ import javax.persistence.Table;
 
 import com.examprep.app.persistencelayer.daoimpl.CredibilityDaoImpl;
 import com.examprep.app.persistencelayer.daoimpl.KlausurfrageDaoImpl;
+import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
 
@@ -44,8 +46,8 @@ public class KlausurFrage implements Serializable {
 	@DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = "nk_id")
 	private Nutzer nutzer;
 	
-	@DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = "ck_id")
-	private Credibility credibility;
+	@ForeignCollectionField
+	private ForeignCollection<Credibility> cred;
 	
 	
 	public KlausurFrage() {
@@ -53,7 +55,7 @@ public class KlausurFrage implements Serializable {
 	}
 	
 	public KlausurFrage(int f_id, int schwierigkeit, String text, Dozent dozent, Modul modul, int jahr,
-			Hochschule hochschule, Nutzer nutzer, Credibility credibility) {
+			Hochschule hochschule, Nutzer nutzer) {
 		this.k_id = f_id;
 		this.schwierigkeit = schwierigkeit;
 		this.text = text;
@@ -61,7 +63,7 @@ public class KlausurFrage implements Serializable {
 		this.modul = modul;
 		this.jahr = jahr;
 		this.hochschule = hochschule;
-		this.credibility = credibility;
+
 	}
 	
 
@@ -126,15 +128,6 @@ public class KlausurFrage implements Serializable {
 		this.hochschule = hochschule;
 	}
 
-	public Credibility getCredibility() {
-		return credibility;
-	}
-
-	public void setCredibility(Credibility credibility) {
-		this.credibility = credibility;
-	}
-	
-	
 	
 	
 

@@ -31,6 +31,9 @@ public class Nutzer {
 	@ForeignCollectionField
 	private ForeignCollection<KlausurFrage> klausurfrage;
 
+	@ForeignCollectionField
+	private ForeignCollection<Credibility> cred;
+	
 	public Nutzer() {
 	}
 	
@@ -46,7 +49,7 @@ public class Nutzer {
 
 
 
-	public int getH_id() {
+	public int getN_id() {
 		return n_id;
 	}
 
