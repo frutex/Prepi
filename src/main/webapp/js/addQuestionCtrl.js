@@ -6,7 +6,7 @@ angular.module('ExPrep').controller(
 					$scope.hochschulen;
 					$scope.dozenten;
 					$scope.startup = function(){
-						RequestFactory.loadHochschulen()
+						RequestFactory.getHochschulen()
 						.success(
 								function(data) {
 									if (data.successfull) {
