@@ -1,11 +1,13 @@
 package com.examprep.app.bean;
 
+import com.examprep.app.persistencelayer.daoimpl.CredibilityDaoImpl;
+import com.examprep.app.persistencelayer.daoimpl.HochschuleDaoImpl;
 import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
-@DatabaseTable(tableName = "Hochschule")
+@DatabaseTable(tableName = "Hochschule", daoClass = HochschuleDaoImpl.class)
 public class Hochschule {
 
 	@DatabaseField(generatedId = true, columnName = "h_id")

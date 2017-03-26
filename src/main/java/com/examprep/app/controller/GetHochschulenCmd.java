@@ -5,8 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.examprep.app.bean.Nutzer;
-import com.examprep.app.dao.HochschuleDAO;
-import com.examprep.app.dao.NutzerDAO;
+
 import com.examprep.app.util.JSONConverter;
 
 public class GetHochschulenCmd extends AbstractCmdServlet{

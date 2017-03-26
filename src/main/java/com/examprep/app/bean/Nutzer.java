@@ -1,11 +1,13 @@
 package com.examprep.app.bean;
 
+import com.examprep.app.persistencelayer.daoimpl.CredibilityDaoImpl;
+import com.examprep.app.persistencelayer.daoimpl.NutzerDaoImpl;
 import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
-@DatabaseTable(tableName = "Nutzer")
+@DatabaseTable(tableName = "Nutzer", daoClass = NutzerDaoImpl.class)
 public class Nutzer {
 	
 	@DatabaseField(generatedId = true, columnName = "n_id")
@@ -29,6 +31,9 @@ public class Nutzer {
 	@ForeignCollectionField
 	private ForeignCollection<KlausurFrage> klausurfrage;
 
+	@ForeignCollectionField
+	private ForeignCollection<Credibility> cred;
+	
 	public Nutzer() {
 	}
 	
@@ -44,7 +49,7 @@ public class Nutzer {
 
 
 
-	public int getH_id() {
+	public int getN_id() {
 		return n_id;
 	}
 

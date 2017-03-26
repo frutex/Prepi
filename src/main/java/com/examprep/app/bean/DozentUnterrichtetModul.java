@@ -1,16 +1,18 @@
 package com.examprep.app.bean;
 
+import com.examprep.app.persistencelayer.daoimpl.CredibilityDaoImpl;
+import com.examprep.app.persistencelayer.daoimpl.DozentUnterrichtetModulDaoImpl;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 
-@DatabaseTable(tableName = "DozentUnterrichtetModul")
+@DatabaseTable(tableName = "DozentUnterrichtetModul", daoClass = DozentUnterrichtetModulDaoImpl.class)
 public class DozentUnterrichtetModul {
 	
 	@DatabaseField(generatedId = true, columnName = "dum_id")
 	private int dum_id;
 	
-	@DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = "d_id")
+	@DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = "ddum_id")
 	private Dozent dozent;
 	
 	@DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = "md_id")

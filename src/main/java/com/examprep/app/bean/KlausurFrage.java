@@ -9,17 +9,21 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.examprep.app.persistencelayer.daoimpl.CredibilityDaoImpl;
+import com.examprep.app.persistencelayer.daoimpl.KlausurfrageDaoImpl;
+import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
 
-@DatabaseTable(tableName = "Klausurfrage")
+@DatabaseTable(tableName = "Klausurfrage", daoClass = KlausurfrageDaoImpl.class)
 
 public class KlausurFrage implements Serializable {
 
 
-	@DatabaseField(generatedId = true, columnName = "f_id")
-	private int f_id;
+	@DatabaseField(generatedId = true, columnName = "k_id")
+	private int k_id;
 	
 	@DatabaseField(columnName = "schwierigkeit")
 	private int schwierigkeit;
@@ -30,17 +34,21 @@ public class KlausurFrage implements Serializable {
 	@DatabaseField(columnName = "jahr")
 	private int jahr;
 	
-	@DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = "Hochschule")
+	@DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = "hk_id")
 	private Hochschule hochschule;
 
-	@DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = "Dozent")
+	@DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = "dk_id")
 	private Dozent dozent;
 	
-	@DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = "Modul")
+	@DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = "mk_id")
 	private Modul modul;
 	
-	@DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = "Nutzer")
+	@DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = "nk_id")
 	private Nutzer nutzer;
+	
+	@ForeignCollectionField
+	private ForeignCollection<Credibility> cred;
+	
 	
 	public KlausurFrage() {
 		
@@ -48,13 +56,14 @@ public class KlausurFrage implements Serializable {
 	
 	public KlausurFrage(int f_id, int schwierigkeit, String text, Dozent dozent, Modul modul, int jahr,
 			Hochschule hochschule, Nutzer nutzer) {
-		this.f_id = f_id;
+		this.k_id = f_id;
 		this.schwierigkeit = schwierigkeit;
 		this.text = text;
 		this.dozent = dozent;
 		this.modul = modul;
 		this.jahr = jahr;
 		this.hochschule = hochschule;
+
 	}
 	
 
@@ -67,7 +76,7 @@ public class KlausurFrage implements Serializable {
 	}
 
 	public int getF_id() {
-		return f_id;
+		return k_id;
 	}
 
 
@@ -118,8 +127,7 @@ public class KlausurFrage implements Serializable {
 	public void setHochschule(Hochschule hochschule) {
 		this.hochschule = hochschule;
 	}
-	
-	
+
 	
 	
 
