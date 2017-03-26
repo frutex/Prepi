@@ -6,8 +6,6 @@ angular.module('ExPrep').controller(
 			
 					$scope.userData;
 					$scope.loadUserData = function() {
-						token = AuthService.getUserToken();
-						
 						RequestFactory.loadUserData()
 						.success(
 								function(data) {
@@ -21,8 +19,6 @@ angular.module('ExPrep').controller(
 								});
 					}
 					
-					$scope.addQuestion = function(){
-						window.location.href = "./addQuestion.html";
-					}
+					
 
 				} ]);
