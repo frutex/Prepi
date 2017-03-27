@@ -19,7 +19,7 @@ angular.module('ExPrep').factory(
 					}
 					
 					function getHochschulen() {
-						return send("c=getHochschulen");
+						return send ("c=getHochschulen");
 
 					}
 					
@@ -32,12 +32,34 @@ angular.module('ExPrep').factory(
 						return send("c=loadUserData");
 
 					}
+					
+					function getModule() {
+						return send("c=getModule");
+
+					}
+					
+					function getDozenten() {
+						return send("c=getDozenten");
+
+					}
+					
+					function addFrage(data) {
+						return send("c=addFrage" + "&titel=" + data.Titel + "&hochschule=" + data.Hochschule + "&modul=" + data.Modul + "&dozent=" + data.Dozent + "&beschreibung=" + data.Beschreibung + "&datum=" + data.Datum);
+
+								
+										
+										
+					}
 
 					return {
 						send : send,
 						login : login,
 						checkAuthToken : checkAuthToken,
 						loadUserData : loadUserData,
-						getHochschulen : getHochschulen
+						getHochschulen : getHochschulen,
+						getModule : getModule,
+						getDozenten : getDozenten,
+						addFrage : addFrage,
+						
 					};
 				} ]);

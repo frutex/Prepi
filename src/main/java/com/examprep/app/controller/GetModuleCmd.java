@@ -7,15 +7,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.examprep.app.bean.Hochschule;
-import com.examprep.app.bean.Nutzer;
+import com.examprep.app.bean.Modul;
 import com.examprep.app.persistencelayer.PersistenceQuery;
-import com.examprep.app.persistencelayer.daoif.HochschuleDao;
-import com.examprep.app.persistencelayer.daoimpl.HochschuleDaoImpl;
 import com.examprep.app.util.JSONConverter;
 
-public class GetHochschulenCmd extends AbstractCmdServlet {
-
-	public GetHochschulenCmd(HttpServlet servlet, HttpServletRequest request, HttpServletResponse response) {
+public class GetModuleCmd extends AbstractCmdServlet {
+	
+	public GetModuleCmd(HttpServlet servlet, HttpServletRequest request, HttpServletResponse response) {
 		super(servlet, request, response);
 	}
 
@@ -25,9 +23,9 @@ public class GetHochschulenCmd extends AbstractCmdServlet {
 
 		try {
 
-			List<Hochschule> hsList = PersistenceQuery.getAllHochschulen();
+			List<Modul> modulList = PersistenceQuery.getAllModule();
 
-			res = "{\"successfull\":" + "true" + ",\"data\":" + JSONConverter.toJSONH(hsList) + "}";
+			res = "{\"successfull\":" + "true" + ",\"data\":" + JSONConverter.toJSONM(modulList) + "}";
 
 		} catch (Exception e) {
 			res = "{\"successfull\":" + "false" + ",\"data\":\""
