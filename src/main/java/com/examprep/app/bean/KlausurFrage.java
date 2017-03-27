@@ -25,8 +25,6 @@ public class KlausurFrage implements Serializable {
 	@DatabaseField(generatedId = true, columnName = "k_id")
 	private int k_id;
 	
-	@DatabaseField(columnName = "schwierigkeit")
-	private int schwierigkeit;
 	
 	@DatabaseField(columnName = "text")
 	private String text;
@@ -54,10 +52,10 @@ public class KlausurFrage implements Serializable {
 		
 	}
 	
-	public KlausurFrage(int f_id, int schwierigkeit, String text, Dozent dozent, Modul modul, int jahr,
+	public KlausurFrage(int f_id,String text, Dozent dozent, Modul modul, int jahr,
 			Hochschule hochschule, Nutzer nutzer) {
 		this.k_id = f_id;
-		this.schwierigkeit = schwierigkeit;
+
 		this.text = text;
 		this.dozent = dozent;
 		this.modul = modul;
@@ -80,13 +78,6 @@ public class KlausurFrage implements Serializable {
 	}
 
 
-	public int getSchwierigkeit() {
-		return schwierigkeit;
-	}
-
-	public void setSchwierigkeit(int schwierigkeit) {
-		this.schwierigkeit = schwierigkeit;
-	}
 
 	public String getText() {
 		return text;

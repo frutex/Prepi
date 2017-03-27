@@ -25,6 +25,23 @@ public class DozentAnHochschule {
 		this.dozent = dozent;
 		this.hochschule = hochschule;
 	}
+	public int getDah_id() {
+		return dah_id;
+	}
 
+	public Dozent getDozent() {
+		return dozent;
+	}
+	public void setDozent(Dozent dozent) {
+		this.dozent = dozent;
+	}
+	public Hochschule getHochschule() {
+		return hochschule;
+	}
+	public void setHochschule(Hochschule hochschule) {
+		this.hochschule = hochschule;
+	}
+
+	
 	
 }

@@ -25,6 +25,22 @@ public class ModulAnHochschule {
 		this.modul = modul;
 		this.hochschule = hochschule;
 	}
+	public int getDum_id() {
+		return dum_id;
+	}
+
+	public Modul getModul() {
+		return modul;
+	}
+	public void setModul(Modul modul) {
+		this.modul = modul;
+	}
+	public Hochschule getHochschule() {
+		return hochschule;
+	}
+	public void setHochschule(Hochschule hochschule) {
+		this.hochschule = hochschule;
+	}
 	
 	
 
