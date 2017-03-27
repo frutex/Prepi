@@ -42,8 +42,7 @@
 <link href="css/dashboard.css" rel="stylesheet">
 </head>
 
-<body ng-app="ExPrep" ng-controller="AuthCtrl" ng-init="checkAuth()">
-	<div ng-controller="DashCtrl" ng-init="loadUserData()">
+<body ng-app="ExPrep" ng-controller="DashCtrl" ng-init="startup()">
 
 		<nav
 			class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
@@ -257,7 +256,6 @@
 		</footer>
 
 
-	</div>
 	<!-- Bootstrap core JavaScript
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->

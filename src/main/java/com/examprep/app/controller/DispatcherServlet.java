@@ -74,8 +74,14 @@ public class DispatcherServlet extends HttpServlet {
 			result = new LoginCmd(servlet, request, response);
 		} else if (command.equalsIgnoreCase("checkAuthToken")) {
 			result = new CheckAuthTokenCmd(servlet, request, response);
-		}else if (command.equalsIgnoreCase("loadUserData")) {
+		} else if (command.equalsIgnoreCase("loadUserData")) {
 			result = new GetUserDataCmd(servlet, request, response);
+		} else if (command.equalsIgnoreCase("getHochschulen")) {
+			result = new GetHochschulenCmd(servlet, request, response);
+		} else if (command.equalsIgnoreCase("getModule")) {
+			result = new GetModuleCmd(servlet, request, response);
+		}else if (command.equalsIgnoreCase("getDozenten")) {
+			result = new GetDozentenCmd(servlet, request, response);
 		}
 		return result;
 	}
