@@ -41,10 +41,10 @@ angular.module('ExPrep').controller(
 					
 					$scope.addFrage = function(){
 						RequestFactory.addFrage($scope.selected).success(function(data) {
-							if (data.successfull) {
-								// Do something, change window 
+							if (data) {
+								window.location.href = "./danke.html";
 							} else {
-								alert(data.data);
+								alert("Error");
 								// $scope.$apply;
 							}
 						});
@@ -99,7 +99,7 @@ angular.module('ExPrep').controller(
 					}
 					
 					$scope.dozentenName = function(index){
-						return $scope.dozenten[index].Vorname + ", " + $scope.dozenten[index].Nachname
+						return $scope.dozenten[index].Nachname + ", " + $scope.dozenten[index].Vorname;
 					}
 					
 

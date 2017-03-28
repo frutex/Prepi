@@ -25,11 +25,11 @@ public class GetDozentenCmd extends AbstractCmdServlet{
 
 			List<Dozent> dList;
 			
-		//	dList = PersistenceQuery.getAllDozenten();
+			dList = PersistenceQuery.getAllDozenten();
 
-		//	res = "{\"successfull\":" + "true" + ",\"data\":" + JSONConverter.toJSOND(dList) + "}";
+			res = "{\"successfull\":" + "true" + ",\"data\":" + JSONConverter.toJSOND(dList) + "}";
 			
-			res = "{\"successfull\":" + "true" + ",\"data\":" + "[{\"Nachname\":\"Lustig\",\"Vorname\":\"Peter\"}]" + "}";
+			//res = "{\"successfull\":" + "true" + ",\"data\":" + "[{\"Nachname\":\"Lustig\",\"Vorname\":\"Peter\"}]" + "}";
 
 		} catch (Exception e) {
 			res = "{\"successfull\":" + "false" + ",\"data\":\""
