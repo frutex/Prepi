@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.examprep.app.bean.KlausurFrage;
 import com.examprep.app.bean.Nutzer;
 import com.examprep.app.persistencelayer.PersistenceQuery;
 import com.examprep.app.util.JSONConverter;
@@ -24,7 +25,9 @@ public class GetUserDataCmd extends AbstractCmdServlet {
 
 		try {
 			Nutzer nutzer = PersistenceQuery.getOneNutzerByName(name);
-			String nutzerJSON = JSONConverter.toJSON(nutzer);
+			String nutzerJSON = JSONConverter.toJSONN(nutzer);
+			
+		//	KlausurFrage frage = PersistenceQuery.get
 
 			res = "{\"successfull\":" + "true" + ",\"data\":" + nutzerJSON + "}";
 
