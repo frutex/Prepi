@@ -17,20 +17,12 @@ public class JSONConverter {
 		sb.append("\"Email\":\"").append(nutzer.getEmail()).append("\",");
 		sb.append("\"Name\":\"").append(nutzer.getName()).append("\",");
 		sb.append("\"Vorname\":\"").append(nutzer.getVorname()).append("\",");
-		sb.append("\"Adresse\":\"").append(nutzer.getHochschule()).append("\",");
-		sb.append("\"Klausurfragen\":").append(toJSON(nutzer.getKlausurfragen())).append("");
+		sb.append("\"Adresse\":\"").append(nutzer.getHochschule()).append("\"");
 		sb.append("}");
 		String res = sb.toString();
 		return res;
 	}
 
-	public static String toJSON(ForeignCollection<KlausurFrage> fragen) {
-		StringBuilder sb = new StringBuilder();
-		sb.append("[]");
-
-		String res = sb.toString();
-		return res;
-	}
 
 	public static String toJSONH(Hochschule hochschule) {
 		StringBuilder sb = new StringBuilder();
@@ -99,6 +91,35 @@ public class JSONConverter {
 				sb.append(",");
 				}
 			sb.append(toJSOND(list.get(i)));
+			
+		}
+		sb.append("]");
+		String res = sb.toString();
+		return res;
+	}
+	
+	public static String toJSONF(KlausurFrage frage) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("{");
+		sb.append("\"Jahr\":\"").append(frage.getJahr()).append("\",");
+		sb.append("\"Beschreibung\":\"").append(frage.getText()).append("\",");
+		sb.append("\"Dozent\":\"").append(frage.getDozent().getNachname()).append("\",");
+		sb.append("\"Hochschule\":\"").append(frage.getHochschule().getName()).append("\",");
+		sb.append("\"Modul\":\"").append(frage.getModul().getModul()).append("\",");
+		sb.append("\"Nutzer\":\"").append(frage.getNutzer().getEmail()).append("\"");
+		sb.append("}");
+		String res = sb.toString();
+		return res;
+	}
+
+	public static String toJSONF(List<KlausurFrage> list) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("[");
+		for (int i = 0; i < list.size(); i++) {
+			if(i != 0){
+				sb.append(",");
+				}
+			sb.append(toJSONF(list.get(i)));
 			
 		}
 		sb.append("]");

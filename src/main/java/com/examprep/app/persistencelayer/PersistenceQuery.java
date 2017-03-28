@@ -488,9 +488,9 @@ public class PersistenceQuery {
 		List<KlausurFrage> listFrage = new ArrayList<>();
 		int cred = 0;
 		try {
-			Dao<KlausurFrage, String> frageDao = DaoManager.createDao(connSource, KlausurFrage.class);
-			listFrage = frageDao.queryBuilder().where().eq("nk_id", nutzer).query();
-			Dao<Credibility, String> credDao = DaoManager.createDao(connSource, Credibility.class);
+			klausurfDao = DaoManager.createDao(connSource, KlausurFrage.class);
+			listFrage = klausurfDao.queryBuilder().where().eq("nk_id", nutzer).query();
+			credDao = DaoManager.createDao(connSource, Credibility.class);
 			List<Credibility> credList = new ArrayList<>();
 			for (KlausurFrage tmp : listFrage) {
 				credList = credDao.queryBuilder().where().eq("kfgc_id", tmp.getF_id()).query();
@@ -510,7 +510,7 @@ public class PersistenceQuery {
 		Nutzer nutzer = getOneNutzerByName(name);
 		List<Credibility> credList = new ArrayList<>();
 		try {
-			Dao<Credibility, String> credDao = DaoManager.createDao(connSource, Credibility.class);
+			credDao = DaoManager.createDao(connSource, Credibility.class);
 			credList = credDao.queryBuilder().where().eq("nutgc_id", nutzer.getN_id()).query();
 
 			for (Credibility cred : credList) {
@@ -523,5 +523,26 @@ public class PersistenceQuery {
 		}
 
 		return listFrage;
+	}
+	
+	@SuppressWarnings("finally")
+	public static List<KlausurFrage> getAllQuestions(){
+		List<KlausurFrage> listFrage = new ArrayList<>();
+
+		try{
+			klausurfDao = DaoManager.createDao(connSource, KlausurFrage.class);
+			listFrage = klausurfDao.queryForAll();
+			
+		}		catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			if(listFrage.size() > 0 ){
+				return listFrage;
+			}else{
+				return null;
+			}
+		}
+
 	}
 }

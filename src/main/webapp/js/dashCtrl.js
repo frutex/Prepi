@@ -16,13 +16,14 @@ angular.module('ExPrep').controller(
 						token = AuthService.getUserToken();
 						if (AuthService.isAuthenticated && token) {
 
-							RequestFactory.checkAuthToken().success(
+							RequestFactory.checkAuthToken().then(
 									function(data) {
-										if (data.successfull) {
+										if (data.data.successfull) {
 
 										} else {
-											alert(data.token);
-											// $scope.$apply;
+											alert(data.data.token);
+											AuthService.logout();
+											window.location.href = "./login.html";
 										}
 									});
 
@@ -40,12 +41,12 @@ angular.module('ExPrep').controller(
 
 					$scope.userData;
 					$scope.loadUserData = function() {
-						RequestFactory.loadUserData().success(function(data) {
-							if (data.successfull) {
-								$scope.userData = data.data;
+						RequestFactory.loadUserData().then(function(data) {
+							if (data.data.successfull) {
+								$scope.userData = data.data.data;
 							} else {
-								$scope.userData = data;
-								alert(data.data);
+								$scope.userData = data.data;
+								alert(data.data.data);
 								// $scope.$apply;
 							}
 						});
