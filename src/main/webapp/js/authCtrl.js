@@ -19,11 +19,11 @@ angular
 											.checkAuthToken()
 											.success(
 													function(data) {
-														if (data.successfull) {
+														if (data.data.successfull) {
 
 														} else {
 															$scope.authenticated = false;
-															alert(data.token);
+															alert(data.data.token);
 															// $scope.$apply;
 														}
 													});
@@ -52,12 +52,12 @@ angular
 												$scope.loginData.password)
 										.success(
 												function(data) {
-													if (data.successfull) {
-														AuthService.login(data);
+													if (data.data.successfull) {
+														AuthService.login(data.data);
 														$scope.checkAuth();
 														window.location.href = "./dashboard.html";
 													} else {
-														alert(data.token);
+														alert(data.data.token);
 													}
 												})
 							}

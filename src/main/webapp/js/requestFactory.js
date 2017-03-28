@@ -8,7 +8,7 @@ angular.module('ExPrep').factory(
 					function send(url) {
 						return $http.post(
 								"/prepa/cmd?" + url + '&token='
-										+ AuthService.getUserToken()).success(
+										+ AuthService.getUserToken()).then(
 								function(data) {
 									return data;
 								})
