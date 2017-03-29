@@ -1,6 +1,6 @@
 /* Move down content because we have a fixed navbar that is 50px tall */
 body {
-  padding-top: 2rem;
+  padding-top: 10rem;
 }
 
 /* Center exprep logo on page and resize automatically */
@@ -42,4 +42,19 @@ body {
   margin-bottom: 10px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
+}
+
+/* Signup.css */ 
+
+/* Align text next to checkbox */
+input[type="checkbox"] {
+    display: inline-block;
+    width: 15px;
+    vertical-align: top;
+}
+
+.label-text {
+  display: inline-block;
+  width: 200px;
+  word-break: break-all; 
 }
