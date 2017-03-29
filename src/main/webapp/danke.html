@@ -10,88 +10,97 @@
     <title>Danke</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
     <!-- Custom styles for this template -->
+    <link href="css/navbar-footer.css" rel="stylesheet">
     <link href="css/dashboard.css" rel="stylesheet">
   </head>
 
   <body>
 
-    <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
-      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <a class="navbar-brand" href="">ExPrep</a>
-      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Dashboard <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Explore</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menü</a>
-            <div class="dropdown-menu" aria-labelledby="dropdown01">
-              <a class="dropdown-item" href="#">Frage hinzufügen</a>
-              <a class="dropdown-item" href="#">Meine Fragen</a>
-              <a class="dropdown-item" href="#">Optionen</a>
-              <a class="dropdown-item" href="#">Logout</a>
-            </div>
-          </li>
-        </ul>
-        <form class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2" type="text" placeholder="Fragen durchsuchen">
-          <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Suchen</button>
-        </form>
-      </div>
-    </nav>
 
-    <!-- Main jumbotron for account information and progress bar for credibility level -->
-    <div class="jumbotron">
-      <div class="container-centered">
-        <h1>DEINE AKTUELLE CREDIBILITY</h1>
-        <p></p>
-        <div class="row">
-        	<div class="col-md-4" id="status-div1">
-        	<h2>10</h2>Level
-        	</div>
-        	<div class="col-md-4" id="status-div2">
-        	<h2>250</h2>Danke!
-        	</div>
-       		<div class="col-md-4" id="status-div3">
-       		<h2>17</h2>Fragen
+<!-- Fixed Navbar with Brand logo, nav items and search form -->
+	 <nav class="navbar navbar-inverse navbar-fixed-top">
+	   <div class="container-fluid">
+		 <div class="navbar-header">
+			<a class="navbar-brand" href="dashboard.html"><img src="images/exam preppar_logo_small.png" alt="ExPrep"></a>
+		 </div>
+		 <ul class="nav navbar-nav">
+			<li><a href="dashboard.html">Dashboard</a></li>
+			<li><a href="#">Explore</a></li>
+			<li><a href="#">Meine Fragen</a></li>
+			<li class="active"><a href="addQuestion.html">Frage hinzufügen</a></li>
+			<li><a href="#">Optionen</a></li>
+			<li><a href="login.html">Logout</a></li>
+		 </ul>
+		 <form class="navbar-form navbar-right">
+		 <div class="input-group">
+			<input type="text" class="form-control" placeholder="Fragen durchsuchen">
+			<div class="input-group-btn">
+			<button class="btn btn-default" type="submit">
+				<i class="glyphicon glyphicon-search"></i>
+			</button>
+			</div>
+		 </div>
+		 </form>
+	   </div>
+	 </nav>
+
+
+	<!-- Main jumbotron for account information and progress bar for credibility level -->
+	<div class="jumbotron">
+		<div class="container">
+			<h1>DEINE AKTUELLE CREDIBILITY</h1>
+			<p></p>
+			<div class="row">
+				<div class="col-md-4" id="status-div1">
+					<h2>{{userData[2].Level}}</h2>
+					Level
+				</div>
+				<div class="col-md-4" id="status-div2">
+					<h2>{{userData[2].Credibility}}</h2>
+					Danke!
+				</div>
+				<div class="col-md-4" id="status-div3">
+					<h2>{{userData[1].length}}</h2>
+					Fragen
+				</div>
+			</div>
+			<hr>
+
+			<div class="progress">
+				<div class="progress-bar" role="progressbar" aria-valuenow="70"
+					aria-valuemin="0" aria-valuemax="100" style="width: 70%">
+					<span class="sr-only">70% Complete</span>
+				</div>
 			</div>
 		</div>
-    	<hr>
-    	
-    	<div class="progress">
-  			<div class="progress-bar" role="progressbar" aria-valuenow="70"
-  			aria-valuemin="0" aria-valuemax="100" style="width:70%">
-    			<span class="sr-only">70% Complete</span>
-  			</div>
-		</div>
-      </div>
-    </div>
+	</div>
     
     <div class="container">
     <!-- Add Question Button -->
-    <div id="question-div">
-    <h1>DANKE!</h1>
-    <img class="img-responsive img-center" allign="middle"
+    	<div id="question-div">
+    		<h1>DANKE!</h1>
+			<!-- Centered icon -->
+			<div class="image-container">
+				<img class="img-responsive img-center" allign="middle"
 					src="images/medal icon.jpg">
-    <div id="button-div">
-    <p><a class="btn btn-primary btn-lg" id="btn-add-question" href="./dashboard.html" role="button">Zum Dashboard &raquo;</a></p>
-    </div>
-    </div>
-	  </div>
-      <hr>
+			</div>
+    	<div id="button-div">
+    		<p><a class="btn btn-primary btn-lg" id="btn-add-question" href="./dashboard.html" role="button">Zum Dashboard &raquo;</a></p>
+    	</div>
+    	</div>
+	</div>
 
     
-      <footer>
-        <p>&copy; ExPrep 2017 - Bjarne Obst, Christopher Tunkel, Daniel Köhler</p>
-      </footer>
+	<footer class="footer">
+      <div class="container">
+        <span class="text-muted">&copy; ExPrep 2017 - Bjarne Obst, Christopher Tunkel, Daniel
+			Köhler</span>
+      </div>
+    </footer>
     
 
 
