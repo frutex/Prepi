@@ -141,6 +141,33 @@ public class PersistenceQuery {
 
 		return doz.get(0);
 	}
+	
+	@SuppressWarnings("finally")
+	public static List<Modul> getAllModuleVonDozent(Dozent dozent){
+		List<Modul> modulList = new ArrayList<>();
+		List<DozentUnterrichtetModul> dozUmodList = new ArrayList<>();
+
+		try {
+			dozentUnterrichtetModulDao = DaoManager.createDao(connSource, DozentUnterrichtetModul.class);
+			modulDao = DaoManager.createDao(connSource, Modul.class);
+			// doz = dozentDao.queryBuilder().where().and(where.eq("vorname",
+			// vorname), where. ));
+
+			dozUmodList = dozentUnterrichtetModulDao.queryBuilder().where().eq("ddum_id", dozent.getD_id()).query();
+			for(DozentUnterrichtetModul tmp : dozUmodList){
+				modulList.add(tmp.getModul());
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			if(modulList.size() > 0){
+				return modulList;
+			}else{
+				return null;
+			}
+		}
+	}
 
 	/**
 	 * ---------------------------------------------------------------------------------------------
