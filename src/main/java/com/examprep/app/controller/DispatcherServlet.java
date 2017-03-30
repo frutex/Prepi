@@ -84,6 +84,10 @@ public class DispatcherServlet extends HttpServlet {
 			result = new GetDozentenCmd(servlet, request, response);
 		} else if (command.equalsIgnoreCase("addFrage")) {
 			result = new AddFrageCmd(servlet, request, response);
+		} else if (command.equalsIgnoreCase("getDozentenForHochschule")) {
+			result = new GetDozentenForHochschuleCmd(servlet, request, response);
+		} else if (command.equalsIgnoreCase("getModulForDozent")) {
+			result = new GetModuleForDozentCmd(servlet, request, response);
 		}
 		return result;
 	}
