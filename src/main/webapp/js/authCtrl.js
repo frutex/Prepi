@@ -17,7 +17,7 @@ angular
 
 									RequestFactory
 											.checkAuthToken()
-											.success(
+											.then(
 													function(data) {
 														if (data.data.successfull) {
 
@@ -50,7 +50,7 @@ angular
 								RequestFactory
 										.login($scope.loginData.username,
 												$scope.loginData.password)
-										.success(
+										.then(
 												function(data) {
 													if (data.data.successfull) {
 														AuthService.login(data.data);

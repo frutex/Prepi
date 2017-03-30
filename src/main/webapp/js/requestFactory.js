@@ -53,6 +53,16 @@ angular.module('ExPrep').factory(
 								+ "&datum=" + data.Datum);
 
 					}
+					
+					function getDozentenForHochschule(hochschule) {
+						return send("c=getDozentenForHochschule" + "&hochschule=" + hochschule);
+
+					}
+					
+					function getModulForDozent(hochschule) {
+						return send("c=getModulForDozent" + "&dozent=" + hochschule);
+
+					}
 
 					return {
 						send : send,
@@ -63,6 +73,9 @@ angular.module('ExPrep').factory(
 						getModule : getModule,
 						getDozenten : getDozenten,
 						addFrage : addFrage,
+						getDozentenForHochschule : getDozentenForHochschule,
+						getModulForDozent : getModulForDozent,
+						
 
 					};
 				} ]);
