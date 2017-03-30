@@ -242,13 +242,13 @@ public class PersistenceQuery {
 	@SuppressWarnings("finally")
 	public static List<Dozent> getAllDozentenEinerHochschule(String name){
 		Hochschule hochschule = getHochschuleByName(name).get(0);
-		List<DozentAnHochschule> modAnHochList = new ArrayList<>();
+		List<DozentAnHochschule> dozAnHochList = new ArrayList<>();
 		List<Dozent> dozList = new ArrayList<>();
 		try {
 			dozentAnHochschuleDao = DaoManager.createDao(connSource, DozentAnHochschule.class);
-			modAnHochList = dozentAnHochschuleDao.queryBuilder().where().eq("hochschule_id", hochschule.getH_id()).query();
+			dozAnHochList = dozentAnHochschuleDao.queryBuilder().where().eq("hoch_id", hochschule.getH_id()).query();
 			dozentDao = DaoManager.createDao(connSource, Dozent.class);
-			for (DozentAnHochschule tmp : modAnHochList){
+			for (DozentAnHochschule tmp : dozAnHochList){
 				dozList.add(tmp.getDozent());
 			}
 		} catch (SQLException e) {

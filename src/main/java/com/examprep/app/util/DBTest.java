@@ -25,18 +25,20 @@ public class DBTest {
 //		Dozent dozent = PersistenceQuery.createDozent("Hans", "Obst");
 //		Hochschule hochschule = PersistenceQuery.createHochschule("HWR Berlin", "Berlin");
 //		Nutzer nutzer = PersistenceQuery.createNutzer("Obst", "Bjarne", "bjarne.obst@gmail.com", "password", hochschule);
-		Modul modul = PersistenceQuery.getModulByName("Business Intelligenze").get(0);
-		Dozent dozent = PersistenceQuery.getDozentByName("Hans", "Obst");
-		Hochschule hochschule = PersistenceQuery.getHochschuleByName("HWR Berlin").get(0);
-		Nutzer nutzer = PersistenceQuery.getOneNutzerByName("bjarne.obst@gmail.com");
+//		Modul modul = PersistenceQuery.getModulByName("Business Intelligenze").get(0);
+//		Dozent dozent = PersistenceQuery.getDozentByName("Hans", "Obst");
+//		Hochschule hochschule = PersistenceQuery.getHochschuleByName("HWR Berlin").get(0);
+//		Nutzer nutzer = PersistenceQuery.getOneNutzerByName("bjarne.obst@gmail.com");
+		List<Dozent> dozList = PersistenceQuery.getAllDozentenEinerHochschule("HWR Berlin");
+//		System.out.println(modul.getModul());
+//		System.out.println(dozent.getVorname());
+//		System.out.println(hochschule.getName());
+//		System.out.println(nutzer.getEmail());
 		
-		System.out.println(modul.getModul());
-		System.out.println(dozent.getVorname());
-		System.out.println(hochschule.getName());
-		System.out.println(nutzer.getEmail());
-		
-		PersistenceQuery.createKlausurfrage("Wie funktioniert dieses Programm?", 2017, hochschule, dozent, modul, nutzer);
-		
+//		PersistenceQuery.createKlausurfrage("Wie funktioniert dieses Programm?", 2017, hochschule, dozent, modul, nutzer);
+		for(Dozent tmp : dozList){
+			System.out.println(tmp.getVorname());
+		}
 		
 	}
 
