@@ -7,6 +7,12 @@ angular.module('ExPrep').controller(
 				'AuthService',
 				function($http, $scope, RequestFactory, AuthService) {
 
+					
+					$scope.today = new Date();
+					$scope.hochschulen = [];
+					$scope.dozenten;
+					$scope.module;
+					
 					$scope.startup = function() {
 						$scope.checkAuth();
 						$scope.getHochschulen();
@@ -18,15 +24,17 @@ angular.module('ExPrep').controller(
 					$scope.selected = {
 						"Titel" : "Bitte Fragentitel Eingeben",
 						"Hochschule" : "",
-						"Modul" : "Bitte Modul auswählen",
+						"Modul" : "",
 						"Dozent" : "",
 						"Beschreibung" : "Bitte Beschreibung einfügen",
-						"Datum" : "Datum"
+						"Datum" : $scope.today.getFullYear()
 					}
 
-					$scope.hochschulen = [];
-					$scope.dozenten;
-					$scope.module;
+				
+					
+					$scope.setDate = function(){
+						$scope.selected.Datum = $scope.today.getFullYear(); 
+					}
 
 					$scope.getHochschulen = function() {
 						RequestFactory.getHochschulen().then(function(data) {
@@ -64,6 +72,17 @@ angular.module('ExPrep').controller(
 
 					$scope.getModule = function() {
 						RequestFactory.getModule().then(function(data) {
+							if (data.data.successfull) {
+								$scope.module = data.data.data;
+							} else {
+								alert(data.data.data);
+								// $scope.$apply;
+							}
+						});
+					}
+					
+					$scope.loadDModule = function() {
+						RequestFactory.getModulForDozent($scope.selected.Dozent).then(function(data) {
 							if (data.data.successfull) {
 								$scope.module = data.data.data;
 							} else {
@@ -145,10 +164,24 @@ angular.module('ExPrep').controller(
 					$scope.queryD = function(query) {
 						res = [];
 						for (i = 0; i < $scope.dozenten.length; i++) {
-							dName = $scope.dozentenNameObj($scope.dozenten[i]).toLowerCase();
+							dName = $scope.dozentenNameObj($scope.dozenten[i]).toLowerCase().trim();
 								
 							if (dName.contains(query.toLowerCase())) {
 								res[res.length] = $scope.dozenten[i];
+							}
+
+						}
+						return res;
+
+					}
+					
+					$scope.queryM = function(query) {
+						res = [];
+						for (i = 0; i < $scope.module.length; i++) {
+							mName = $scope.module[1].Name.toLowerCase().trim();
+								
+							if (mName.contains(query.toLowerCase())) {
+								res[res.length] = $scope.module[i];
 							}
 
 						}

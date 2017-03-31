@@ -265,7 +265,7 @@ public class PersistenceQuery {
 	 * ---------------------------------------------------------------------------------------------
 	 */
 
-	public static KlausurFrage createKlausurfrage(String text, int jahr, Hochschule hochschule, Dozent dozent,
+	public static KlausurFrage createKlausurfrage(String text, int jahr, String titel, Hochschule hochschule, Dozent dozent,
 			Modul modul, Nutzer nutzer) {
 
 		KlausurFrage klausurf = new KlausurFrage();
@@ -276,6 +276,7 @@ public class PersistenceQuery {
 		klausurf.setDozent(dozent);
 		klausurf.setModul(modul);
 		klausurf.setNutzer(nutzer);
+		klausurf.setTitel(titel);
 
 		try {
 			klausurfDao = DaoManager.createDao(connSource, KlausurFrage.class);

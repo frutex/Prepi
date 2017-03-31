@@ -32,6 +32,9 @@ public class KlausurFrage implements Serializable {
 	@DatabaseField(columnName = "jahr")
 	private int jahr;
 	
+	@DatabaseField(columnName = "titel")
+	private String titel;
+	
 	@DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = "hk_id")
 	private Hochschule hochschule;
 
@@ -52,7 +55,7 @@ public class KlausurFrage implements Serializable {
 		
 	}
 	
-	public KlausurFrage(int f_id,String text, Dozent dozent, Modul modul, int jahr,
+	public KlausurFrage(int f_id,String text, String titel, Dozent dozent, Modul modul, int jahr,
 			Hochschule hochschule, Nutzer nutzer) {
 		this.k_id = f_id;
 
@@ -61,6 +64,7 @@ public class KlausurFrage implements Serializable {
 		this.modul = modul;
 		this.jahr = jahr;
 		this.hochschule = hochschule;
+		this.titel = titel;
 
 	}
 	
@@ -118,6 +122,24 @@ public class KlausurFrage implements Serializable {
 	public void setHochschule(Hochschule hochschule) {
 		this.hochschule = hochschule;
 	}
+
+	public String getTitel() {
+		return titel;
+	}
+
+	public void setTitel(String titel) {
+		this.titel = titel;
+	}
+
+	public ForeignCollection<Credibility> getCred() {
+		return cred;
+	}
+
+	public void setCred(ForeignCollection<Credibility> cred) {
+		this.cred = cred;
+	}
+	
+	
 
 	
 	

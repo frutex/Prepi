@@ -50,34 +50,38 @@
 <link href="css/dashboard.css" rel="stylesheet">
 </head>
 
-<body ng-app="ExPrep" ng-controller="AddQuestionCtrl" ng-init="startup()">
+<body ng-app="ExPrep" ng-controller="AddQuestionCtrl"
+	ng-init="startup()">
 
-<!-- Fixed Navbar with Brand logo, nav items and search form -->
-	 <nav class="navbar navbar-inverse navbar-fixed-top">
-	   <div class="container-fluid">
-		 <div class="navbar-header">
-			<a class="navbar-brand" href="#"><img src="images/exam preppar_logo_small.png" alt="ExPrep"></a>
-		 </div>
-		 <ul class="nav navbar-nav">
-			<li><a href="dashboard.html">Dashboard</a></li>
-			<li><a href="#">Explore</a></li>
-			<li><a href="#">Meine Fragen</a></li>
-			<li class="active"><a href="#">Frage hinzufügen</a></li>
-			<li><a href="#">Optionen</a></li>
-			<li><a href="login.html">Logout</a></li> <!-- TODO: logout funktion: token löschen/ ablaufen lassen -->
-		 </ul>
-		 <form class="navbar-form navbar-right">
-		 <div class="input-group">
-			<input type="text" class="form-control" placeholder="Fragen durchsuchen">
-			<div class="input-group-btn">
-			<button class="btn btn-default" type="submit">
-				<i class="glyphicon glyphicon-search"></i>
-			</button>
+	<!-- Fixed Navbar with Brand logo, nav items and search form -->
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#"><img
+					src="images/exam preppar_logo_small.png" alt="ExPrep"></a>
 			</div>
-		 </div>
-		 </form>
-	   </div>
-	 </nav>
+			<ul class="nav navbar-nav">
+				<li><a href="dashboard.html">Dashboard</a></li>
+				<li><a href="#">Explore</a></li>
+				<li><a href="#">Meine Fragen</a></li>
+				<li class="active"><a href="#">Frage hinzufügen</a></li>
+				<li><a href="#">Optionen</a></li>
+				<li><a href="login.html">Logout</a></li>
+				<!-- TODO: logout funktion: token löschen/ ablaufen lassen -->
+			</ul>
+			<form class="navbar-form navbar-right">
+				<div class="input-group">
+					<input type="text" class="form-control"
+						placeholder="Fragen durchsuchen">
+					<div class="input-group-btn">
+						<button class="btn btn-default" type="submit">
+							<i class="glyphicon glyphicon-search"></i>
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</nav>
 
 
 	<!-- Main jumbotron for account information and progress bar for credibility level -->
@@ -91,9 +95,10 @@
 	<div id="form-div">
 		<form>
 			<div class="form-group">
-				<label for="text"></label> <input type="text" class="form-control"
-					placeholder="Fragentitel" ng-model="selected.Titel" id="frage">
-				<label for="text"></label>
+				<md-input-container class="md-block"> <label>FragenTitel</label>
+				<textarea ng-model="$scope.selected.Titel" md-maxlength="100"
+					rows="1" md-select-on-focus></textarea> </md-input-container>
+
 
 
 
@@ -102,70 +107,36 @@
 					md-items="item in queryHS(searchTextH)" md-item-text="item.Name"
 					placeholder="Bitte eine Hochschule eingeben." md-require-match
 					md-floating-label="Hochschule auswählen"
-					md-selected-item-change="loadHSDozenten()"> <span
-					md-highlight-text="searchText">{{item.Name}}</span> </md-autocomplete>
+					md-selected-item-change="loadHSDozenten()"
+					md-select-on-match="true" md-match-case-insensitive="true">
+				<span md-highlight-text="searchText">{{item.Name}}</span> </md-autocomplete>
 
-<md-autocomplete flex required
-					md-selected-item="selected.Dozent" md-search-text="searchTextD"
-					md-items="item in queryD(searchTextD)" md-item-text="dozentenNameObj(item)"
+				<md-autocomplete flex required md-selected-item="selected.Dozent"
+					md-search-text="searchTextD" md-items="item in queryD(searchTextD)"
+					md-item-text="dozentenNameObj(item)"
 					placeholder="Bitte einen Dozenten eingeben" md-require-match
 					md-floating-label="Dozenten auswählen"
-					md-selected-item-change=""> <span
+					md-selected-item-change="loadDModule()" md-select-on-match="true"
+					md-match-case-insensitive="true"> <span
 					md-highlight-text="searchTextD">{{dozentenNameObj(item)}}</span> </md-autocomplete>
 
+				<md-autocomplete flex required md-selected-item="selected.Modul"
+					md-search-text="searchTextM" md-items="item in queryM(searchTextM)"
+					md-item-text="item.Name" placeholder="Bitte ein Modul eingeben"
+					md-require-match md-floating-label="Modul auswählen"
+					md-select-on-match="true" md-match-case-insensitive="true">
+				<span md-highlight-text="searchTextM">{{item.Name}}</span> </md-autocomplete>
 
-				<div class="dropdown">
-					<button class="btn btn-default dropdown-toggle" type="button"
-						id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
-						aria-expanded="true">
-						{{selected.Modul}} <span class="caret"></span>
-					</button>
-					<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-						<li ng-repeat="modul in module"><a href="#"
-							ng-click="selected.Modul = modul.Name">{{modul.Name}}</a></li>
-						<li role="separator" class="divider"></li>
-						<li>Neues Modul Anlegen</li>
-
-					</ul>
+				<div flex-gt-xs>
+					<h4>Klausurdatum auswählen</h4>
+					<md-datepicker ng-model="today" md-placeholder="Datum eingeben"
+						ng-blur="setDate()"></md-datepicker>
 				</div>
 
-				<div class="dropdown">
-					<button class="btn btn-default dropdown-toggle" type="button"
-						id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
-						aria-expanded="true">
-						{{selected.Dozent}} <span class="caret"></span>
-					</button>
-					<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-						<li ng-repeat="dozent in dozenten"><a href="#"
-							ng-click="selected.Dozent = dozentenName($index)">{{dozentenName($index)}}</a></li>
-						<li role="separator" class="divider"></li>
-						<li>Neuen Dozenten Hinzufügen</li>
+				<md-input-container class="md-block"> <label>Frageninhalt</label>
+				<textarea ng-model="$scope.selected.Beschreibung"
+					md-maxlength="1000" rows="2" md-select-on-focus></textarea> </md-input-container>
 
-					</ul>
-				</div>
-
-
-				<div class="dropdown">
-					<button class="btn btn-default dropdown-toggle" type="button"
-						id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
-						aria-expanded="true">
-						{{selected.Hochschule}} <span class="caret"></span>
-					</button>
-					<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-						<li ng-repeat="hochschule in hochschulen"><a href="#"
-							ng-click="selected.Hochschule = hochschule.Name">{{hochschule.Name}}</a></li>
-						<li role="separator" class="divider"></li>
-						<li>Neue Hochschule Anlegen</li>
-
-					</ul>
-				</div>
-
-
-				<label for="date"></label> <input class="form-control"
-					placeholder="Datum" ng-model="selected.Datum" id="datum"> <label
-					for="text"></label> <input type="text" class="form-control"
-					placeholder="Beschreibung" ng-model="selected.Beschreibung"
-					id="frage"> <label for="text"></label>
 			</div>
 		</form>
 
@@ -181,12 +152,12 @@
 	</div>
 
 
-		<footer class="footer">
-      <div class="container">
-        <span class="text-muted">&copy; ExPrep 2017 - Bjarne Obst, Christopher Tunkel, Daniel
-			Köhler</span>
-      </div>
-    </footer>
+	<footer class="footer">
+		<div class="container">
+			<span class="text-muted">&copy; ExPrep 2017 - Bjarne Obst,
+				Christopher Tunkel, Daniel Köhler</span>
+		</div>
+	</footer>
 
 </body>
 </html>

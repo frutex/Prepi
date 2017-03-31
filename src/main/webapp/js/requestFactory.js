@@ -47,20 +47,25 @@ angular.module('ExPrep').factory(
 
 					function addFrage(data) {
 						return send("c=addFrage" + "&titel=" + data.Titel
-								+ "&hochschule=" + data.Hochschule + "&modul="
-								+ data.Modul + "&dozent=" + data.Dozent
+								+ "&hochschule=" + data.Hochschule.Name
+								+ "&modul=" + data.Modul.Name
+								+ "&dozentVorname=" + data.Dozent.Vorname
+								+ "&dozentNachname=" + data.Dozent.Nachname
 								+ "&beschreibung=" + data.Beschreibung
 								+ "&datum=" + data.Datum);
 
 					}
-					
+
 					function getDozentenForHochschule(hochschule) {
-						return send("c=getDozentenForHochschule" + "&hochschule=" + hochschule);
+						return send("c=getDozentenForHochschule"
+								+ "&hochschule=" + hochschule);
 
 					}
-					
-					function getModulForDozent(hochschule) {
-						return send("c=getModulForDozent" + "&dozent=" + hochschule);
+
+					function getModulForDozent(dozent) {
+						return send("c=getModulForDozent" + "&vorname="
+								+ dozent.Vorname + "&nachname="
+								+ dozent.Nachname);
 
 					}
 
@@ -75,7 +80,6 @@ angular.module('ExPrep').factory(
 						addFrage : addFrage,
 						getDozentenForHochschule : getDozentenForHochschule,
 						getModulForDozent : getModulForDozent,
-						
 
 					};
 				} ]);

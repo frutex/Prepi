@@ -6,8 +6,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.examprep.app.bean.Dozent;
 import com.examprep.app.bean.Modul;
 import com.examprep.app.persistencelayer.PersistenceQuery;
+import com.examprep.app.persistencelayer.daoif.DozentDao;
 import com.examprep.app.util.JSONConverter;
 
 public class GetModuleForDozentCmd extends AbstractCmdServlet {
@@ -19,12 +21,14 @@ public class GetModuleForDozentCmd extends AbstractCmdServlet {
 	@Override
 	public void execute() throws Exception {
 
-		String dozent = request.getParameter("dozent");
+		String vorname = request.getParameter("vorname");
+		String nachname = request.getParameter("nachname");
 		String res = "";
 
 		try {
-
-			List<Modul> mList = PersistenceQuery.getAllModule();
+			
+			Dozent d = PersistenceQuery.getDozentByName(vorname, nachname);
+			List<Modul> mList = PersistenceQuery.getAllModuleVonDozent(d);
 
 			res = "{\"successfull\":" + "true" + ",\"data\":" + JSONConverter.toJSONM(mList) + "}";
 
