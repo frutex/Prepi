@@ -25,15 +25,14 @@ public class AddFrageCmd extends AbstractCmdServlet {
 	public void execute() throws Exception {
 
 		String nutzer = request.getParameter("token").split("\\|")[0];
-		//String titel = request.getParameter("titel");
+		String titel = request.getParameter("titel");
 		String hochschule = request.getParameter("hochschule");
-		String dozent = request.getParameter("dozent");
+		String dVorname = request.getParameter("dozentVorname");
+		String dNachname = request.getParameter("dozentNachname");
 		String modul = request.getParameter("modul");
 		String beschreibung = request.getParameter("beschreibung");
 		String datum = request.getParameter("datum");
 
-		String dVorname = dozent.split(",")[1].trim();
-		String dNachname = dozent.split(",")[0].trim();
 
 		// Date da = new Date(Integer.parseInt(datum.split(".")[2]),
 		// datum.split(".")[1], datum.split(".")[0])
@@ -46,7 +45,7 @@ public class AddFrageCmd extends AbstractCmdServlet {
 		Modul m = PersistenceQuery.getModulByName(modul).get(0);
 
 
-		KlausurFrage frage = PersistenceQuery.createKlausurfrage(beschreibung, Integer.parseInt(datum), h, d, m, n);
+		KlausurFrage frage = PersistenceQuery.createKlausurfrage(beschreibung, Integer.parseInt(datum), titel, h, d, m, n);
 
 		try {
 			if (frage != null) {
