@@ -7,12 +7,11 @@ angular.module('ExPrep').controller(
 				'AuthService',
 				function($http, $scope, RequestFactory, AuthService) {
 
-					
 					$scope.today = new Date();
 					$scope.hochschulen = [];
 					$scope.dozenten;
 					$scope.module;
-					
+
 					$scope.startup = function() {
 						$scope.checkAuth();
 						$scope.getHochschulen();
@@ -30,10 +29,8 @@ angular.module('ExPrep').controller(
 						"Datum" : $scope.today.getFullYear()
 					}
 
-				
-					
-					$scope.setDate = function(){
-						$scope.selected.Datum = $scope.today.getFullYear(); 
+					$scope.setDate = function() {
+						$scope.selected.Datum = $scope.today.getFullYear();
 					}
 
 					$scope.getHochschulen = function() {
@@ -80,16 +77,20 @@ angular.module('ExPrep').controller(
 							}
 						});
 					}
-					
+
 					$scope.loadDModule = function() {
-						RequestFactory.getModulForDozent($scope.selected.Dozent).then(function(data) {
-							if (data.data.successfull) {
-								$scope.module = data.data.data;
-							} else {
-								alert(data.data.data);
-								// $scope.$apply;
-							}
-						});
+						if ($scope.selected.Dozent) {
+							RequestFactory.getModulForDozent(
+									$scope.selected.Dozent).then(
+									function(data) {
+										if (data.data.successfull) {
+											$scope.module = data.data.data;
+										} else {
+											alert(data.data.data);
+											// $scope.$apply;
+										}
+									});
+						}
 					}
 
 					$scope.checkAuth = function() {
@@ -142,7 +143,6 @@ angular.module('ExPrep').controller(
 
 					// _----------------------------------
 
-
 					$scope.searchTextH = "";
 					$scope.searchTextD = "";
 					$scope.searchTextM = "";
@@ -160,12 +160,13 @@ angular.module('ExPrep').controller(
 						return res;
 
 					}
-					
+
 					$scope.queryD = function(query) {
 						res = [];
 						for (i = 0; i < $scope.dozenten.length; i++) {
-							dName = $scope.dozentenNameObj($scope.dozenten[i]).toLowerCase().trim();
-								
+							dName = $scope.dozentenNameObj($scope.dozenten[i])
+									.toLowerCase().trim();
+
 							if (dName.contains(query.toLowerCase())) {
 								res[res.length] = $scope.dozenten[i];
 							}
@@ -174,12 +175,12 @@ angular.module('ExPrep').controller(
 						return res;
 
 					}
-					
+
 					$scope.queryM = function(query) {
 						res = [];
 						for (i = 0; i < $scope.module.length; i++) {
 							mName = $scope.module[1].Name.toLowerCase().trim();
-								
+
 							if (mName.contains(query.toLowerCase())) {
 								res[res.length] = $scope.module[i];
 							}
