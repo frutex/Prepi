@@ -7,6 +7,7 @@ import com.examprep.app.bean.Hochschule;
 import com.examprep.app.bean.KlausurFrage;
 import com.examprep.app.bean.Modul;
 import com.examprep.app.bean.Nutzer;
+import com.examprep.app.persistencelayer.PersistenceQuery;
 import com.j256.ormlite.dao.ForeignCollection;
 
 public class JSONConverter {
@@ -77,7 +78,8 @@ public class JSONConverter {
 		StringBuilder sb = new StringBuilder();
 		sb.append("{");
 		sb.append("\"Vorname\":\"").append(dozent.getVorname()).append("\",");
-		sb.append("\"Nachname\":\"").append(dozent.getNachname()).append("\"");
+		sb.append("\"Nachname\":\"").append(dozent.getNachname()).append("\",");
+		sb.append("\"Vollname\":\"").append(dozent.getNachname()).append(", ").append(dozent.getVorname()).append("\"");
 		sb.append("}");
 		String res = sb.toString();
 		return res;
@@ -103,10 +105,14 @@ public class JSONConverter {
 		sb.append("{");
 		sb.append("\"Jahr\":\"").append(frage.getJahr()).append("\",");
 		sb.append("\"Beschreibung\":\"").append(frage.getText()).append("\",");
-		sb.append("\"Dozent\":\"").append(frage.getDozent().getNachname()).append("\",");
+		sb.append("\"Dozent\":\"").append(frage.getDozent().getNachname()).append(", ").append(frage.getDozent().getVorname()).append("\",");
 		sb.append("\"Hochschule\":\"").append(frage.getHochschule().getName()).append("\",");
 		sb.append("\"Modul\":\"").append(frage.getModul().getModul()).append("\",");
-		sb.append("\"Nutzer\":\"").append(frage.getNutzer().getEmail()).append("\"");
+		sb.append("\"Nutzer\":\"").append(frage.getNutzer().getEmail()).append("\",");
+		sb.append("\"Titel\":\"").append(frage.getTitel()).append("\",");
+		sb.append("\"Likeable\":\"").append(true).append("\",");
+		sb.append("\"Likes\":\"").append((int) (Math.random() * 100)).append("\",");
+		sb.append("\"FragenID\":\"").append(frage.getF_id()).append("\"");
 		sb.append("}");
 		String res = sb.toString();
 		return res;

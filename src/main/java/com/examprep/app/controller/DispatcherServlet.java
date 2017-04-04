@@ -30,6 +30,20 @@ public class DispatcherServlet extends HttpServlet {
 
 				e.printStackTrace();
 			}
+		} else if (request.getParameter("c").equalsIgnoreCase("createAccount")) {
+			CmdServletIF cmd = getCommand(this, request, response);
+
+			try {
+
+				// LOG.debug("DispatcherServlet execute:" + cmd);
+				if (null != cmd) {
+					cmd.execute();
+				}
+
+			} catch (Exception e) {
+
+				e.printStackTrace();
+			}
 		} else if (request.getParameter("token") != null) {
 			if (authenticator.checkAuth(request.getParameter("token"))) {
 				CmdServletIF cmd = getCommand(this, request, response);
@@ -88,6 +102,8 @@ public class DispatcherServlet extends HttpServlet {
 			result = new GetDozentenForHochschuleCmd(servlet, request, response);
 		} else if (command.equalsIgnoreCase("getModulForDozent")) {
 			result = new GetModuleForDozentCmd(servlet, request, response);
+		} else if (command.equalsIgnoreCase("createAccount")) {
+			result = new CreateAccountCmd(servlet, request, response);
 		}
 		return result;
 	}

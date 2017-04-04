@@ -69,6 +69,18 @@ angular.module('ExPrep').factory(
 
 					}
 
+					function createAccount(data) {
+						return $http.post(
+								"/prepa/cmd?" + "c=createAccount" + "&vorname="
+										+ data.Vorname + "&nachname="
+										+ data.Name + "&password=" + data.Pass
+										+ "&email=" + data.Email).then(
+								function(data) {
+									return data;
+								})
+
+					}
+
 					return {
 						send : send,
 						login : login,
@@ -80,6 +92,7 @@ angular.module('ExPrep').factory(
 						addFrage : addFrage,
 						getDozentenForHochschule : getDozentenForHochschule,
 						getModulForDozent : getModulForDozent,
+						createAccount : createAccount,
 
 					};
 				} ]);

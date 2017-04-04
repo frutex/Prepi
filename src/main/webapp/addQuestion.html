@@ -111,7 +111,7 @@
 
 				<md-autocomplete flex required md-selected-item="selected.Dozent"
 					md-search-text="searchTextD" md-items="item in queryD(searchTextD)"
-					md-item-text="dozentenNameObj(item)"
+					md-item-text="item.Vollname"
 					placeholder="Bitte einen Dozenten eingeben" md-require-match
 					md-floating-label="Dozenten auswählen"
 					md-selected-item-change="loadDModule()" md-select-on-match="true"

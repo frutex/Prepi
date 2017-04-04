@@ -164,8 +164,7 @@ angular.module('ExPrep').controller(
 					$scope.queryD = function(query) {
 						res = [];
 						for (i = 0; i < $scope.dozenten.length; i++) {
-							dName = $scope.dozentenNameObj($scope.dozenten[i])
-									.toLowerCase().trim();
+							dName = $scope.dozenten[i].Vollname.toLowerCase().trim();
 
 							if (dName.contains(query.toLowerCase())) {
 								res[res.length] = $scope.dozenten[i];
