@@ -1,5 +1,6 @@
 package com.examprep.app.persistencelayer;
 
+import java.lang.reflect.Method;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,8 +54,7 @@ public class PersistenceQuery {
 	static Dao<DozentAnHochschule, String> dozentAnHochschuleDao;
 	static Dao<DozentUnterrichtetModul, String> dozentUnterrichtetModulDao;
 	static Dao<ModulAnHochschule, String> modulAnHochschuleDao;
-	
-	
+
 	/**
 	 * ---------------------------------------------------------------------------------------------
 	 * ---------------------------------------------------------------------------------------------
@@ -73,12 +73,60 @@ public class PersistenceQuery {
 			credDao = DaoManager.createDao(connSource, Credibility.class);
 			credDao.create(cred);
 		} catch (SQLException e) {
+			reconnect();
+			credDao = DaoManager.createDao(connSource, Credibility.class);
+			credDao.create(cred);
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 
 			return cred;
 		}
+	}
+
+	@SuppressWarnings("finally")
+	public static int getAllLikesForOneQuestionNumber(KlausurFrage kfrage) {
+		List<Credibility> credList = new ArrayList<>();
+		int anzahl = 0;
+		try {
+			credDao = DaoManager.createDao(connSource, Credibility.class);
+			credList = credDao.queryBuilder().where().eq("kfgc_id", kfrage.getF_id()).query();
+		} catch (SQLException e) {
+			reconnect();
+			anzahl = getAllLikesForOneQuestionNumber(kfrage);
+			;
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			anzahl = credList.size();
+			return anzahl;
+
+		}
+
+	}
+
+	@SuppressWarnings("finally")
+	public static List<Credibility> getAllLikesForOneQuestion(KlausurFrage kfrage) {
+		List<Credibility> credList = new ArrayList<>();
+		int anzahl = 0;
+		try {
+			credDao = DaoManager.createDao(connSource, Credibility.class);
+			credList = credDao.queryBuilder().where().eq("kfgc_id", kfrage.getF_id()).query();
+		} catch (SQLException e) {
+			reconnect();
+			credList = getAllLikesForOneQuestion(kfrage);
+			;
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (credList.size() > 0) {
+				return credList;
+			} else {
+				return null;
+			}
+
+		}
+
 	}
 
 	/**
@@ -89,6 +137,7 @@ public class PersistenceQuery {
 	 * ---------------------------------------------------------------------------------------------
 	 */
 
+	@SuppressWarnings("finally")
 	public static Dozent createDozent(String vorname, String nachname) {
 		Dozent doz = new Dozent();
 
@@ -99,12 +148,16 @@ public class PersistenceQuery {
 			dozentDao = DaoManager.createDao(connSource, Dozent.class);
 			dozentDao.create(doz);
 		} catch (SQLException e) {
+			reconnect();
+			doz = createDozent(vorname, nachname);
 			e.printStackTrace();
+		} finally {
+			return doz;
 		}
 
-		return doz;
 	}
 
+	@SuppressWarnings("finally")
 	public static List<Dozent> getAllDozenten() {
 		List<Dozent> dozList = new ArrayList<>();
 
@@ -112,14 +165,19 @@ public class PersistenceQuery {
 			dozentDao = DaoManager.createDao(connSource, Dozent.class);
 			dozList = dozentDao.queryForAll();
 		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return dozList;
+			reconnect();
 
+			dozList = getAllDozenten();
+			e.printStackTrace();
+		} finally {
+			return dozList;
+		}
 	}
 
+	@SuppressWarnings("finally")
 	public static Dozent getDozentByName(String vorname, String nachname) {
-		List<Dozent> doz = new ArrayList<>();
+		List<Dozent> dozList = new ArrayList<>();
+		Dozent doz = new Dozent();
 
 		try {
 			dozentDao = DaoManager.createDao(connSource, Dozent.class);
@@ -134,16 +192,19 @@ public class PersistenceQuery {
 			where.like("nachname", nachname);
 
 			PreparedQuery<Dozent> preparedQuery = queryBuilder.prepare();
-			doz = dozentDao.query(preparedQuery);
+			dozList = dozentDao.query(preparedQuery);
 		} catch (SQLException e) {
+			reconnect();
+			doz = getDozentByName(vorname, nachname);
 			e.printStackTrace();
+		} finally {
+			return doz;
 		}
 
-		return doz.get(0);
 	}
-	
+
 	@SuppressWarnings("finally")
-	public static List<Modul> getAllModuleVonDozent(Dozent dozent){
+	public static List<Modul> getAllModuleVonDozent(Dozent dozent) {
 		List<Modul> modulList = new ArrayList<>();
 		List<DozentUnterrichtetModul> dozUmodList = new ArrayList<>();
 
@@ -154,16 +215,18 @@ public class PersistenceQuery {
 			// vorname), where. ));
 
 			dozUmodList = dozentUnterrichtetModulDao.queryBuilder().where().eq("ddum_id", dozent.getD_id()).query();
-			for(DozentUnterrichtetModul tmp : dozUmodList){
+			for (DozentUnterrichtetModul tmp : dozUmodList) {
 				modulList.add(tmp.getModul());
 			}
 
 		} catch (SQLException e) {
+			reconnect();
+			modulList = getAllModuleVonDozent(dozent);
 			e.printStackTrace();
-		}finally{
-			if(modulList.size() > 0){
+		} finally {
+			if (modulList.size() > 0) {
 				return modulList;
-			}else{
+			} else {
 				return null;
 			}
 		}
@@ -188,6 +251,9 @@ public class PersistenceQuery {
 			hochschuleDao = DaoManager.createDao(connSource, Hochschule.class);
 			hochschuleDao.create(hochschule);
 		} catch (SQLException e) {
+			reconnect();
+			hochschule = createHochschule(name, stadt);
+			e.printStackTrace();
 
 		} finally {
 			return hochschule;
@@ -201,7 +267,10 @@ public class PersistenceQuery {
 			hochschuleDao = DaoManager.createDao(connSource, Hochschule.class);
 			listHochschule = hochschuleDao.queryForAll();
 		} catch (SQLException e) {
+			reconnect();
 
+			listHochschule = getAllHochschulen();
+			e.printStackTrace();
 		} finally {
 			return listHochschule;
 		}
@@ -214,33 +283,39 @@ public class PersistenceQuery {
 			hochschuleDao = DaoManager.createDao(connSource, Hochschule.class);
 			listHochschule = hochschuleDao.queryBuilder().where().eq("name", name).query();
 		} catch (SQLException e) {
-
+			reconnect();
+			listHochschule = getHochschuleByName(name);
+			e.printStackTrace();
 		} finally {
 			return listHochschule;
 		}
 	}
 
 	@SuppressWarnings("finally")
-	public static List<Modul> getAllModuleEinerHochschule(String name){
+	public static List<Modul> getAllModuleEinerHochschule(String name) {
 		Hochschule hochschule = getHochschuleByName(name).get(0);
 		List<ModulAnHochschule> modAnHochList = new ArrayList<>();
 		List<Modul> modList = new ArrayList<>();
 		try {
 			modulAnHochschuleDao = DaoManager.createDao(connSource, ModulAnHochschule.class);
-			modAnHochList = modulAnHochschuleDao.queryBuilder().where().eq("hochschule_id", hochschule.getH_id()).query();
+			modAnHochList = modulAnHochschuleDao.queryBuilder().where().eq("hochschule_id", hochschule.getH_id())
+					.query();
 			modulDao = DaoManager.createDao(connSource, Modul.class);
-			for (ModulAnHochschule tmp : modAnHochList){
+			for (ModulAnHochschule tmp : modAnHochList) {
 				modList.add(tmp.getModul());
 			}
 		} catch (SQLException e) {
+			reconnect();
 
+			modList = getAllModuleEinerHochschule(name);
+			e.printStackTrace();
 		} finally {
 			return modList;
 		}
 	}
-	
+
 	@SuppressWarnings("finally")
-	public static List<Dozent> getAllDozentenEinerHochschule(String name){
+	public static List<Dozent> getAllDozentenEinerHochschule(String name) {
 		Hochschule hochschule = getHochschuleByName(name).get(0);
 		List<DozentAnHochschule> dozAnHochList = new ArrayList<>();
 		List<Dozent> dozList = new ArrayList<>();
@@ -248,15 +323,18 @@ public class PersistenceQuery {
 			dozentAnHochschuleDao = DaoManager.createDao(connSource, DozentAnHochschule.class);
 			dozAnHochList = dozentAnHochschuleDao.queryBuilder().where().eq("hoch_id", hochschule.getH_id()).query();
 			dozentDao = DaoManager.createDao(connSource, Dozent.class);
-			for (DozentAnHochschule tmp : dozAnHochList){
+			for (DozentAnHochschule tmp : dozAnHochList) {
 				dozList.add(tmp.getDozent());
 			}
 		} catch (SQLException e) {
-
+			reconnect();
+			dozList = getAllDozentenEinerHochschule(name);
+			e.printStackTrace();
 		} finally {
 			return dozList;
 		}
 	}
+
 	/**
 	 * ---------------------------------------------------------------------------------------------
 	 * ---------------------------------------------------------------------------------------------
@@ -265,8 +343,9 @@ public class PersistenceQuery {
 	 * ---------------------------------------------------------------------------------------------
 	 */
 
-	public static KlausurFrage createKlausurfrage(String text, int jahr, String titel, Hochschule hochschule, Dozent dozent,
-			Modul modul, Nutzer nutzer) {
+	@SuppressWarnings("finally")
+	public static KlausurFrage createKlausurfrage(String text, int jahr, String titel, Hochschule hochschule,
+			Dozent dozent, Modul modul, Nutzer nutzer) {
 
 		KlausurFrage klausurf = new KlausurFrage();
 
@@ -282,19 +361,35 @@ public class PersistenceQuery {
 			klausurfDao = DaoManager.createDao(connSource, KlausurFrage.class);
 			klausurfDao.create(klausurf);
 		} catch (SQLException e) {
+			reconnect();
+			klausurf = createKlausurfrage(text, jahr, titel, hochschule, dozent, modul, nutzer);
 			e.printStackTrace();
+		} finally {
+			return klausurf;
 		}
 
-		// Dao<Nutzer, String> nutzerDao;
-		// try {
-		// nutzerDao = DaoManager.createDao(connSource, Nutzer.class);
-		// nutzerDao.create(nutzer);
-		// } catch (SQLException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
+	}
 
-		return klausurf;
+	@SuppressWarnings("finally")
+	public static List<KlausurFrage> getAllQuestions() {
+		List<KlausurFrage> listFrage = new ArrayList<>();
+
+		try {
+			klausurfDao = DaoManager.createDao(connSource, KlausurFrage.class);
+			listFrage = klausurfDao.queryForAll();
+
+		} catch (SQLException e) {
+			reconnect();
+			listFrage = getAllQuestions();
+			e.printStackTrace();
+		} finally {
+			if (listFrage.size() > 0) {
+				return listFrage;
+			} else {
+				return null;
+			}
+		}
+
 	}
 
 	/**
@@ -312,8 +407,8 @@ public class PersistenceQuery {
 			Dao<Modul, String> modulDao = DaoManager.createDao(connSource, Modul.class);
 			modulDao.create(modul);
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			;
+			reconnect();
+			modul = createModul(modulName);
 			e.printStackTrace();
 		} finally {
 			int id = modul.getM_id();
@@ -326,7 +421,7 @@ public class PersistenceQuery {
 		}
 
 	}
-	
+
 	@SuppressWarnings("finally")
 	public static Modul createModulWithHochschule(String modulName, Hochschule hochschule) {
 		Modul modul = new Modul(modulName);
@@ -336,10 +431,11 @@ public class PersistenceQuery {
 			modulAnHochschuleDao = DaoManager.createDao(connSource, ModulAnHochschule.class);
 			ModulAnHochschule modanh = new ModulAnHochschule(modul, hochschule);
 			modulAnHochschuleDao.create(modanh);
-				
+
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			;
+			reconnect();
+
+			modul = createModulWithHochschule(modulName, hochschule);
 			e.printStackTrace();
 		} finally {
 			int id = modul.getM_id();
@@ -352,7 +448,7 @@ public class PersistenceQuery {
 		}
 
 	}
-	
+
 	@SuppressWarnings("finally")
 	public static Modul createModulWithDozent(String modulName, Dozent dozent) {
 		Modul modul = new Modul(modulName);
@@ -362,10 +458,10 @@ public class PersistenceQuery {
 			dozentUnterrichtetModulDao = DaoManager.createDao(connSource, DozentUnterrichtetModul.class);
 			DozentUnterrichtetModul modwithdoz = new DozentUnterrichtetModul(dozent, modul);
 			dozentUnterrichtetModulDao.create(modwithdoz);
-				
+
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			;
+			reconnect();
+			modul = createModulWithDozent(modulName, dozent);
 			e.printStackTrace();
 		} finally {
 			int id = modul.getM_id();
@@ -378,25 +474,25 @@ public class PersistenceQuery {
 		}
 
 	}
-	
+
 	@SuppressWarnings("finally")
 	public static Modul createModulWithDozentAndHochschule(String modulName, Dozent dozent, Hochschule hochschule) {
 		Modul modul = new Modul(modulName);
 		try {
 			modulDao = DaoManager.createDao(connSource, Modul.class);
 			modulDao.create(modul);
-			
+
 			modulAnHochschuleDao = DaoManager.createDao(connSource, ModulAnHochschule.class);
 			ModulAnHochschule modanhoch = new ModulAnHochschule(modul, hochschule);
 			modulAnHochschuleDao.create(modanhoch);
-			
+
 			dozentUnterrichtetModulDao = DaoManager.createDao(connSource, DozentUnterrichtetModul.class);
 			DozentUnterrichtetModul dozUModul = new DozentUnterrichtetModul(dozent, modul);
 			dozentUnterrichtetModulDao.create(dozUModul);
-				
+
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			;
+			reconnect();
+			modul = createModulWithDozentAndHochschule(modulName, dozent, hochschule);
 			e.printStackTrace();
 		} finally {
 			int id = modul.getM_id();
@@ -410,31 +506,46 @@ public class PersistenceQuery {
 
 	}
 
-	public static Modul searchModulById(String id) {
+	@SuppressWarnings("finally")
+	public static Modul getModulById(String id) {
 		Modul modul = null;
 		try {
 			modulDao = DaoManager.createDao(connSource, Modul.class);
 			modul = modulDao.queryForId(id);
 		} catch (SQLException e) {
+			reconnect();
+
+			modul = getModulById(id);
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			return modul;
 		}
-		return modul;
 
 	}
 
+	@SuppressWarnings("finally")
 	public static List<Modul> getAllModule() {
 		List<Modul> moduleList = new ArrayList<>();
 		try {
 			modulDao = DaoManager.createDao(connSource, Modul.class);
 			moduleList = modulDao.queryForAll();
 		} catch (SQLException e) {
+			reconnect();
+			moduleList = getAllModule();
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			if (moduleList.size() > 0) {
+				return moduleList;
+			} else {
+				return null;
+			}
 		}
-		return moduleList;
+
 	}
 
+	@SuppressWarnings("finally")
 	public static List<Modul> getModulByName(String name) {
 
 		List<Modul> moduleList = new ArrayList<>();
@@ -442,10 +553,17 @@ public class PersistenceQuery {
 			modulDao = DaoManager.createDao(connSource, Modul.class);
 			moduleList = modulDao.queryBuilder().where().eq("modul", name).query();
 		} catch (SQLException e) {
+			reconnect();
+			moduleList = getModulByName(name);
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			if (moduleList.size() > 0) {
+				return moduleList;
+			} else {
+				return null;
+			}
 		}
-		return moduleList;
 
 	}
 
@@ -457,6 +575,7 @@ public class PersistenceQuery {
 	 * ---------------------------------------------------------------------------------------------
 	 */
 
+	@SuppressWarnings("finally")
 	public static Nutzer createNutzer(String name, String vorname, String email, String password,
 			Hochschule hochschule) {
 		CryptoHelpClass cryp = new CryptoHelpClass();
@@ -474,25 +593,34 @@ public class PersistenceQuery {
 			nutzerDao = DaoManager.createDao(connSource, Nutzer.class);
 			nutzerDao.create(nutzer);
 		} catch (SQLException e) {
+			reconnect();
+			nutzer = createNutzer(name, vorname, email, password, hochschule);
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			return nutzer;
 		}
 
-		return nutzer;
 	}
 
+	@SuppressWarnings("finally")
 	public static Nutzer getNutzerById(String id) {
 		Nutzer nutzer = null;
 		try {
 			nutzerDao = DaoManager.createDao(connSource, Nutzer.class);
 			nutzer = nutzerDao.queryForId(id);
 		} catch (SQLException e) {
+			reconnect();
+			nutzer = getNutzerById(id);
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			return nutzer;
 		}
-		return nutzer;
+
 	}
 
+	@SuppressWarnings("finally")
 	public static List<Nutzer> getNutzerByName(String name) {
 
 		List<Nutzer> nutzerList = new ArrayList<>();
@@ -500,10 +628,18 @@ public class PersistenceQuery {
 			Dao<Nutzer, String> nutzerDao = DaoManager.createDao(connSource, Nutzer.class);
 			nutzerList = nutzerDao.queryBuilder().where().eq("email", name).query();
 		} catch (SQLException e) {
+			reconnect();
+			nutzerList = getNutzerByName(name);
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			if (nutzerList.size() > 0) {
+				return nutzerList;
+			} else {
+				return null;
+			}
 		}
-		return nutzerList;
+
 	}
 
 	public static Nutzer getOneNutzerByName(String name) {
@@ -525,6 +661,8 @@ public class PersistenceQuery {
 				cred = cred + credList.size();
 			}
 		} catch (SQLException e) {
+			reconnect();
+			cred = getAllLikesForRegisteredQuestionsForOneUser(name);
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
@@ -533,6 +671,7 @@ public class PersistenceQuery {
 		}
 	}
 
+	@SuppressWarnings("finally")
 	public static List<KlausurFrage> getAllLikedQuestionsForOneUser(String name) {
 		List<KlausurFrage> listFrage = new ArrayList<>();
 		Nutzer nutzer = getOneNutzerByName(name);
@@ -546,31 +685,91 @@ public class PersistenceQuery {
 			}
 
 		} catch (SQLException e) {
+			reconnect();
+			listFrage = getAllLikedQuestionsForOneUser(name);
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-
-		return listFrage;
-	}
-	
-	@SuppressWarnings("finally")
-	public static List<KlausurFrage> getAllQuestions(){
-		List<KlausurFrage> listFrage = new ArrayList<>();
-
-		try{
-			klausurfDao = DaoManager.createDao(connSource, KlausurFrage.class);
-			listFrage = klausurfDao.queryForAll();
-			
-		}		catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally{
-			if(listFrage.size() > 0 ){
+		} finally {
+			if (listFrage.size() > 0) {
 				return listFrage;
-			}else{
+			} else {
 				return null;
 			}
 		}
 
+	}
+
+	@SuppressWarnings("finally")
+	public static List<KlausurFrage> getAllQuestionsFromOneUser(String name) {
+		Nutzer nutzer = getOneNutzerByName(name);
+		List<KlausurFrage> frageList = new ArrayList<>();
+		try {
+			klausurfDao = DaoManager.createDao(connSource, KlausurFrage.class);
+			frageList = klausurfDao.queryBuilder().where().eq(KlausurFrage.NUTZER_ID_FIELD_NAME, nutzer.getN_id())
+					.query();
+
+		} catch (SQLException e) {
+			reconnect();
+			frageList = getAllQuestionsFromOneUser(name);
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (frageList.size() > 0) {
+				return frageList;
+			} else {
+				return null;
+			}
+		}
+
+	}
+
+	@SuppressWarnings("finally")
+	public static boolean isQuestionLikedByUser(KlausurFrage kfrage, Nutzer nutzer) {
+		List<Credibility> credList = new ArrayList<>();
+		boolean liked = false;
+		try {
+			credDao = DaoManager.createDao(connSource, Credibility.class);
+			// doz = dozentDao.queryBuilder().where().and(where.eq("vorname",
+			// vorname), where. ));
+
+			QueryBuilder<Credibility, String> queryBuilder = credDao.queryBuilder();
+			// get the WHERE object to build our query
+			Where<Credibility, String> where = queryBuilder.where();
+			where.like("nutgc_id", nutzer.getN_id());
+			where.and();
+			where.like("kfgc_id", kfrage.getF_id());
+
+			PreparedQuery<Credibility> preparedQuery = queryBuilder.prepare();
+			credList = credDao.query(preparedQuery);
+		} catch (SQLException e) {
+			reconnect();
+			liked = isQuestionLikedByUser(kfrage, nutzer);
+			e.printStackTrace();
+		} finally {
+			if (liked = false) {
+				if (credList.size() > 0) {
+					liked = true;
+					return liked;
+				} else {
+					liked = false;
+					return false;
+				}
+			} else {
+				return liked;
+			}
+
+		}
+	}
+
+	/**
+	 * ---------------------------------------------------------------------------------------------
+	 * ---------------------------------------------------------------------------------------------
+	 * Part for Util
+	 * ---------------------------------------------------------------------------------------------
+	 * ---------------------------------------------------------------------------------------------
+	 */
+
+	public static void reconnect() {
+		connSource = sess.createConnection();
 	}
 }

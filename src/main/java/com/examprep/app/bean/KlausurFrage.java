@@ -20,7 +20,12 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "Klausurfrage", daoClass = KlausurfrageDaoImpl.class)
 
 public class KlausurFrage implements Serializable {
-
+	
+	
+	public static final String HOCHSCHULE_ID_FIELD_NAME = "hk_id";
+	public static final String DOZENT_ID_FIELD_NAME = "dk_id";
+	public static final String MODUL_ID_FIELD_NAME = "mk_id";
+	public static final String NUTZER_ID_FIELD_NAME = "nk_id";
 
 	@DatabaseField(generatedId = true, columnName = "k_id")
 	private int k_id;
