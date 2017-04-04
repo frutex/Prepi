@@ -8,7 +8,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @Entity
-@DatabaseTable(tableName = "GegeneneCred", daoClass = CredibilityDaoImpl.class)
+@DatabaseTable(tableName = "GegebeneCred", daoClass = CredibilityDaoImpl.class)
 public class Credibility {
 
 	@DatabaseField(generatedId = true, columnName = "c_id")
