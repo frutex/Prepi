@@ -13,8 +13,8 @@ public class AuthService {
 
 	public boolean checkAuth(String token) {
 
-		if (token != "" && token.contains("|")) {
-			String name = token.split("\\|")[0];
+		if (token != "" && token.contains(UserTokenMachine.seperator)) {
+			String name = UserTokenMachine.getUserFromToken(token);
 			try {
 				Nutzer nutzer = PersistenceQuery.getOneNutzerByName(name);
 				String genToken = cryp.generateUserToken(nutzer, cryp.token);

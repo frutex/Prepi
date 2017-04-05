@@ -1,4 +1,4 @@
-angular.module('ExPrep').controller(
+	angular.module('ExPrep').controller(
 		'DashCtrl',
 		[
 				'$http',

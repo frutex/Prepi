@@ -193,6 +193,7 @@ public class PersistenceQuery {
 
 			PreparedQuery<Dozent> preparedQuery = queryBuilder.prepare();
 			dozList = dozentDao.query(preparedQuery);
+;			doz = dozList.get(0);
 		} catch (SQLException e) {
 			reconnect();
 			doz = getDozentByName(vorname, nachname);
@@ -227,7 +228,8 @@ public class PersistenceQuery {
 			if (modulList.size() > 0) {
 				return modulList;
 			} else {
-				return null;
+				List<Modul> newList = new ArrayList<>();
+				return newList;
 			}
 		}
 	}
@@ -717,7 +719,8 @@ public class PersistenceQuery {
 			if (frageList.size() > 0) {
 				return frageList;
 			} else {
-				return null;
+				 List<KlausurFrage> newList = new ArrayList<>();
+				 return newList;
 			}
 		}
 
