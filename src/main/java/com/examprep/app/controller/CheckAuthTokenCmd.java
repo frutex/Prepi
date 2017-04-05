@@ -28,7 +28,7 @@ public class CheckAuthTokenCmd extends AbstractCmdServlet {
 		String name = UserTokenMachine.getUserFromToken(request.getParameter("token"));
 		String token = "";
 		if (!name.equals(null)) {
-			token = request.getParameter("token").split("\\|")[1];
+			token = UserTokenMachine.getTokenFromToken(request.getParameter("token"));
 		}
 		String res = "";
 
@@ -45,7 +45,7 @@ public class CheckAuthTokenCmd extends AbstractCmdServlet {
 					Nutzer nutzer = nutzerList.get(0);
 					String genToken = cryp.generateUserToken(nutzer, cryp.token);
 					
-					if (genToken.split("\\|")[1].matches(token)) {
+					if (UserTokenMachine.getTokenFromToken(genToken).matches(token)) {
 						res = "{\"successfull\":true,\"token\":\"" + token + "\"}";
 					} else {
 						res = "{\"successfull\":false,\"token\":\"Authentication token is wrong. You are being logged out. \"}";

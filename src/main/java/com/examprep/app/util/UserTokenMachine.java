@@ -15,5 +15,12 @@ public class UserTokenMachine {
 		
 	}
 	
+	public static String getTokenFromToken(String token){
+		String nutzer = token.split("\\!")[1];
+		
+		return nutzer;
+		
+	}
+	
 	
 }
