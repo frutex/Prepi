@@ -31,11 +31,11 @@ public class GetUserDataCmd extends AbstractCmdServlet {
 			String nutzerJSON = JSONConverter.toJSONN(nutzer);
 
 			// ToDo: Reale Daten LAden
-			int cred = (int) (Math.random() * 100);
-		//	int cred = PersistenceQuery.getAllLikesForRegisteredQuestionsForOneUser(name);
+			//int cred = (int) (Math.random() * 100);
+			int cred = PersistenceQuery.getAllLikesForRegisteredQuestionsForOneUser(name);
 			int level = LevelCalc.calculateLevel(cred);
 
-			List<KlausurFrage> fragen = PersistenceQuery.getAllQuestions();
+			List<KlausurFrage> fragen = PersistenceQuery.getAllQuestionsFromOneUser(name);
 
 			String fRes = JSONConverter.toJSONF(fragen);
 			String nRes = JSONConverter.toJSONN(nutzer);
