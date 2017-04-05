@@ -12,6 +12,7 @@ import com.examprep.app.bean.Nutzer;
 
 import com.examprep.app.persistencelayer.PersistenceQuery;
 import com.examprep.app.util.CryptoHelpClass;
+import com.examprep.app.util.UserTokenMachine;
 
 // class to get user data
 public class CheckAuthTokenCmd extends AbstractCmdServlet {
@@ -24,7 +25,7 @@ public class CheckAuthTokenCmd extends AbstractCmdServlet {
 
 	public void execute() throws Exception {
 
-		String name = request.getParameter("token").split("\\|")[0];
+		String name = UserTokenMachine.getUserFromToken(request.getParameter("token"));
 		String token = "";
 		if (!name.equals(null)) {
 			token = request.getParameter("token").split("\\|")[1];
