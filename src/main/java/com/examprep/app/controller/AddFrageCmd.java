@@ -12,6 +12,7 @@ import com.examprep.app.bean.KlausurFrage;
 import com.examprep.app.bean.Modul;
 import com.examprep.app.bean.Nutzer;
 import com.examprep.app.persistencelayer.PersistenceQuery;
+import com.examprep.app.util.UserTokenMachine;
 
 public class AddFrageCmd extends AbstractCmdServlet {
 
@@ -24,7 +25,7 @@ public class AddFrageCmd extends AbstractCmdServlet {
 	@Override
 	public void execute() throws Exception {
 
-		String nutzer = request.getParameter("token").split("\\|")[0];
+		String nutzer = UserTokenMachine.getUserFromToken(request.getParameter("token"));
 		String titel = request.getParameter("titel");
 		String hochschule = request.getParameter("hochschule");
 		String dVorname = request.getParameter("dozentVorname");

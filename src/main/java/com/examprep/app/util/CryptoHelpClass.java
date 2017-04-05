@@ -7,6 +7,8 @@ import com.examprep.app.bean.Nutzer;
 
 public class CryptoHelpClass {
 	
+	public String seperator = UserTokenMachine.seperator;
+	
 	public String token = "SuperSecretExamPrepToken";
 	
 	 
@@ -41,7 +43,7 @@ public class CryptoHelpClass {
 	}
 	
 	public String generateUserToken(Nutzer nutzer, String secretToken) {
-		return nutzer.getEmail() + "|" + generateHash(nutzer.getEmail() + nutzer.getPassword() + secretToken);
+		return nutzer.getEmail() + seperator + generateHash(nutzer.getEmail() + nutzer.getPassword() + secretToken);
 	}
 	
 	

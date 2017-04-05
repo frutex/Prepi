@@ -12,6 +12,7 @@ import com.examprep.app.bean.Nutzer;
 import com.examprep.app.persistencelayer.PersistenceQuery;
 import com.examprep.app.util.JSONConverter;
 import com.examprep.app.util.LevelCalc;
+import com.examprep.app.util.UserTokenMachine;
 
 // class to get user data
 public class GetUserDataCmd extends AbstractCmdServlet {
@@ -22,8 +23,7 @@ public class GetUserDataCmd extends AbstractCmdServlet {
 
 	public void execute() throws Exception {
 
-		String token = request.getParameter("token");
-		String name = token.split("\\|")[0];
+		String name = UserTokenMachine.getUserFromToken(request.getParameter("token"));
 		String res = "";
 
 		try {
