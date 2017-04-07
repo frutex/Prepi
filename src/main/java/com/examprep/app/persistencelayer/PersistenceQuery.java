@@ -394,6 +394,86 @@ public class PersistenceQuery {
 
 	}
 
+	@SuppressWarnings("finally")
+	public static List<KlausurFrage> getKlausurFrage(Dozent dozent, Modul modul, Hochschule hochschule,
+			String keyword) {
+		String[] words = keyword.split(" ");
+		List<KlausurFrage> kList = new ArrayList<>();
+		try {
+
+			QueryBuilder<KlausurFrage, String> queryBuilder = klausurfDao.queryBuilder();
+			// get the WHERE object to build our query
+			Where<KlausurFrage, String> where = queryBuilder.where();
+			if (dozent != null) {
+				where.eq(KlausurFrage.DOZENT_ID_FIELD_NAME, dozent.getD_id());
+				where.and();
+			}
+			if (modul != null) {
+				where.eq(KlausurFrage.MODUL_ID_FIELD_NAME, modul.getM_id());
+				where.and();
+			}
+
+			if (hochschule != null) {
+				where.eq(KlausurFrage.HOCHSCHULE_ID_FIELD_NAME, hochschule.getH_id());
+				where.and();
+			}
+			if (keyword.length() > 0) {
+				for (int i = 0; i < words.length; i++) {
+					where.like("text", words[i]);
+					if (i < words.length - 1) {
+						where.and();
+					}
+				}
+			}
+
+			PreparedQuery<KlausurFrage> preparedQuery = queryBuilder.prepare();
+			kList = klausurfDao.query(preparedQuery);
+
+			if (kList.size() < 1) {
+				QueryBuilder<KlausurFrage, String> queryBuilderContent = klausurfDao.queryBuilder();
+				// get the WHERE object to build our query
+				Where<KlausurFrage, String> whereContent = queryBuilder.where();
+
+				if (dozent != null) {
+					where.eq(KlausurFrage.DOZENT_ID_FIELD_NAME, dozent.getD_id());
+					where.and();
+				}
+				if (modul != null) {
+					where.eq(KlausurFrage.MODUL_ID_FIELD_NAME, modul.getM_id());
+					where.and();
+				}
+
+				if (hochschule != null) {
+					where.eq(KlausurFrage.HOCHSCHULE_ID_FIELD_NAME, hochschule.getH_id());
+					where.and();
+				}
+				if (keyword.length() > 0) {
+					for (int i = 0; i < words.length; i++) {
+						where.like("text", words[i]);
+						if (i < words.length - 1) {
+							where.and();
+						}
+					}
+
+				}
+				PreparedQuery<KlausurFrage> preparedQuery1 = queryBuilder.prepare();
+				kList = klausurfDao.query(preparedQuery1);
+			}
+		} catch (SQLException e) {
+			reconnect();
+			kList = getKlausurFrage(dozent, modul, hochschule, keyword);
+
+		}finally{
+			if(kList.size() > 0){
+				return kList;
+			}else{
+				return null;
+			}
+		}
+
+
+	}
+
 	/**
 	 * ---------------------------------------------------------------------------------------------
 	 * ---------------------------------------------------------------------------------------------
