@@ -193,7 +193,8 @@ public class PersistenceQuery {
 
 			PreparedQuery<Dozent> preparedQuery = queryBuilder.prepare();
 			dozList = dozentDao.query(preparedQuery);
-;			doz = dozList.get(0);
+			;
+			doz = dozList.get(0);
 		} catch (SQLException e) {
 			reconnect();
 			doz = getDozentByName(vorname, nachname);
@@ -400,77 +401,116 @@ public class PersistenceQuery {
 		String[] words = keyword.split(" ");
 		List<KlausurFrage> kList = new ArrayList<>();
 		try {
-
-			QueryBuilder<KlausurFrage, String> queryBuilder = klausurfDao.queryBuilder();
+			klausurfDao = DaoManager.createDao(connSource, KlausurFrage.class);
+			QueryBuilder<KlausurFrage, String> queryBuilderContent = klausurfDao.queryBuilder();
 			// get the WHERE object to build our query
-			Where<KlausurFrage, String> where = queryBuilder.where();
+			boolean before = false;
+			Where<KlausurFrage, String> where = queryBuilderContent.where();
 			if (dozent != null) {
 				where.eq(KlausurFrage.DOZENT_ID_FIELD_NAME, dozent.getD_id());
-				where.and();
+				before = true;
+			}else{
+				before = false;
 			}
 			if (modul != null) {
+				if (before) {
+					where.and();
+				}
 				where.eq(KlausurFrage.MODUL_ID_FIELD_NAME, modul.getM_id());
-				where.and();
+				before = true;
+
+			}else{
+				before = false;
 			}
 
 			if (hochschule != null) {
+				if (before) {
+					where.and();
+				}
 				where.eq(KlausurFrage.HOCHSCHULE_ID_FIELD_NAME, hochschule.getH_id());
-				where.and();
+				before = true;
+			}else{
+				before = false;
 			}
 			if (keyword.length() > 0) {
+				if (before) {
+					where.and();
+				}
 				for (int i = 0; i < words.length; i++) {
-					where.like("text", words[i]);
+					where.like("titel", "%" + words[i] + "%");
 					if (i < words.length - 1) {
 						where.and();
 					}
 				}
+			}else{
+				before = false;
 			}
 
-			PreparedQuery<KlausurFrage> preparedQuery = queryBuilder.prepare();
+			PreparedQuery<KlausurFrage> preparedQuery = queryBuilderContent.prepare();
+			System.out.println(preparedQuery.getStatement());
 			kList = klausurfDao.query(preparedQuery);
-
+			before = false;
 			if (kList.size() < 1) {
-				QueryBuilder<KlausurFrage, String> queryBuilderContent = klausurfDao.queryBuilder();
+
+				QueryBuilder<KlausurFrage, String> queryBuilderContent1 = klausurfDao.queryBuilder();
 				// get the WHERE object to build our query
-				Where<KlausurFrage, String> whereContent = queryBuilder.where();
+				Where<KlausurFrage, String> whereContent = queryBuilderContent1.where();
 
 				if (dozent != null) {
-					where.eq(KlausurFrage.DOZENT_ID_FIELD_NAME, dozent.getD_id());
-					where.and();
+					whereContent.eq(KlausurFrage.DOZENT_ID_FIELD_NAME, dozent.getD_id());
+					before = true;
+				}else{
+					before = false;
 				}
 				if (modul != null) {
-					where.eq(KlausurFrage.MODUL_ID_FIELD_NAME, modul.getM_id());
-					where.and();
+					if (before) {
+						whereContent.and();
+					}
+					whereContent.eq(KlausurFrage.MODUL_ID_FIELD_NAME, modul.getM_id());
+					before = true;
+
+				}else{
+					before = false;
 				}
 
 				if (hochschule != null) {
-					where.eq(KlausurFrage.HOCHSCHULE_ID_FIELD_NAME, hochschule.getH_id());
-					where.and();
+					if (before) {
+						whereContent.and();
+					}
+					whereContent.eq(KlausurFrage.HOCHSCHULE_ID_FIELD_NAME, hochschule.getH_id());
+					before = true;
+				}else{
+					before = false;
 				}
 				if (keyword.length() > 0) {
+					if (before) {
+						whereContent.and();
+					}
 					for (int i = 0; i < words.length; i++) {
-						where.like("text", words[i]);
+						whereContent.like("text", "%" + words[i] + "%");
 						if (i < words.length - 1) {
-							where.and();
+							whereContent.and();
 						}
 					}
-
+				}else{
+					before = false;
 				}
-				PreparedQuery<KlausurFrage> preparedQuery1 = queryBuilder.prepare();
+
+				PreparedQuery<KlausurFrage> preparedQuery1 = queryBuilderContent1.prepare();
+				System.out.println(preparedQuery1.getStatement());
 				kList = klausurfDao.query(preparedQuery1);
 			}
 		} catch (SQLException e) {
 			reconnect();
 			kList = getKlausurFrage(dozent, modul, hochschule, keyword);
 
-		}finally{
-			if(kList.size() > 0){
+		} finally {
+			if (kList.size() > 0) {
 				return kList;
-			}else{
+			} else {
 				return null;
 			}
 		}
-
 
 	}
 
@@ -799,8 +839,8 @@ public class PersistenceQuery {
 			if (frageList.size() > 0) {
 				return frageList;
 			} else {
-				 List<KlausurFrage> newList = new ArrayList<>();
-				 return newList;
+				List<KlausurFrage> newList = new ArrayList<>();
+				return newList;
 			}
 		}
 
