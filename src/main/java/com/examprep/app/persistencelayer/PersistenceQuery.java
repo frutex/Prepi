@@ -103,7 +103,6 @@ public class PersistenceQuery {
 			return anzahl;
 
 		}
-		credDao.
 
 	}
 
