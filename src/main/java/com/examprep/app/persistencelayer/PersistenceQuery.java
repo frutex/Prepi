@@ -73,11 +73,12 @@ public class PersistenceQuery {
 			credDao = DaoManager.createDao(connSource, Credibility.class);
 			credDao.create(cred);
 		} catch (SQLException e) {
+			e.printStackTrace();
 			reconnect();
 			credDao = DaoManager.createDao(connSource, Credibility.class);
 			credDao.create(cred);
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
 		} finally {
 
 			return cred;

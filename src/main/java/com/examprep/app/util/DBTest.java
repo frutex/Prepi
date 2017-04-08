@@ -26,23 +26,31 @@ public class DBTest {
 //		Dozent dozent = PersistenceQuery.createDozent("Hans", "Obst");
 //		Hochschule hochschule = PersistenceQuery.createHochschule("HWR Berlin", "Berlin");
 //		Nutzer nutzer = PersistenceQuery.createNutzer("Obst", "Bjarne", "bjarne.obst@gmail.com", "password", hochschule);
-		Modul modul = PersistenceQuery.getModulByName("Management komplexer Anwendungssysteme").get(0);
-		Dozent dozent = null;
+//		Modul modul = PersistenceQuery.getModulByName("Management komplexer Anwendungssysteme").get(0);
+//		Dozent dozent = null;
 				// PersistenceQuery.getDozentByName("Hans", "Obst");
-		Hochschule hochschule = null;
+//		Hochschule hochschule = null;
 				//PersistenceQuery.getHochschuleByName("Freie Universität Berlin").get(0);
 //		Nutzer nutzer = PersistenceQuery.getOneNutzerByName("bjarne.obst@gmail.com");
 //		List<Dozent> dozList = PersistenceQuery.getAllDozentenEinerHochschule("HWR Berlin");
 //		System.out.println(modul.getModul());
 //		System.out.println(dozent.getVorname());
 //		System.out.println(hochschule.getName());
+		
+		Credibility cred = new Credibility();
+		KlausurFrage kfrage = PersistenceQuery.getAllQuestions().get(0);
+		Nutzer nutzer = PersistenceQuery.getOneNutzerByName("bjarne.obst@de.ibm.com");
+		cred.setKlausurf_id(kfrage);
+		cred.setNutzc_id(nutzer);
+		
+		PersistenceQuery.createCredibility(kfrage, nutzer);
 //		System.out.println(nutzer.getEmail());
 		
-		List<KlausurFrage> fList = new ArrayList<>();
-		fList = PersistenceQuery.getKlausurFrage(dozent, modul, hochschule, "");
-		for(KlausurFrage tmp : fList){
-			System.out.println(tmp.getText());
-		}
+//		List<KlausurFrage> fList = new ArrayList<>();
+//		fList = PersistenceQuery.getKlausurFrage(dozent, modul, hochschule, "");
+//		for(KlausurFrage tmp : fList){
+//			System.out.println(tmp.getText());
+//		}
 		
 //		PersistenceQuery.createKlausurfrage("Wie funktioniert dieses Programm?", 2017, hochschule, dozent, modul, nutzer);
 //		for(Dozent tmp : dozList){
