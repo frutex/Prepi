@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import com.examprep.app.bean.KlausurFrage;
 import com.examprep.app.bean.Nutzer;
 import com.examprep.app.persistencelayer.PersistenceQuery;
+import com.examprep.app.util.ErrorMessages;
 import com.examprep.app.util.JSONConverter;
 import com.examprep.app.util.LevelCalc;
 import com.examprep.app.util.UserTokenMachine;
@@ -47,7 +48,7 @@ public class GetUserDataCmd extends AbstractCmdServlet {
 
 		} catch (Exception e) {
 			res = "{\"successfull\":" + "false" + ",\"data\":\""
-					+ "An Internal Error Occured, please contact the HelpDesk for further assistance." + "\"}";
+					+ ErrorMessages.getInternalError() + "\"}";
 			e.printStackTrace();
 		} finally {
 			this.sendJsonResult(res);

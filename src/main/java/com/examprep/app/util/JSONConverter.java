@@ -2,6 +2,7 @@ package com.examprep.app.util;
 
 import java.util.List;
 
+import com.examprep.app.bean.Credibility;
 import com.examprep.app.bean.Dozent;
 import com.examprep.app.bean.Hochschule;
 import com.examprep.app.bean.KlausurFrage;
@@ -111,7 +112,7 @@ public class JSONConverter {
 		sb.append("\"Nutzer\":\"").append(frage.getNutzer().getEmail()).append("\",");
 		sb.append("\"Titel\":\"").append(frage.getTitel()).append("\",");
 		sb.append("\"Likeable\":\"").append(true).append("\",");
-		sb.append("\"Likes\":\"").append((int) (Math.random() * 100)).append("\",");
+		sb.append("\"Likes\":\"").append(PersistenceQuery.getAllLikesForOneQuestionNumber(frage)).append("\",");
 		sb.append("\"FragenID\":\"").append(frage.getF_id()).append("\"");
 		sb.append("}");
 		String res = sb.toString();
@@ -129,6 +130,44 @@ public class JSONConverter {
 			
 		}
 		sb.append("]");
+		String res = sb.toString();
+		return res;
+	}
+
+
+	public static String toJSONFullF(KlausurFrage frage) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("[{\"Fragendetails\":");
+		sb.append(toJSONF(frage));
+		sb.append("},{\"Likes\":");
+		sb.append(toJSONL(PersistenceQuery.getAllLikesForOneQuestion(frage)));
+		sb.append("}]");
+		String res = sb.toString();
+		return res;
+	}
+	
+	public static String toJSONL(List<Credibility> list) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("[");
+		for (int i = 0; i < list.size(); i++) {
+			if(i != 0){
+				sb.append(",");
+				}
+			sb.append(toJSONL(list.get(i)));
+			
+		}
+		sb.append("]");
+		String res = sb.toString();
+		return res;
+	}
+	
+	public static String toJSONL(Credibility cred) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("{");
+		sb.append("\"Name\":\"").append(cred.getNutz().getName()).append("\",");
+		sb.append("\"Vorname\":\"").append(cred.getNutz().getVorname()).append("\",");
+		sb.append("\"Email\":\"").append(cred.getNutz().getEmail()).append("\"");
+		sb.append("}");
 		String res = sb.toString();
 		return res;
 	}

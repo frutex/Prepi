@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.examprep.app.bean.Hochschule;
 import com.examprep.app.bean.Modul;
 import com.examprep.app.persistencelayer.PersistenceQuery;
+import com.examprep.app.util.ErrorMessages;
 import com.examprep.app.util.JSONConverter;
 
 public class GetModuleCmd extends AbstractCmdServlet {
@@ -29,7 +30,7 @@ public class GetModuleCmd extends AbstractCmdServlet {
 
 		} catch (Exception e) {
 			res = "{\"successfull\":" + "false" + ",\"data\":\""
-					+ "An Internal Error Occured, please contact the HelpDesk for further assistance." + "\"}";
+					+ ErrorMessages.getInternalError() + "\"}";
 			e.printStackTrace();
 		} finally {
 			this.sendJsonResult(res);

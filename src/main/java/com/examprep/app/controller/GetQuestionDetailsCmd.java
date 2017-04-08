@@ -6,30 +6,39 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.examprep.app.bean.Dozent;
 import com.examprep.app.bean.Hochschule;
-import com.examprep.app.bean.Nutzer;
+import com.examprep.app.bean.KlausurFrage;
 import com.examprep.app.persistencelayer.PersistenceQuery;
-import com.examprep.app.persistencelayer.daoif.HochschuleDao;
-import com.examprep.app.persistencelayer.daoimpl.HochschuleDaoImpl;
 import com.examprep.app.util.ErrorMessages;
 import com.examprep.app.util.JSONConverter;
 
-public class GetHochschulenCmd extends AbstractCmdServlet {
+public class GetQuestionDetailsCmd extends AbstractCmdServlet{
 
-	public GetHochschulenCmd(HttpServlet servlet, HttpServletRequest request, HttpServletResponse response) {
+	public GetQuestionDetailsCmd(HttpServlet servlet, HttpServletRequest request, HttpServletResponse response) {
 		super(servlet, request, response);
 	}
 
 	public void execute() throws Exception {
 
 		String res = "";
+		String qID = request.getParameter("questionID");
+		int id = Integer.parseInt(qID);
 
 		try {
 
-			List<Hochschule> hsList = PersistenceQuery.getAllHochschulen();
+			List<KlausurFrage> fList;
+			
+			fList = PersistenceQuery.getAllQuestions();
+				
+			res = "{\"successfull\":" + "false" + ",\"data\":" + ErrorMessages.getInternalError() + "}";
 
-			res = "{\"successfull\":" + "true" + ",\"data\":" + JSONConverter.toJSONH(hsList) + "}";
-
+			for(int i = 0; i< fList.size(); i++){
+				if(fList.get(i).getF_id() == id){
+					res = "{\"successfull\":" + "true" + ",\"data\":" + JSONConverter.toJSONFullF(fList.get(i)) + "}";
+				}
+			}
+			
 		} catch (Exception e) {
 			res = "{\"successfull\":" + "false" + ",\"data\":\""
 					+ ErrorMessages.getInternalError() + "\"}";

@@ -12,6 +12,7 @@ import com.examprep.app.bean.Nutzer;
 
 import com.examprep.app.persistencelayer.PersistenceQuery;
 import com.examprep.app.util.CryptoHelpClass;
+import com.examprep.app.util.ErrorMessages;
 import com.examprep.app.util.UserTokenMachine;
 
 // class to get user data
@@ -39,7 +40,7 @@ public class CheckAuthTokenCmd extends AbstractCmdServlet {
 
 				List<Nutzer> nutzerList = PersistenceQuery.getNutzerByName(name);
 				if (nutzerList.size() > 1) {
-					res = "{\"successfull\":false,\"response\":\"Too many users with your Email found, please contact the HelpDesk.\"}";
+					res = "{\"successfull\":false,\"response\":\"" +  ErrorMessages.getTooManyUsersError()+ "\"}";
 					this.sendJsonResult(res);
 				} else {
 					Nutzer nutzer = nutzerList.get(0);
@@ -48,7 +49,7 @@ public class CheckAuthTokenCmd extends AbstractCmdServlet {
 					if (UserTokenMachine.getTokenFromToken(genToken).matches(token)) {
 						res = "{\"successfull\":true,\"token\":\"" + token + "\"}";
 					} else {
-						res = "{\"successfull\":false,\"token\":\"Authentication token is wrong. You are being logged out. \"}";
+						res = "{\"successfull\":false,\"token\":\"" +  ErrorMessages.getAuthenticationError()+ " \"}";
 
 					}
 				}
@@ -56,11 +57,11 @@ public class CheckAuthTokenCmd extends AbstractCmdServlet {
 			} else {
 				//
 				int i = 0;
-				res = "{\"successfull\":false,\"token\":\"Authentication token is wrong. You are being logged out. \"}";
+				res = "{\"successfull\":false,\"token\":\"" +  ErrorMessages.getAuthenticationError()+ "\"}";
 
 			}
 		} catch (Exception e) {
-			res = "{\"successfull\":false,\"token\":\"Internal Error trying to check the Authentication Token, please contact the HelpDesk.\"}";
+			res = "{\"successfull\":false,\"token\":\"" +  ErrorMessages.getInternalError()+ "\"}";
 
 			e.printStackTrace();
 		} finally {
