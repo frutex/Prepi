@@ -38,7 +38,7 @@ public class GetUserDataCmd extends AbstractCmdServlet {
 
 			List<KlausurFrage> fragen = PersistenceQuery.getAllQuestionsFromOneUser(name);
 
-			String fRes = JSONConverter.toJSONF(fragen);
+			String fRes = JSONConverter.toJSONF(fragen, nutzer);
 			String nRes = JSONConverter.toJSONN(nutzer);
 
 			String returnData = "[" + nRes + "," + fRes + "," + "{\"Credibility\":\"" + cred + "\",\"Level\":\"" + level

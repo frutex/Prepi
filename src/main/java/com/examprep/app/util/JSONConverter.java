@@ -25,7 +25,6 @@ public class JSONConverter {
 		return res;
 	}
 
-
 	public static String toJSONH(Hochschule hochschule) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("{");
@@ -40,17 +39,17 @@ public class JSONConverter {
 		StringBuilder sb = new StringBuilder();
 		sb.append("[");
 		for (int i = 0; i < list.size(); i++) {
-			if(i != 0){
+			if (i != 0) {
 				sb.append(",");
-				}
+			}
 			sb.append(toJSONH(list.get(i)));
-			
+
 		}
 		sb.append("]");
 		String res = sb.toString();
 		return res;
 	}
-	
+
 	public static String toJSONM(Modul modul) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("{");
@@ -64,17 +63,17 @@ public class JSONConverter {
 		StringBuilder sb = new StringBuilder();
 		sb.append("[");
 		for (int i = 0; i < list.size(); i++) {
-			if(i != 0){
+			if (i != 0) {
 				sb.append(",");
-				}
+			}
 			sb.append(toJSONM(list.get(i)));
-			
+
 		}
 		sb.append("]");
 		String res = sb.toString();
 		return res;
 	}
-	
+
 	public static String toJSOND(Dozent dozent) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("{");
@@ -90,13 +89,33 @@ public class JSONConverter {
 		StringBuilder sb = new StringBuilder();
 		sb.append("[");
 		for (int i = 0; i < list.size(); i++) {
-			if(i != 0){
+			if (i != 0) {
 				sb.append(",");
-				}
+			}
 			sb.append(toJSOND(list.get(i)));
-			
+
 		}
 		sb.append("]");
+		String res = sb.toString();
+		return res;
+	}
+
+	public static String toJSONF(KlausurFrage frage, Nutzer nutzer) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("{");
+		sb.append("\"Jahr\":\"").append(frage.getJahr()).append("\",");
+		sb.append("\"Beschreibung\":\"").append(frage.getText()).append("\",");
+		sb.append("\"Dozent\":\"").append(frage.getDozent().getNachname()).append(", ")
+				.append(frage.getDozent().getVorname()).append("\",");
+		sb.append("\"Hochschule\":\"").append(frage.getHochschule().getName()).append("\",");
+		sb.append("\"Modul\":\"").append(frage.getModul().getModul()).append("\",");
+		sb.append("\"Nutzer\":\"").append(frage.getNutzer().getEmail()).append("\",");
+		sb.append("\"Titel\":\"").append(frage.getTitel()).append("\",");
+		sb.append("\"Likeable\":\"").append(true).append("\",");
+		sb.append("\"Likes\":\"").append(PersistenceQuery.getAllLikesForOneQuestionNumber(frage)).append("\",");
+		sb.append("\"FragenID\":\"").append(frage.getF_id()).append("\",");
+		sb.append("\"isLikeable\":\"").append(LikeChecker.check(frage, nutzer)).append("\"");
+		sb.append("}");
 		String res = sb.toString();
 		return res;
 	}
@@ -106,7 +125,8 @@ public class JSONConverter {
 		sb.append("{");
 		sb.append("\"Jahr\":\"").append(frage.getJahr()).append("\",");
 		sb.append("\"Beschreibung\":\"").append(frage.getText()).append("\",");
-		sb.append("\"Dozent\":\"").append(frage.getDozent().getNachname()).append(", ").append(frage.getDozent().getVorname()).append("\",");
+		sb.append("\"Dozent\":\"").append(frage.getDozent().getNachname()).append(", ")
+				.append(frage.getDozent().getVorname()).append("\",");
 		sb.append("\"Hochschule\":\"").append(frage.getHochschule().getName()).append("\",");
 		sb.append("\"Modul\":\"").append(frage.getModul().getModul()).append("\",");
 		sb.append("\"Nutzer\":\"").append(frage.getNutzer().getEmail()).append("\",");
@@ -118,49 +138,63 @@ public class JSONConverter {
 		String res = sb.toString();
 		return res;
 	}
-
-	public static String toJSONF(List<KlausurFrage> list) {
+	
+	public static String toJSONF(List<KlausurFrage> list, Nutzer nutzer) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("[");
 		for (int i = 0; i < list.size(); i++) {
-			if(i != 0){
+			if (i != 0) {
 				sb.append(",");
-				}
-			sb.append(toJSONF(list.get(i)));
-			
+			}
+			sb.append(toJSONF(list.get(i), nutzer));
+
 		}
 		sb.append("]");
 		String res = sb.toString();
 		return res;
 	}
 
+	public static String toJSONF(List<KlausurFrage> list) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("[");
+		for (int i = 0; i < list.size(); i++) {
+			if (i != 0) {
+				sb.append(",");
+			}
+			sb.append(toJSONF(list.get(i)));
 
-	public static String toJSONFullF(KlausurFrage frage) {
+		}
+		sb.append("]");
+		String res = sb.toString();
+		return res;
+	}
+
+	public static String toJSONFullF(KlausurFrage frage, Nutzer nutzer) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("[{\"Fragendetails\":");
-		sb.append(toJSONF(frage));
+		sb.append(toJSONF(frage, nutzer));
 		sb.append("},{\"Likes\":");
 		sb.append(toJSONL(PersistenceQuery.getAllLikesForOneQuestion(frage)));
 		sb.append("}]");
 		String res = sb.toString();
 		return res;
 	}
-	
+
 	public static String toJSONL(List<Credibility> list) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("[");
 		for (int i = 0; i < list.size(); i++) {
-			if(i != 0){
+			if (i != 0) {
 				sb.append(",");
-				}
+			}
 			sb.append(toJSONL(list.get(i)));
-			
+
 		}
 		sb.append("]");
 		String res = sb.toString();
 		return res;
 	}
-	
+
 	public static String toJSONL(Credibility cred) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("{");
