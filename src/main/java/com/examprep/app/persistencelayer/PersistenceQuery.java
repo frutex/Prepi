@@ -122,7 +122,7 @@ public class PersistenceQuery {
 			if (credList.size() > 0) {
 				return credList;
 			} else {
-				return null;
+				return credList;
 			}
 
 		}
@@ -369,6 +369,24 @@ public class PersistenceQuery {
 			e.printStackTrace();
 		} finally {
 			return klausurf;
+		}
+
+	}
+	
+	@SuppressWarnings("finally")
+	public static KlausurFrage getFrageById(String id) {
+		KlausurFrage frage = null;
+		try {
+			klausurfDao = DaoManager.createDao(connSource, KlausurFrage.class);
+			frage = klausurfDao.queryForId(id);
+		} catch (SQLException e) {
+			reconnect();
+
+			frage = getFrageById(id);
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			return frage;
 		}
 
 	}
