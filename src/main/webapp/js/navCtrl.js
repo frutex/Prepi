@@ -8,4 +8,11 @@ angular.module('ExPrep').controller(
 						window.location.href = "login.html";
 					}
 
+					$scope.searchText = "";
+
+					$scope.newSearch = function() {
+						url = "explore.html?keywords=" + $scope.searchText;
+						window.location.href = url;
+					}
+
 				} ]);
