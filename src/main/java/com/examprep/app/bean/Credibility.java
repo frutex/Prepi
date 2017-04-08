@@ -11,7 +11,7 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "GegebeneCred", daoClass = CredibilityDaoImpl.class)
 public class Credibility {
 
-	@DatabaseField(generatedId = true, columnName = "c_id")
+	@DatabaseField(generatedId = true, columnName = "gc_id")
 	private int c_id;
 	
 	

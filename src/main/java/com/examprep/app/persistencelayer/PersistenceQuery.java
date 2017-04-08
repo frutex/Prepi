@@ -45,7 +45,7 @@ public class PersistenceQuery {
 	 * ---------------------------------------------------------------------------------------------
 	 */
 
-	static Dao<Credibility, String> credDao;
+	static Dao<Credibility, String> credDao = DaoManager.createDao(connSource, Credibility.class);
 	static Dao<Hochschule, String> hochschuleDao;
 	static Dao<Modul, String> modulDao;
 	static Dao<Nutzer, String> nutzerDao;
@@ -103,6 +103,7 @@ public class PersistenceQuery {
 			return anzahl;
 
 		}
+		credDao.
 
 	}
 
