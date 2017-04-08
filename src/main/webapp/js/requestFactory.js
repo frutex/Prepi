@@ -92,6 +92,11 @@ angular.module('ExPrep').factory(
 
 					}
 					
+					function getAllQuestions() {
+						return send("c=getAllQuestions");
+
+					}
+					
 					function doSearch(modul, hochschule, dozent, keywords) {
 						return send("c=doSearch" + "&modul=" + modul
 								+ "&hochschule=" + hochschule + "&dozent="
@@ -114,6 +119,7 @@ angular.module('ExPrep').factory(
 						loadQuestionDetails : loadQuestionDetails,
 						doQuestionLike : doQuestionLike,
 						doSearch : doSearch,
+						getAllQuestions : getAllQuestions,
 
 					};
 				} ]);

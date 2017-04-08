@@ -32,7 +32,8 @@
 <script src="js/app.js"></script>
 <script src="js/authenticator.js"></script>
 <script src="js/requestFactory.js"></script>
-<script src="js/addQuestionCtrl.js"></script>
+<script src="js/navCtrl.js"></script>
+<script src="js/exploreCtrl.js"></script>
 
 
 <!-- Stylesheets from Bootstrap and Angular-->
@@ -48,36 +49,37 @@
 
 </head>
 
-<body ng-app="ExPrep" ng-controller="AddQuestionCtrl"><!-- ng-init="startup()" -->
+<body ng-app="ExPrep" ng-controller="ExploreCtrl" ng-init="startup()">
 
 
 
-<!-- Fixed Navbar with Brand logo, nav items and search form -->
-	 <nav class="navbar navbar-inverse navbar-fixed-top">
-	   <div class="container-fluid">
-		 <div class="navbar-header">
-			<a class="navbar-brand" href="#"><img src="images/exam preppar_logo_small.png" alt="ExPrep"></a>
-		 </div>
-		 <ul class="nav navbar-nav">
-			<li><a href="dashboard.html">Dashboard</a></li>
-			<li class="active"><a href="#">Explore</a></li>
-			<li><a href="#">Meine Fragen</a></li>
-			<li><a href="addQuestion.html">Frage hinzufügen</a></li>
-			<li><a href="#">Optionen</a></li>
-			<li><a href="login.html">Logout</a></li>
-		 </ul>
-		 <form class="navbar-form navbar-right">
-		 <div class="input-group">
-			<input type="text" class="form-control" placeholder="Fragen durchsuchen">
-			<div class="input-group-btn">
-			<button class="btn btn-default" type="submit">
-				<i class="glyphicon glyphicon-search"></i>
-			</button>
+	<!-- Fixed Navbar with Brand logo, nav items and search form -->
+	<nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="NavCtrl">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="dashboard.html"><img
+					src="images/exam preppar_logo_small.png" alt="ExPrep"></a>
 			</div>
-		 </div>
-		 </form>
-	   </div>
-	 </nav>
+			<ul class="nav navbar-nav">
+				<li ><a href="dashboard.html">Dashboard</a></li>
+				<li class="active"><a href="#">Explore</a></li>
+				<li><a href="addQuestion.html">Frage hinzufügen</a></li>
+				<li><a href="#">Profil</a></li>
+				<li><a href="#" ng-click="logout()">Logout</a></li>
+			</ul>
+			<form class="navbar-form navbar-right">
+				<div class="input-group">
+					<input type="text" class="form-control" ng-model="searchText"
+						placeholder="Fragen durchsuchen">
+					<div class="input-group-btn">
+						<button class="btn btn-default" type="submit" ng-click="newSearch()">
+							<i class="glyphicon glyphicon-search"></i>
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</nav>
 
 
 
@@ -89,133 +91,99 @@
 			<p></p>
 			<form>
 				<div class="form-group">
-				<div class="row">
-					<div class="col-md-4" id="status-div1">
-						<md-autocomplete flex required
-						md-selected-item="selected.Hochschule" md-search-text="searchTextH"
-						md-items="item in queryHS(searchTextH)" md-item-text="item.Name"
-						placeholder="Bitte eine Hochschule eingeben." md-require-match
-						md-floating-label="Hochschule auswählen"
-						md-selected-item-change="loadHSDozenten()"
-						md-select-on-match="true" md-match-case-insensitive="true">
-					<span md-highlight-text="searchText">{{item.Name}}</span> </md-autocomplete>
+					<div class="row">
+						<div class="col-md-4" id="status-div1">
+							<md-autocomplete flex required
+								md-selected-item="selected.Hochschule"
+								md-search-text="searchTextH"
+								md-items="item in queryHS(searchTextH)" md-item-text="item.Name"
+								placeholder="Bitte eine Hochschule eingeben." md-require-match
+								md-floating-label="Hochschule auswählen"
+								md-selected-item-change="loadHSDozenten()"
+								md-select-on-match="true" md-match-case-insensitive="true">
+							<span md-highlight-text="searchText">{{item.Name}}</span> </md-autocomplete>
+						</div>
+						<div class="col-md-4" id="status-div2">
+							<md-autocomplete flex required md-selected-item="selected.Dozent"
+								md-search-text="searchTextD"
+								md-items="item in queryD(searchTextD)"
+								md-item-text="dozentenNameObj(item)"
+								placeholder="Bitte einen Dozenten eingeben" md-require-match
+								md-floating-label="Dozenten auswählen"
+								md-selected-item-change="loadDModule()"
+								md-select-on-match="true" md-match-case-insensitive="true">
+							<span md-highlight-text="searchTextD">{{dozentenNameObj(item)}}</span>
+							</md-autocomplete>
+						</div>
+						<div class="col-md-4" id="status-div3">
+							<md-autocomplete flex required md-selected-item="selected.Modul"
+								md-search-text="searchTextM"
+								md-items="item in queryM(searchTextM)" md-item-text="item.Name"
+								placeholder="Bitte ein Modul eingeben" md-require-match
+								md-floating-label="Modul auswählen" md-select-on-match="true"
+								md-match-case-insensitive="true"> <span
+								md-highlight-text="searchTextM">{{item.Name}}</span> </md-autocomplete>
+						</div>
 					</div>
-					<div class="col-md-4" id="status-div2">
-						<md-autocomplete flex required md-selected-item="selected.Dozent"
-						md-search-text="searchTextD" md-items="item in queryD(searchTextD)"
-						md-item-text="dozentenNameObj(item)"
-						placeholder="Bitte einen Dozenten eingeben" md-require-match
-						md-floating-label="Dozenten auswählen"
-						md-selected-item-change="loadDModule()" md-select-on-match="true"
-						md-match-case-insensitive="true"> <span
-						md-highlight-text="searchTextD">{{dozentenNameObj(item)}}</span> </md-autocomplete>
-					</div>
-					<div class="col-md-4" id="status-div3">
-						<md-autocomplete flex required md-selected-item="selected.Modul"
-						md-search-text="searchTextM" md-items="item in queryM(searchTextM)"
-						md-item-text="item.Name" placeholder="Bitte ein Modul eingeben"
-						md-require-match md-floating-label="Modul auswählen"
-						md-select-on-match="true" md-match-case-insensitive="true">
-					<span md-highlight-text="searchTextM">{{item.Name}}</span> </md-autocomplete>
-					</div>
-				</div>
 					<div class="input-group">
-						<input type="text" class="form-control" placeholder="Fragen durchsuchen">
+						<input type="text" class="form-control"
+							placeholder="Fragen durchsuchen">
 						<div class="input-group-btn">
-						<button class="btn btn-default" type="submit">
-						<i class="glyphicon glyphicon-search"></i>
-						</button>
+							<button class="btn btn-default" type="submit">
+								<i class="glyphicon glyphicon-search"></i>
+							</button>
 						</div>
 					</div>
 				</div>
 			</form>
 		</div>
 	</div>
-	
+
 	<!-- Example row of columns
      TODO: load question object dynamically -->
-     <div class="container">
-      <div class="row">
-        <div class="col-md-4">
-         <h2>Modul m bei Professor p</h2>
-          <p>Hier steht der Beschreibungstext der Frage. Der Inhalt der Frage
-          so wie er von einem Nutzer beschrieben wurde wird angezeigt. Durch klicken auf Details anzeigen,
-          wird die Detailansicht der Frage aufgerufen.</p>
-          <div class="row">
-          	<div class="col-md-7">
-          	<p><a class="btn btn-sm btn-secondary" href="#" role="button">Details anzeigen &raquo;</a></p>
-          	</div>
-          	<div class="col-md-5">
-          	<p>16x  <button href="#" class="btn btn-sm btn-danger" ng-click="doLikeOnQuestion()">Danke! <span class="glyphicon glyphicon-heart-empty"></span></button></p>
-          	</div>
-          </div>
-        </div>
-        <div class="col-md-4">
-         <h2>Modul m bei Professor p</h2>
-          <p>Hier steht der Beschreibungstext der Frage. Der Inhalt der Frage
-          so wie er von einem Nutzer beschrieben wurde wird angezeigt. Durch klicken auf Details anzeigen,
-          wird die Detailansicht der Frage aufgerufen.</p>
-          <div class="row">
-          	<div class="col-md-7">
-          	<p><a class="btn btn-sm btn-secondary" href="#" role="button">Details anzeigen &raquo;</a></p>
-          	</div>
-          	<div class="col-md-5">
-          	<p>16x  <button href="#" class="btn btn-sm btn-danger" ng-click="doLikeOnQuestion()">Danke! <span class="glyphicon glyphicon-heart-empty"></span></button></p>
-          	</div>
-          </div>
-        </div>
-        <div class="col-md-4">
-         <h2>Modul m bei Professor p</h2>
-          <p>Hier steht der Beschreibungstext der Frage. Der Inhalt der Frage
-          so wie er von einem Nutzer beschrieben wurde wird angezeigt. Durch klicken auf Details anzeigen,
-          wird die Detailansicht der Frage aufgerufen.</p>
-          <div class="row">
-          	<div class="col-md-7">
-          	<p><a class="btn btn-sm btn-secondary" href="#" role="button">Details anzeigen &raquo;</a></p>
-          	</div>
-          	<div class="col-md-5">
-          	<p>16x  <button href="#" class="btn btn-sm btn-danger" ng-click="doLikeOnQuestion()">Danke! <span class="glyphicon glyphicon-heart-empty"></span></button></p>
-          	</div>
-          </div>
-        </div>
-      </div>
-      <!-- end of example object row -->
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4" ng-repeat="frage in fragen">
+				<h2>{{frage.Titel}}</h2>
+				<p>{{frage.Beschreibung}}</p>
+				<div class="row">
+					<div class="col-md-7">
+						<p>
+							<a class="btn btn-sm btn-secondary"
+								href="questionDetails.html?questionID={{frage.FragenID}}"
+								role="button">Details anzeigen &raquo;</a>
+						</p>
+					</div>
+					<div class="col-md-5">
+						<p>
+							{{frage.Likes}}x
+							<button href="#" ng-show="frage.isLikeable"
+								class="btn btn-sm btn-danger"
+								ng-click="doQuestionLike(frage.FragenID)">
+								Danke! <span class="glyphicon glyphicon-heart-empty"></span>
+							</button>
+
+							<button href="#" ng-show="!frage.isLikeable"
+								class="btn btn-sm btn-danger"
+								ng-click="doQuestionLike(frage.FragenID)" disabled>
+								Danke! <span class="glyphicon glyphicon-heart-empty"></span>
+							</button>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- end of example object row -->
 	</div>
 	<!-- end of container -->
 
-<!-- BACKUP: Table 
-	<div class="table-responsive">
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>Modul</th>
-					<th>Dozent</th>
-					<th>Frage</th>
-					<th>Hochschule</th>
-					<th>Datum</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="frage in userData[1]">
-					<td>{{frage.Modul}}</td>
-					<td>{{frage.Dozent}}</td>
-					<td>{{frage.Beschreibung}}</td>
-					<td>{{frage.Hochschule}}</td>
-					<td>{{frage.Datum}}</td>
-				</tr>
-
-			</tbody>
-		</table>
-	</div>
-	
-	-->
 
 	<footer class="footer">
-      <div class="container">
-        <span class="text-muted">&copy; ExPrep 2017 - Bjarne Obst, Christopher Tunkel, Daniel
-			Köhler</span>
-      </div>
-    </footer>
+		<div class="container">
+			<span class="text-muted">&copy; ExPrep 2017 - Bjarne Obst,
+				Christopher Tunkel, Daniel Köhler</span>
+		</div>
+	</footer>
 
 </body>
 </html>
