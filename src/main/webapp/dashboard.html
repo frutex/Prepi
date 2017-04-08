@@ -34,6 +34,7 @@
 <script src="js/requestFactory.js"></script>
 <script src="js/authCtrl.js"></script>
 <script src="js/dashCtrl.js"></script>
+<script src="js/navCtrl.js"></script>
 
 
 <!-- Bootstrap core CSS & Angular Material CSS-->
@@ -55,7 +56,7 @@
 
 
 	<!-- Fixed Navbar with Brand logo, nav items and search form -->
-	<nav class="navbar navbar-inverse navbar-fixed-top">
+	<nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="NavCtrl">
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<a class="navbar-brand" href="#"><img
@@ -67,7 +68,7 @@
 				<li><a href="#">Meine Fragen</a></li>
 				<li><a href="addQuestion.html">Frage hinzufügen</a></li>
 				<li><a href="#">Optionen</a></li>
-				<li><a href="login.html">Logout</a></li>
+				<li><a href="#" ng-click="logout()">Logout</a></li>
 			</ul>
 			<form class="navbar-form navbar-right">
 				<div class="input-group">
@@ -126,7 +127,6 @@
 		</div>
 	</div>
 
-	<!-- Example row of columns -->
 	<div class="container">
 		<div class="row">
 			<div class="col-md-4" ng-repeat="frage in userData[1]">
@@ -135,15 +135,23 @@
 				<div class="row">
 					<div class="col-md-7">
 						<p>
-							<a class="btn btn-sm btn-secondary" href="questionDetails.html?questionID={{frage.FragenID}}" role="button">Details
-								anzeigen &raquo;</a>
+							<a class="btn btn-sm btn-secondary"
+								href="questionDetails.html?questionID={{frage.FragenID}}"
+								role="button">Details anzeigen &raquo;</a>
 						</p>
 					</div>
 					<div class="col-md-5">
 						<p>
 							{{frage.Likes}}x
-							<button href="#" class="btn btn-sm btn-danger"
-								ng-click="doLikeOnQuestion()">
+							<button href="#" ng-show="frage.isLikeable"
+								class="btn btn-sm btn-danger"
+								ng-click="doQuestionLike(frage.FragenID)">
+								Danke! <span class="glyphicon glyphicon-heart-empty"></span>
+							</button>
+
+							<button href="#" ng-show="!frage.isLikeable"
+								class="btn btn-sm btn-danger"
+								ng-click="doQuestionLike(frage.FragenID)" disabled>
 								Danke! <span class="glyphicon glyphicon-heart-empty"></span>
 							</button>
 						</p>
@@ -153,13 +161,15 @@
 
 		</div>
 		<!-- end of container -->
+
+
 	</div>
 
-		<footer class="footer">
-			<div class="container">
-				<span class="text-muted">&copy; ExPrep 2017 - Bjarne Obst,
-					Christopher Tunkel, Daniel Köhler</span>
-			</div>
-		</footer>
+	<footer class="footer">
+		<div class="container">
+			<span class="text-muted">&copy; ExPrep 2017 - Bjarne Obst,
+				Christopher Tunkel, Daniel Köhler</span>
+		</div>
+	</footer>
 </body>
 </html>
