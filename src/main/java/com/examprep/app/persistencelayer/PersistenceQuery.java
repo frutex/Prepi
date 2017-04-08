@@ -95,7 +95,6 @@ public class PersistenceQuery {
 		} catch (SQLException e) {
 			reconnect();
 			anzahl = getAllLikesForOneQuestionNumber(kfrage);
-			;
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
