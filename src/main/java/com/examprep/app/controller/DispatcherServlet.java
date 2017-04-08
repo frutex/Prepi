@@ -108,6 +108,10 @@ public class DispatcherServlet extends HttpServlet {
 			result = new GetQuestionDetailsCmd(servlet, request, response);
 		} else if (command.equalsIgnoreCase("doQuestionLike")) {
 			result = new DoLikeCmd(servlet, request, response);
+		} else if (command.equalsIgnoreCase("doSearch")) {
+			result = new DoSearchCmd(servlet, request, response);
+		} else if (command.equalsIgnoreCase("getAllQuestions")) {
+			result = new GetAllQuestionsCmd(servlet, request, response);
 		} 
 		return result;
 	}

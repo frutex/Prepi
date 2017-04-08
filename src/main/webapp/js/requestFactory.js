@@ -80,16 +80,27 @@ angular.module('ExPrep').factory(
 								+ dozent.Nachname);
 
 					}
-					
+
 					function loadQuestionDetails(id) {
 						return send("c=loadQuestionDetails" + "&questionID="
 								+ id);
 
-					} 
-					
+					}
+
 					function doQuestionLike(id) {
-						return send("c=doQuestionLike" + "&questionID="
-								+ id);
+						return send("c=doQuestionLike" + "&questionID=" + id);
+
+					}
+					
+					function getAllQuestions() {
+						return send("c=getAllQuestions");
+
+					}
+					
+					function doSearch(modul, hochschule, dozent, keywords) {
+						return send("c=doSearch" + "&modul=" + modul
+								+ "&hochschule=" + hochschule + "&dozent="
+								+ dozent + "&keywords=" + keywords);
 
 					}
 
@@ -107,6 +118,8 @@ angular.module('ExPrep').factory(
 						createAccount : createAccount,
 						loadQuestionDetails : loadQuestionDetails,
 						doQuestionLike : doQuestionLike,
+						doSearch : doSearch,
+						getAllQuestions : getAllQuestions,
 
 					};
 				} ]);

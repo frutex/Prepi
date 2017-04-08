@@ -199,7 +199,8 @@ public class JSONConverter {
 		sb.append("{");
 		sb.append("\"Name\":\"").append(cred.getNutz().getName()).append("\",");
 		sb.append("\"Vorname\":\"").append(cred.getNutz().getVorname()).append("\",");
-		sb.append("\"Email\":\"").append(cred.getNutz().getEmail()).append("\"");
+		sb.append("\"Email\":\"").append(cred.getNutz().getEmail()).append("\",");
+		sb.append("\"FragenID\":\"").append(cred.getKlausurf_id().getF_id()).append("\"");
 		sb.append("}");
 		String res = sb.toString();
 		return res;
