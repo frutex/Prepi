@@ -34,6 +34,7 @@
 <script src="js/authenticator.js"></script>
 <script src="js/requestFactory.js"></script>
 <script src="js/detailCtrl.js"></script>
+<script src="js/modalCtrl.js"></script>
 
 <!-- Bootstrap core CSS & Angular Material CSS-->
 <link
@@ -42,7 +43,6 @@
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.3/angular-material.css"
 	rel="stylesheet">
-
 
 
 <!-- Custom styles for this template -->
@@ -112,16 +112,21 @@
 		</table>
 		<p>
 			{{questionDetails[0].Fragendetails.Likes}}x
-			<button ng-show="questionDetails[0].Fragendetails.isLikeable" href="#" class="btn btn-sm btn-danger"
-				ng-click="doQuestionLike()">
+			<button ng-show="questionDetails[0].Fragendetails.isLikeable"
+				href="#" class="btn btn-sm btn-danger" ng-click="doQuestionLike()">
 				Danke! <span class="glyphicon glyphicon-heart-empty"></span>
 			</button>
-			
-			<button ng-show="!questionDetails[0].Fragendetails.isLikeable" href="#" class="btn btn-sm btn-danger"
-				ng-click="doQuestionLike()" disabled>
+
+			<button ng-show="!questionDetails[0].Fragendetails.isLikeable"
+				href="#" class="btn btn-sm btn-danger" ng-click="doQuestionLike()"
+				disabled>
 				Danke! <span class="glyphicon glyphicon-heart-empty"></span>
 			</button>
+
 		</p>
+
+
+
 
 
 

@@ -15,7 +15,7 @@ import com.examprep.app.util.ErrorMessages;
 import com.examprep.app.util.JSONConverter;
 import com.examprep.app.util.UserTokenMachine;
 
-public class GetQuestionDetailsCmd extends AbstractCmdServlet{
+public class GetQuestionDetailsCmd extends AbstractCmdServlet {
 
 	public GetQuestionDetailsCmd(HttpServlet servlet, HttpServletRequest request, HttpServletResponse response) {
 		super(servlet, request, response);
@@ -25,30 +25,21 @@ public class GetQuestionDetailsCmd extends AbstractCmdServlet{
 
 		String res = "";
 		String qID = request.getParameter("questionID");
-		
+
 		String name = UserTokenMachine.getUserFromToken(request.getParameter("token"));
-		
 
 		try {
-			
+
 			Nutzer nutzer = PersistenceQuery.getOneNutzerByName(name);
 			int id = Integer.parseInt(qID);
 
-			List<KlausurFrage> fList;
-			
-			fList = PersistenceQuery.getAllQuestions();
-				
-			res = "{\"successfull\":" + "false" + ",\"data\":" + ErrorMessages.getInternalError() + "}";
 
-			for(int i = 0; i< fList.size(); i++){
-				if(fList.get(i).getF_id() == id){
-					res = "{\"successfull\":" + "true" + ",\"data\":" + JSONConverter.toJSONFullF(fList.get(i), nutzer) + "}";
-				}
-			}
-			
+			KlausurFrage frage = PersistenceQuery.getFrageById(qID);
+
+			res = "{\"successfull\":" + "true" + ",\"data\":" + JSONConverter.toJSONFullF(frage, nutzer) + "}";
+
 		} catch (Exception e) {
-			res = "{\"successfull\":" + "false" + ",\"data\":\""
-					+ ErrorMessages.getInternalError() + "\"}";
+			res = "{\"successfull\":" + "false" + ",\"data\":\"" + ErrorMessages.getInternalError() + "\"}";
 			e.printStackTrace();
 		} finally {
 			this.sendJsonResult(res);
