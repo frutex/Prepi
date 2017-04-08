@@ -11,6 +11,7 @@ import com.examprep.app.bean.Nutzer;
 import com.examprep.app.persistencelayer.PersistenceQuery;
 import com.examprep.app.persistencelayer.daoif.HochschuleDao;
 import com.examprep.app.persistencelayer.daoimpl.HochschuleDaoImpl;
+import com.examprep.app.util.ErrorMessages;
 import com.examprep.app.util.JSONConverter;
 
 public class GetHochschulenCmd extends AbstractCmdServlet {
@@ -31,7 +32,7 @@ public class GetHochschulenCmd extends AbstractCmdServlet {
 
 		} catch (Exception e) {
 			res = "{\"successfull\":" + "false" + ",\"data\":\""
-					+ "An Internal Error Occured, please contact the HelpDesk for further assistance." + "\"}";
+					+ ErrorMessages.getInternalError() + "\"}";
 			e.printStackTrace();
 		} finally {
 			this.sendJsonResult(res);

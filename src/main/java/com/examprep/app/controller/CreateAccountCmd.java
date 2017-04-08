@@ -12,6 +12,7 @@ import com.examprep.app.persistencelayer.PersistenceQuery;
 import com.examprep.app.persistencelayer.daoif.HochschuleDao;
 import com.examprep.app.persistencelayer.daoif.NutzerDao;
 import com.examprep.app.persistencelayer.daoimpl.HochschuleDaoImpl;
+import com.examprep.app.util.ErrorMessages;
 import com.examprep.app.util.JSONConverter;
 
 public class CreateAccountCmd extends AbstractCmdServlet {
@@ -39,13 +40,11 @@ public class CreateAccountCmd extends AbstractCmdServlet {
 				res = "{\"successfull\":" + "true" + ",\"data\":" + JSONConverter.toJSONN(nutzer) + "}";
 			} else {
 
-				res = "{\"successfull\":" + "false" + ",\"data\":"
-						+ "An Unexpected Error Occured, please contact the Help." + "}";
+				res = "{\"successfull\":" + "false" + ",\"data\":" + ErrorMessages.getInternalError() + "}";
 			}
 
 		} catch (Exception e) {
-			res = "{\"successfull\":" + "false" + ",\"data\":\""
-					+ "An Internal Error Occured, please contact the HelpDesk for further assistance." + "\"}";
+			res = "{\"successfull\":" + "false" + ",\"data\":\"" + ErrorMessages.getInternalError() + "\"}";
 			e.printStackTrace();
 		} finally {
 			this.sendJsonResult(res);

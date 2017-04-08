@@ -10,7 +10,7 @@ angular.module('ExPrep').controller(
 					$scope.authenticated = false;
 					$scope.checkAuth = function() {
 						token = AuthService.getUserToken();
-						if (AuthService.isAuthenticated && token) {
+						if (token) {
 							$scope.authenticated = true;
 
 							RequestFactory.checkAuthToken().then(
@@ -19,6 +19,8 @@ angular.module('ExPrep').controller(
 											var loc = window.location.pathname;
 
 											if (loc.contains("login")) {
+												window.location.href = "./dashboard.html";
+											}if (loc == "/prepa/") {
 												window.location.href = "./dashboard.html";
 											}
 										} else {

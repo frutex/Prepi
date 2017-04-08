@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.examprep.app.bean.Dozent;
 import com.examprep.app.bean.Hochschule;
 import com.examprep.app.persistencelayer.PersistenceQuery;
+import com.examprep.app.util.ErrorMessages;
 import com.examprep.app.util.JSONConverter;
 
 public class GetDozentenCmd extends AbstractCmdServlet{
@@ -33,7 +34,7 @@ public class GetDozentenCmd extends AbstractCmdServlet{
 
 		} catch (Exception e) {
 			res = "{\"successfull\":" + "false" + ",\"data\":\""
-					+ "An Internal Error Occured, please contact the HelpDesk for further assistance." + "\"}";
+					+ ErrorMessages.getInternalError() + "\"}";
 			e.printStackTrace();
 		} finally {
 			this.sendJsonResult(res);

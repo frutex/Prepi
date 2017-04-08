@@ -46,7 +46,7 @@ public class Credibility {
 		this.klausurf_id = klausurf_id;
 	}
 
-	public Nutzer getNutzc_id() {
+	public Nutzer getNutz() {
 		return nutzc_id;
 	}
 
