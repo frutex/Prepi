@@ -106,7 +106,9 @@ public class DispatcherServlet extends HttpServlet {
 			result = new CreateAccountCmd(servlet, request, response);
 		}else if (command.equalsIgnoreCase("loadQuestionDetails")) {
 			result = new GetQuestionDetailsCmd(servlet, request, response);
-		}
+		} else if (command.equalsIgnoreCase("doQuestionLike")) {
+			result = new DoLikeCmd(servlet, request, response);
+		} 
 		return result;
 	}
 }

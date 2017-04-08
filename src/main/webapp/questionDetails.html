@@ -33,7 +33,7 @@
 <script src="js/app.js"></script>
 <script src="js/authenticator.js"></script>
 <script src="js/requestFactory.js"></script>
-<script src="js/addQuestionCtrl.js"></script>
+<script src="js/detailCtrl.js"></script>
 
 <!-- Bootstrap core CSS & Angular Material CSS-->
 <link
@@ -50,8 +50,8 @@
 <link href="css/dashboard.css" rel="stylesheet">
 </head>
 
-<body ng-app="ExPrep" ng-controller="AddQuestionCtrl">
-	<!-- ng-init="startup()"> 
+<body ng-app="ExPrep" ng-controller="DetailCtrl" ng-init="startup()">
+	<!-- > 
 
 	<!-- Fixed Navbar with Brand logo, nav items and search form -->
 	<nav class="navbar navbar-inverse navbar-fixed-top">
@@ -82,7 +82,7 @@
 			</form>
 		</div>
 	</nav>
-	
+
 	<!-- Main jumbotron for account information and progress bar for credibility level -->
 	<div class="jumbotron">
 		<div class="container">
@@ -91,42 +91,45 @@
 	</div>
 
 	<div class="container">
-		<h1>Titel der Frage: {{frage.Titel}}</h1>
+		<h1>Titel der Frage: {{questionDetails[0].Fragendetails.Titel}}</h1>
 		<table>
-		  <tr>
-			<td>Beschreibung</td>
-			<td>{{frage.Beschreibung}}</td>
-		  </tr>
-		  <tr>
-			<td>Modul</td>
-			<td>default</td>
-		  </tr>
-		  <tr>
-			<td>Professor</td>
-			<td>default</td>
-		  </tr>
-		  <tr>
-			<td>Hochschule</td>
-			<td>default</td>
-		  </tr>
+			<tr>
+				<td>Beschreibung</td>
+				<td>{{questionDetails[0].Fragendetails.Beschreibung}}</td>
+			</tr>
+			<tr>
+				<td>Modul</td>
+				<td>{{questionDetails[0].Fragendetails.Modul}}</td>
+			</tr>
+			<tr>
+				<td>Professor</td>
+				<td>{{questionDetails[0].Fragendetails.Dozent}}</td>
+			</tr>
+			<tr>
+				<td>Hochschule</td>
+				<td>{{questionDetails[0].Fragendetails.Hochschule}}</td>
+			</tr>
 		</table>
-		<p>{{frage.Likes}}x
-							<button href="#" class="btn btn-sm btn-danger"
-								ng-click="doLikeOnQuestion()">
-								Danke! <span class="glyphicon glyphicon-heart-empty"></span>
-							</button>
-			</p>
-		  
+		<p>
+			{{questionDetails[0].Fragendetails.Likes}}x
+			<button ng-show="questionDetails[0].Fragendetails.isLikeable" href="#" class="btn btn-sm btn-danger"
+				ng-click="doQuestionLike()">
+				Danke! <span class="glyphicon glyphicon-heart-empty"></span>
+			</button>
+			
+			<button ng-show="!questionDetails[0].Fragendetails.isLikeable" href="#" class="btn btn-sm btn-danger"
+				ng-click="doQuestionLike()" disabled>
+				Danke! <span class="glyphicon glyphicon-heart-empty"></span>
+			</button>
+		</p>
+
 
 
 	</div>
 
 
-	<!-- Submit Button Formular -->
-	<div id="button-div">
-		<button type="submit" id="btn-add-question"
-			class="btn btn-primary btn-lg" ng-click="addFrage()">&laquo; Zurück</button>
-	</div>
+
+	<a href="dashboard.html" class="btn btn-sm btn-danger">Zurück</a>
 
 
 	<footer class="footer">

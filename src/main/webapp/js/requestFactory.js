@@ -14,6 +14,18 @@ angular.module('ExPrep').factory(
 								})
 					}
 
+					function createAccount(data) {
+						return $http.post(
+								"/prepa/cmd?" + "c=createAccount" + "&vorname="
+										+ data.Vorname + "&nachname="
+										+ data.Name + "&password=" + data.Pass
+										+ "&email=" + data.Email).then(
+								function(data) {
+									return data;
+								})
+
+					}
+
 					function login(username, password) {
 						return send("c=login&username=" + username
 								+ "&password=" + password);
@@ -68,16 +80,16 @@ angular.module('ExPrep').factory(
 								+ dozent.Nachname);
 
 					}
+					
+					function loadQuestionDetails(id) {
+						return send("c=loadQuestionDetails" + "&questionID="
+								+ id);
 
-					function createAccount(data) {
-						return $http.post(
-								"/prepa/cmd?" + "c=createAccount" + "&vorname="
-										+ data.Vorname + "&nachname="
-										+ data.Name + "&password=" + data.Pass
-										+ "&email=" + data.Email).then(
-								function(data) {
-									return data;
-								})
+					} 
+					
+					function doQuestionLike(id) {
+						return send("c=doQuestionLike" + "&questionID="
+								+ id);
 
 					}
 
@@ -93,6 +105,8 @@ angular.module('ExPrep').factory(
 						getDozentenForHochschule : getDozentenForHochschule,
 						getModulForDozent : getModulForDozent,
 						createAccount : createAccount,
+						loadQuestionDetails : loadQuestionDetails,
+						doQuestionLike : doQuestionLike,
 
 					};
 				} ]);
