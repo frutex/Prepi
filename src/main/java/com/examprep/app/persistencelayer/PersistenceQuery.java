@@ -1,5 +1,6 @@
 package com.examprep.app.persistencelayer;
 
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -78,7 +79,7 @@ public class PersistenceQuery {
 			credDao = DaoManager.createDao(connSource, Credibility.class);
 			credDao.create(cred);
 			// TODO Auto-generated catch block
-			
+
 		} finally {
 
 			return cred;
@@ -372,7 +373,7 @@ public class PersistenceQuery {
 		}
 
 	}
-	
+
 	@SuppressWarnings("finally")
 	public static KlausurFrage getFrageById(String id) {
 		KlausurFrage frage = null;
@@ -414,6 +415,23 @@ public class PersistenceQuery {
 	}
 
 	@SuppressWarnings("finally")
+	public static KlausurFrage update(KlausurFrage kfrage) {
+
+		try {
+			klausurfDao = DaoManager.createDao(connSource, KlausurFrage.class);
+			klausurfDao.update(kfrage);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			reconnect();
+			update(kfrage);
+
+		} finally {
+
+			return kfrage;
+		}
+	}
+
+	@SuppressWarnings("finally")
 	public static List<KlausurFrage> getKlausurFrage(Dozent dozent, Modul modul, Hochschule hochschule,
 			String keyword) {
 		String[] words = keyword.split(" ");
@@ -427,7 +445,7 @@ public class PersistenceQuery {
 			if (dozent != null) {
 				where.eq(KlausurFrage.DOZENT_ID_FIELD_NAME, dozent.getD_id());
 				before = true;
-			}else{
+			} else {
 				before = false;
 			}
 			if (modul != null) {
@@ -437,7 +455,7 @@ public class PersistenceQuery {
 				where.eq(KlausurFrage.MODUL_ID_FIELD_NAME, modul.getM_id());
 				before = true;
 
-			}else{
+			} else {
 				before = false;
 			}
 
@@ -447,7 +465,7 @@ public class PersistenceQuery {
 				}
 				where.eq(KlausurFrage.HOCHSCHULE_ID_FIELD_NAME, hochschule.getH_id());
 				before = true;
-			}else{
+			} else {
 				before = false;
 			}
 			if (keyword.length() > 0) {
@@ -460,7 +478,7 @@ public class PersistenceQuery {
 						where.and();
 					}
 				}
-			}else{
+			} else {
 				before = false;
 			}
 
@@ -477,7 +495,7 @@ public class PersistenceQuery {
 				if (dozent != null) {
 					whereContent.eq(KlausurFrage.DOZENT_ID_FIELD_NAME, dozent.getD_id());
 					before = true;
-				}else{
+				} else {
 					before = false;
 				}
 				if (modul != null) {
@@ -487,7 +505,7 @@ public class PersistenceQuery {
 					whereContent.eq(KlausurFrage.MODUL_ID_FIELD_NAME, modul.getM_id());
 					before = true;
 
-				}else{
+				} else {
 					before = false;
 				}
 
@@ -497,7 +515,7 @@ public class PersistenceQuery {
 					}
 					whereContent.eq(KlausurFrage.HOCHSCHULE_ID_FIELD_NAME, hochschule.getH_id());
 					before = true;
-				}else{
+				} else {
 					before = false;
 				}
 				if (keyword.length() > 0) {
@@ -510,7 +528,7 @@ public class PersistenceQuery {
 							whereContent.and();
 						}
 					}
-				}else{
+				} else {
 					before = false;
 				}
 
@@ -765,7 +783,7 @@ public class PersistenceQuery {
 
 		List<Nutzer> nutzerList = new ArrayList<>();
 		try {
-			Dao<Nutzer, String> nutzerDao = DaoManager.createDao(connSource, Nutzer.class);
+			nutzerDao = DaoManager.createDao(connSource, Nutzer.class);
 			nutzerList = nutzerDao.queryBuilder().where().eq("email", name).query();
 		} catch (SQLException e) {
 			reconnect();
@@ -899,6 +917,23 @@ public class PersistenceQuery {
 				return liked;
 			}
 
+		}
+	}
+
+	@SuppressWarnings("finally")
+	public static Nutzer update(Nutzer nutzer) {
+
+		try {
+			nutzerDao = DaoManager.createDao(connSource, Nutzer.class);
+			nutzerDao.update(nutzer);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			reconnect();
+			update(nutzer);
+
+		} finally {
+
+			return nutzer;
 		}
 	}
 
