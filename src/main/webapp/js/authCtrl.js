@@ -32,7 +32,7 @@ angular
 														} else {
 															$scope.authenticated = false;
 															AuthService.logout();
-															alert(data.data.token);
+															alert(data.data.data);
 															var loc = window.location.pathname;
 
 															if (!loc.contains("login") && loc != "/prepa/") {
@@ -71,7 +71,7 @@ angular
 														$scope.checkAuth();
 														window.location.href = "./dashboard.html";
 													} else {
-														alert(data.data.token);
+														alert(data.data.data);
 													}
 												})
 							}
