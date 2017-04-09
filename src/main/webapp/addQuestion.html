@@ -34,6 +34,7 @@
 <script src="js/authenticator.js"></script>
 <script src="js/requestFactory.js"></script>
 <script src="js/addQuestionCtrl.js"></script>
+<script src="js/navCtrl.js"></script>
 
 <!-- Bootstrap core CSS & Angular Material CSS-->
 <link
@@ -54,27 +55,27 @@
 	ng-init="startup()">
 
 	<!-- Fixed Navbar with Brand logo, nav items and search form -->
-	<nav class="navbar navbar-inverse navbar-fixed-top">
+	<nav class="navbar navbar-inverse navbar-fixed-top"
+		ng-controller="NavCtrl">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="#"><img
+				<a class="navbar-brand" href="dashboard.html"><img
 					src="images/exam preppar_logo_small.png" alt="ExPrep"></a>
 			</div>
 			<ul class="nav navbar-nav">
 				<li><a href="dashboard.html">Dashboard</a></li>
-				<li><a href="#">Explore</a></li>
-				<li><a href="#">Meine Fragen</a></li>
+				<li><a href="explore.html">Explore</a></li>
 				<li class="active"><a href="#">Frage hinzufügen</a></li>
-				<li><a href="#">Optionen</a></li>
-				<li><a href="login.html">Logout</a></li>
-				<!-- TODO: logout funktion: token löschen/ ablaufen lassen -->
+				<li><a href="profile.html">Profil</a></li>
+				<li><a href="#" ng-click="logout()">Logout</a></li>
 			</ul>
 			<form class="navbar-form navbar-right">
 				<div class="input-group">
-					<input type="text" class="form-control"
+					<input type="text" class="form-control" ng-model="searchText"
 						placeholder="Fragen durchsuchen">
 					<div class="input-group-btn">
-						<button class="btn btn-default" type="submit">
+						<button class="btn btn-default" type="submit"
+							ng-click="newSearch()">
 							<i class="glyphicon glyphicon-search"></i>
 						</button>
 					</div>
@@ -93,11 +94,19 @@
 
 	<!-- Add Question Formular -->
 	<div id="form-div">
-		<form>
+		<form name="fragenForm">
 			<div class="form-group">
-				<md-input-container class="md-block"> <label>Fragentitel</label>
-				<textarea ng-model="selected.Titel" md-maxlength="100"
-					rows="1" md-select-on-focus></textarea> </md-input-container>
+			
+			<md-input-container class="md-block"> <label>Fragentitel</label>
+				<input required name="titel" ng-model="selected.Titel"
+					minlength="10" maxlength="100" />
+
+				<div ng-messages="fragenForm.titel.$error" role="alert">
+					<div ng-message-exp="['required', 'minlength', 'maxlength']">
+						Der Titel sollte mindestens 10 und maximal 1000 Zeichen
+						enthalten.</div>
+				</div>
+				</md-input-container>
 
 
 				<md-autocomplete flex required
@@ -132,8 +141,15 @@
 				</div>
 
 				<md-input-container class="md-block"> <label>Frageninhalt</label>
-				<textarea ng-model="selected.Beschreibung"
-					md-maxlength="1000" rows="2" md-select-on-focus></textarea> </md-input-container>
+				<input required name="desc" ng-model="selected.Beschreibung"
+					minlength="10" maxlength="1000" />
+
+				<div ng-messages="fragenForm.desc.$error" role="alert">
+					<div ng-message-exp="['required', 'minlength', 'maxlength']">
+						Die Beschreibung sollte mindestens 10 und maximal 1000 Zeichen
+						enthalten.</div>
+				</div>
+				</md-input-container>
 
 			</div>
 		</form>

@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 
 import com.examprep.app.bean.Nutzer;
 
-
 import com.examprep.app.persistencelayer.PersistenceQuery;
 import com.examprep.app.util.CryptoHelpClass;
 import com.examprep.app.util.ErrorMessages;
@@ -40,16 +39,22 @@ public class CheckAuthTokenCmd extends AbstractCmdServlet {
 
 				List<Nutzer> nutzerList = PersistenceQuery.getNutzerByName(name);
 				if (nutzerList.size() > 1) {
-					res = "{\"successfull\":false,\"response\":\"" +  ErrorMessages.getTooManyUsersError()+ "\"}";
+					res = "{\"successfull\":false,\"response\":\"" + ErrorMessages.getTooManyUsersError() + "\"}";
 					this.sendJsonResult(res);
 				} else {
 					Nutzer nutzer = nutzerList.get(0);
-					String genToken = cryp.generateUserToken(nutzer, cryp.token);
-					
+					String genToken = cryp.generateUserToken(nutzer);
+
 					if (UserTokenMachine.getTokenFromToken(genToken).matches(token)) {
-						res = "{\"successfull\":true,\"token\":\"" + token + "\"}";
+						if (cryp.checkDurability(request.getParameter("token"))) {
+							res = "{\"successfull\":true,\"token\":\"" + token + "\"}";
+						} else {
+							res = "{\"successfull\":false,\"token\":\"" + ErrorMessages.getTimeoutError() + " \"}";
+
+						}
+
 					} else {
-						res = "{\"successfull\":false,\"token\":\"" +  ErrorMessages.getAuthenticationError()+ " \"}";
+						res = "{\"successfull\":false,\"token\":\"" + ErrorMessages.getAuthenticationError() + " \"}";
 
 					}
 				}
@@ -57,11 +62,11 @@ public class CheckAuthTokenCmd extends AbstractCmdServlet {
 			} else {
 				//
 				int i = 0;
-				res = "{\"successfull\":false,\"token\":\"" +  ErrorMessages.getAuthenticationError()+ "\"}";
+				res = "{\"successfull\":false,\"token\":\"" + ErrorMessages.getAuthenticationError() + "\"}";
 
 			}
 		} catch (Exception e) {
-			res = "{\"successfull\":false,\"token\":\"" +  ErrorMessages.getInternalError()+ "\"}";
+			res = "{\"successfull\":false,\"token\":\"" + ErrorMessages.getInternalError() + "\"}";
 
 			e.printStackTrace();
 		} finally {

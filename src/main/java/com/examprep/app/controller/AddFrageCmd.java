@@ -12,6 +12,7 @@ import com.examprep.app.bean.KlausurFrage;
 import com.examprep.app.bean.Modul;
 import com.examprep.app.bean.Nutzer;
 import com.examprep.app.persistencelayer.PersistenceQuery;
+import com.examprep.app.util.ErrorMessages;
 import com.examprep.app.util.UserTokenMachine;
 
 public class AddFrageCmd extends AbstractCmdServlet {
@@ -34,27 +35,28 @@ public class AddFrageCmd extends AbstractCmdServlet {
 		String beschreibung = request.getParameter("beschreibung");
 		String datum = request.getParameter("datum");
 
-
 		// Date da = new Date(Integer.parseInt(datum.split(".")[2]),
 		// datum.split(".")[1], datum.split(".")[0])
 		@SuppressWarnings("deprecation")
-		//Date dat = new Date(datum);
+		// Date dat = new Date(datum);
 
 		Nutzer n = PersistenceQuery.getNutzerByName(nutzer).get(0);
 		Dozent d = PersistenceQuery.getDozentByName(dVorname, dNachname);
 		Hochschule h = PersistenceQuery.getHochschuleByName(hochschule).get(0);
 		Modul m = PersistenceQuery.getModulByName(modul).get(0);
 
-
-		KlausurFrage frage = PersistenceQuery.createKlausurfrage(beschreibung, Integer.parseInt(datum), titel, h, d, m, n);
-
+		KlausurFrage frage = PersistenceQuery.createKlausurfrage(beschreibung, Integer.parseInt(datum), titel, h, d, m,
+				n);
+		String res = "";
 		try {
 			if (frage != null) {
-				this.sendJsonResult(true);
+				res = "{\"successfull\":" + "true" + ",\"data\":" + "\"Something\"}";
 			}
 
 		} catch (Exception e) {
-			this.sendJsonResult(false);
+			res = "{\"successfull\":" + "false" + ",\"data\":" + ErrorMessages.getInternalError() + "}";
+		} finally {
+			this.sendJsonResult(res);
 		}
 
 	}
