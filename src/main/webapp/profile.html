@@ -8,7 +8,7 @@
 <meta name="author" content="Christopher Tunkel">
 <!-- <link rel="icon" href="images/favicon.ico"> -->
 
-<title>Add Question</title>
+<title>Profil</title>
 
 <!-- Angular and Bootstrap JS -->
 <script
@@ -65,8 +65,8 @@
 			<ul class="nav navbar-nav">
 				<li><a href="dashboard.html">Dashboard</a></li>
 				<li><a href="explore.html">Explore</a></li>
-				<li class="active"><a href="#">Frage hinzufügen</a></li>
-				<li><a href="profile.html">Profil</a></li>
+				<li><a href="#">Frage hinzufügen</a></li>
+				<li class="active"><a href="profile.html">Profil</a></li>
 				<li><a href="#" ng-click="logout()">Logout</a></li>
 			</ul>
 			<form class="navbar-form navbar-right">
@@ -88,82 +88,50 @@
 	<!-- Main jumbotron for account information and progress bar for credibility level -->
 	<div class="jumbotron">
 		<div class="container">
-			<h1>FRAGE HINZUFÜGEN</h1>
+			<h1>DEIN PROFIL</h1>
 		</div>
 	</div>
 
 	<div class="container">
 	<!-- Add Question Formular -->
 	<div id="form-div">
-		<form name="fragenForm">
-			<div class="form-group">
 			
-			<md-input-container class="md-block"> <label>Fragentitel</label>
-				<input required name="titel" ng-model="selected.Titel"
-					minlength="10" maxlength="100" />
+			<div class="form-group col-lg-6">
+							<label>Vorname</label> <input type="" name=""
+								class="form-control" id="" value="" ng-model="data.Vorname">
+						</div>
 
-				<div ng-messages="fragenForm.titel.$error" role="alert">
-					<div ng-message-exp="['required', 'minlength', 'maxlength']">
-						Der Titel sollte mindestens 10 und maximal 1000 Zeichen
-						enthalten.</div>
-				</div>
-				</md-input-container>
+						<div class="form-group col-lg-6">
+							<label>Name</label> <input type="" name="" class="form-control"
+								id="" value="" ng-model="data.Name">
+						</div>
 
+						<div class="form-group col-lg-6">
+							<label>Email</label> <input type="" name="" class="form-control"
+								id="" value="" ng-model="data.Email">
+						</div>
 
-				<md-autocomplete flex required
-					md-selected-item="selected.Hochschule" md-search-text="searchTextH"
-					md-items="item in queryHS(searchTextH)" md-item-text="item.Name"
-					placeholder="Bitte eine Hochschule eingeben." md-require-match
-					md-floating-label="Hochschule auswählen"
-					md-selected-item-change="loadHSDozenten()"
-					md-select-on-match="true" md-match-case-insensitive="true">
-				<span md-highlight-text="searchText">{{item.Name}}</span> </md-autocomplete>
+						<div class="form-group col-lg-6">
+							<label>Email wiederholen</label> <input type="" name=""
+								class="form-control" id="" value="" ng-model="data.EmailWied">
+						</div>
 
-				<md-autocomplete flex required md-selected-item="selected.Dozent"
-					md-search-text="searchTextD" md-items="item in queryD(searchTextD)"
-					md-item-text="item.Vollname"
-					placeholder="Bitte einen Dozenten eingeben" md-require-match
-					md-floating-label="Dozenten auswählen"
-					md-selected-item-change="loadDModule()" md-select-on-match="true"
-					md-match-case-insensitive="true"> <span
-					md-highlight-text="searchTextD">{{dozentenNameObj(item)}}</span> </md-autocomplete>
+						<div class="form-group col-lg-6">
+							<label>Passwort</label> <input type="password" name=""
+								class="form-control" id="" value="" ng-model="data.Pass">
+						</div>
 
-				<md-autocomplete flex required md-selected-item="selected.Modul"
-					md-search-text="searchTextM" md-items="item in queryM(searchTextM)"
-					md-item-text="item.Name" placeholder="Bitte ein Modul eingeben"
-					md-require-match md-floating-label="Modul auswählen"
-					md-select-on-match="true" md-match-case-insensitive="true">
-				<span md-highlight-text="searchTextM">{{item.Name}}</span> </md-autocomplete>
-
-				<md-input-container class="md-block"> <label>Frageninhalt</label>
-				<input required name="desc" ng-model="selected.Beschreibung"
-					minlength="10" maxlength="1000" />
-
-				<div ng-messages="fragenForm.desc.$error" role="alert">
-					<div ng-message-exp="['required', 'minlength', 'maxlength']">
-						Die Beschreibung sollte mindestens 10 und maximal 1000 Zeichen
-						enthalten.</div>
-				</div>
-				</md-input-container>
-				
-				<div flex-gt-xs>
-					<h5>Klausurdatum auswählen</h5>
-					<md-datepicker ng-model="today" md-placeholder="Datum eingeben"
-						ng-blur="setDate()"></md-datepicker>
-				</div>
-
-			</div>
-		</form>
-
-
-
+						<div class="form-group col-lg-6">
+							<label>Passwort wiederholen</label> <input type="password"
+								name="" class="form-control" id="" value=""
+								ng-model="data.PassWied">
+						</div>
 
 	</div>
 	<!-- Submit Button Formular -->
 	<div id="button-div">
 		<button type="submit" id="btn-add-question"
-			class="btn btn-primary btn-lg" ng-click="addFrage()">Frage
-			hinzufügen &raquo;</button>
+			class="btn btn-primary btn-lg" ng-click="addFrage()">Änderungen speichern &raquo;</button>
 	</div>
 	</div>
 
