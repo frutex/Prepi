@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.examprep.app.util.AuthService;
+import com.examprep.app.util.ErrorMessages;
+import com.examprep.app.util.JSONRespCreator;
 
 public class DispatcherServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -46,9 +48,10 @@ public class DispatcherServlet extends HttpServlet {
 			}
 		} else if (request.getParameter("token") != null) {
 			if (authenticator.checkAuth(request.getParameter("token"))) {
-				CmdServletIF cmd = getCommand(this, request, response);
-
+				CmdServletIF cmd;
 				try {
+
+					cmd = getCommand(this, request, response);
 
 					// LOG.debug("DispatcherServlet execute:" + cmd);
 					if (null != cmd) {
@@ -56,13 +59,12 @@ public class DispatcherServlet extends HttpServlet {
 					}
 
 				} catch (Exception e) {
-
+					
 					e.printStackTrace();
 				}
 			} else {
 				CmdServletIF cmd = getCommand(this, request, response);
-				cmd.sendJsonResult(
-						"{\"successfull\":false,\"token\":\"Authentication token is wrong. You are being logged out. \"}");
+				cmd.sendJsonResult(JSONRespCreator.createWstring(true, ErrorMessages.getAuthenticationError()));
 			}
 		}
 
@@ -104,7 +106,7 @@ public class DispatcherServlet extends HttpServlet {
 			result = new GetModuleForDozentCmd(servlet, request, response);
 		} else if (command.equalsIgnoreCase("createAccount")) {
 			result = new CreateAccountCmd(servlet, request, response);
-		}else if (command.equalsIgnoreCase("loadQuestionDetails")) {
+		} else if (command.equalsIgnoreCase("loadQuestionDetails")) {
 			result = new GetQuestionDetailsCmd(servlet, request, response);
 		} else if (command.equalsIgnoreCase("doQuestionLike")) {
 			result = new DoLikeCmd(servlet, request, response);
@@ -114,7 +116,7 @@ public class DispatcherServlet extends HttpServlet {
 			result = new GetAllQuestionsCmd(servlet, request, response);
 		} else if (command.equalsIgnoreCase("addHStoUser")) {
 			result = new AddHStoUserCmd(servlet, request, response);
-		} 
+		}
 		return result;
 	}
 }

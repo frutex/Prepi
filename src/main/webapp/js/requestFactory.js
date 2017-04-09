@@ -105,7 +105,7 @@ angular.module('ExPrep').factory(
 					}
 
 					function addHStoUser(hochschule) {
-						return send("c=addHStouser" + "&hochschule="
+						return send("c=addHStoUser" + "&hochschule="
 								+ hochschule);
 
 					}
@@ -126,7 +126,7 @@ angular.module('ExPrep').factory(
 						doQuestionLike : doQuestionLike,
 						doSearch : doSearch,
 						getAllQuestions : getAllQuestions,
-						addHStoUser : addHStoUSer,
+						addHStoUser : addHStoUser,
 
 					};
 				} ]);

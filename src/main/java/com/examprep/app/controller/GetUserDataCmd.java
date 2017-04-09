@@ -45,7 +45,7 @@ public class GetUserDataCmd extends AbstractCmdServlet {
 			String returnData = "[" + nRes + "," + fRes + "," + "{\"Credibility\":\"" + cred + "\",\"Level\":\"" + level
 					+ "\"}]";
 
-			res = JSONRespCreator.createWobj(false, returnData);
+			res = JSONRespCreator.createWobj(true, returnData);
 
 		} catch (Exception e) {
 			res = JSONRespCreator.createWstring(false, ErrorMessages.getInternalError());
