@@ -7,7 +7,8 @@ angular
 						'$scope',
 						'RequestFactory',
 						'AuthService',
-						function($http, $scope, RequestFactory, AuthService) {
+						'ProgService',
+						function($http, $scope, RequestFactory, AuthService, ProgService) {
 
 							$scope.checkAuth = function() {
 								token = AuthService.getUserToken();
@@ -42,11 +43,11 @@ angular
 							$scope.module;
 
 							$scope.startup = function() {
+								ProgService.state(true);
 								$scope.checkAuth();
 								$scope.getHochschulen();
 								$scope.getModule();
 								$scope.getDozenten();
-								var i = 0;
 							}
 
 							$scope.selected = {
@@ -87,8 +88,10 @@ angular
 										.getHochschulen()
 										.then(
 												function(data) {
+													ProgService.state(false);
 													if (data.data.successfull) {
 														$scope.hochschulen = data.data.data;
+														
 													} else {
 														alert(data.data.data);
 														// $scope.$apply;
@@ -97,18 +100,23 @@ angular
 							}
 
 							$scope.addFrage = function() {
+								ProgService.state(true);
 								if ($scope.checkAll()) {
 									RequestFactory
 											.addFrage($scope.selected)
 											.then(
 													function(data) {
+														ProgService.state(false);
 														if (data.data.successfull) {
 															window.location.href = "./danke.html";
 														} else {
 															alert(data.data.data);
 															// $scope.$apply;
 														}
+														
 													});
+								} else {
+									ProgService.state(false);
 								}
 							}
 
@@ -138,14 +146,17 @@ angular
 							}
 
 							$scope.loadDModule = function() {
+								ProgService.state(true);
 								if ($scope.selected.Dozent) {
 									RequestFactory
 											.getModulForDozent(
 													$scope.selected.Dozent)
 											.then(
 													function(data) {
+														ProgService.state(false);
 														if (data.data.successfull) {
 															$scope.module = data.data.data;
+															
 														} else {
 															alert(data.data.data);
 															// $scope.$apply;
@@ -166,13 +177,16 @@ angular
 							}
 
 							$scope.loadHSDozenten = function() {
+								ProgService.state(true);
 								RequestFactory
 										.getDozentenForHochschule(
 												$scope.selected.Hochschule.Name)
 										.then(
 												function(data) {
+													ProgService.state(false);
 													if (data.data.successfull) {
 														$scope.dozenten = data.data.data;
+														
 													} else {
 														alert(data.data.data);
 														// $scope.$apply;

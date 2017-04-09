@@ -7,9 +7,11 @@ angular
 						'$scope',
 						'RequestFactory',
 						'AuthService',
-						function($http, $scope, RequestFactory, AuthService) {
+						'ProgService',
+						function($http, $scope, RequestFactory, AuthService, ProgService) {
 
 							$scope.startup = function() {
+								ProgService.state(true);
 								$scope.checkAuth();
 								$scope.loadUserData();
 							}
@@ -50,6 +52,7 @@ angular
 										.loadUserData()
 										.then(
 												function(data) {
+													ProgService.state(false);
 													if (data.data.successfull) {
 														$scope.userData = data.data.data;
 													} else {
