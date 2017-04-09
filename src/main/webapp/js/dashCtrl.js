@@ -8,10 +8,12 @@ angular
 						'RequestFactory',
 						'AuthService',
 						'$mdDialog',
+						'ProgService',
 						function($http, $scope, RequestFactory, AuthService,
-								$mdDialog) {
+								$mdDialog, ProgService) {
 
 							$scope.startup = function() {
+								ProgService.state(true);
 								$scope.checkAuth();
 								$scope.loadUserData();
 							}
@@ -46,12 +48,14 @@ angular
 								}
 							}
 
-							$scope.userData;
+							$scope.userData = ["","",{"Progress":0}];
 							$scope.loadUserData = function() {
+								ProgService.state(true);
 								RequestFactory
 										.loadUserData()
 										.then(
 												function(data) {
+													ProgService.state(false);
 													if (data.data.successfull) {
 														$scope.userData = data.data.data;
 														if ($scope.userData[0].Hochschule == "null") {
@@ -59,7 +63,6 @@ angular
 														}
 													} else {
 														alert(data.data.data);
-														// $scope.$apply;
 													}
 												});
 							}
@@ -75,17 +78,19 @@ angular
 														$scope.showHSDialog();
 													} else {
 														alert(data.data.data);
-														// $scope.$apply;
 													}
 												});
 
 							}
 
 							$scope.doQuestionLike = function(id) {
+								ProgService.state(true);
 								RequestFactory.doQuestionLike(id).then(
 										function(data) {
+											ProgService.state(false);
 											if (data.data.successfull) {
 												$scope.loadUserData();
+												
 											} else {
 												alert(data.data.data);
 
@@ -118,22 +123,22 @@ angular
 								return res;
 
 							}
-							
-							$scope.confirmHS = function(){
-								RequestFactory.addHStoUser($scope.selectedHS.Name).then(
-										function(data) {
-											if (data.data.successfull) {
-												$scope.loadUserData();
-												$mdDialog.close({
-													contentElement : '#hsDialog',
-													parent : angular.element(document.body),
-													clickOutsideToClose : true
-												});
-											} else {
-												alert(data.data.data);
 
-											}
-										});
+							$scope.confirmHS = function() {
+								RequestFactory
+										.addHStoUser($scope.selectedHS.Name)
+										.then(
+												function(data) {
+													if (data.data.successfull) {
+														$scope.userData[0] = data.data.data;
+														$mdDialog.hide();
+													} else {
+														alert(data.data.data);
+
+													}
+												});
 							}
+							
+							
 
 						} ]);

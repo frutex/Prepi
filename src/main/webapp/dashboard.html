@@ -16,6 +16,8 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.js"></script>
 <script
+	src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.js"></script>
+<script
 	src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-animate.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-touch.js"></script>
@@ -83,6 +85,7 @@
 				</div>
 			</form>
 		</div>
+		<md-progress-linear ng-show="progActive()" md-mode="indeterminate"></md-progress-linear>
 	</nav>
 
 
@@ -109,13 +112,15 @@
 			<hr>
 
 			<div class="progress">
-				<div class="progress-bar" role="progressbar" aria-valuenow="70"
-					aria-valuemin="0" aria-valuemax="100" style="width: 70%">
-					<span class="sr-only">70% Complete</span>
-				</div>
+				<uib-progressbar max="max" value="userData[2].Progress">
+				<span style="color: white; white-space: nowrap;">{{userData[2].Progress}}
+					%</span></uib-progressbar>
+
 			</div>
 		</div>
+
 	</div>
+
 
 	<!-- Add Question Button -->
 	<div id="question-div">
@@ -174,10 +179,9 @@
 						md-search-text="searchTextH"
 						md-items="item in queryHS(searchTextH)" md-item-text="item.Name"
 						placeholder="Bitte eine Hochschule eingeben." md-require-match
-						md-floating-label="Hochschule auswählen"
-						md-select-on-match="true" md-match-case-insensitive="true">
-					<span md-highlight-text="searchText">{{item.Name}}</span> </md-autocomplete>
-					
+						md-floating-label="Hochschule auswählen" md-select-on-match="true"
+						md-match-case-insensitive="true"> <span
+						md-highlight-text="searchText">{{item.Name}}</span> </md-autocomplete>
 				<div id="button-div">
 					<button id="btn-confirm-HS" class="btn btn-primary btn-lg"
 						ng-click="confirmHS()">Bestätigen. &raquo;</button>

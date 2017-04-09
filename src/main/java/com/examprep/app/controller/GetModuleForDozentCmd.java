@@ -32,7 +32,7 @@ public class GetModuleForDozentCmd extends AbstractCmdServlet {
 			Dozent d = PersistenceQuery.getDozentByName(vorname, nachname);
 			List<Modul> mList = PersistenceQuery.getAllModuleVonDozent(d);
 
-			res = JSONRespCreator.createWobj(false, JSONConverter.toJSONM(mList));
+			res = JSONRespCreator.createWobj(true, JSONConverter.toJSONM(mList));
 
 		} catch (Exception e) {
 			res = JSONRespCreator.createWstring(false, ErrorMessages.getInternalError());

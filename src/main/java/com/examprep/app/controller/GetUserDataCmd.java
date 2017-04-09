@@ -36,6 +36,7 @@ public class GetUserDataCmd extends AbstractCmdServlet {
 			// int cred = (int) (Math.random() * 100);
 			int cred = PersistenceQuery.getAllLikesForRegisteredQuestionsForOneUser(name);
 			int level = LevelCalc.calculateLevel(cred);
+			int progress = LevelCalc.calculateProgress(cred);
 
 			List<KlausurFrage> fragen = PersistenceQuery.getAllQuestionsFromOneUser(name);
 
@@ -43,7 +44,7 @@ public class GetUserDataCmd extends AbstractCmdServlet {
 			String nRes = JSONConverter.toJSONN(nutzer);
 
 			String returnData = "[" + nRes + "," + fRes + "," + "{\"Credibility\":\"" + cred + "\",\"Level\":\"" + level
-					+ "\"}]";
+					+ "\",\"Progress\":\"" + progress + "\"}]";
 
 			res = JSONRespCreator.createWobj(true, returnData);
 

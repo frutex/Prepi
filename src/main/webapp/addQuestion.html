@@ -51,8 +51,7 @@
 <link href="css/dashboard.css" rel="stylesheet">
 </head>
 
-<body ng-app="ExPrep" ng-controller="AddQuestionCtrl">
-	<!-- ng-init="startup()">
+<body ng-app="ExPrep" ng-controller="AddQuestionCtrl" ng-init="startup()">
 
 	<!-- Fixed Navbar with Brand logo, nav items and search form -->
 	<nav class="navbar navbar-inverse navbar-fixed-top"
@@ -82,8 +81,8 @@
 				</div>
 			</form>
 		</div>
+		<md-progress-linear ng-show="progActive()" md-mode="indeterminate"></md-progress-linear>
 	</nav>
-
 
 	<!-- Main jumbotron for account information and progress bar for credibility level -->
 	<div class="jumbotron">
@@ -93,78 +92,81 @@
 	</div>
 
 	<div class="container">
-	<!-- Add Question Formular -->
-	<div id="form-div">
-		<form name="fragenForm">
-			<div class="form-group">
-			
-			<md-input-container class="md-block"> <label>Fragentitel</label>
-				<input required name="titel" ng-model="selected.Titel"
-					minlength="10" maxlength="100" />
+		<!-- Add Question Formular -->
+		<div id="form-div">
+			<form name="fragenForm">
+				<div class="form-group">
 
-				<div ng-messages="fragenForm.titel.$error" role="alert">
-					<div ng-message-exp="['required', 'minlength', 'maxlength']">
-						Der Titel sollte mindestens 10 und maximal 1000 Zeichen
-						enthalten.</div>
+					<md-input-container class="md-block"> <label>Fragentitel</label>
+					<input required name="titel" ng-model="selected.Titel"
+						minlength="10" maxlength="100" />
+
+					<div ng-messages="fragenForm.titel.$error" role="alert">
+						<div ng-message-exp="['required', 'minlength', 'maxlength']">
+							Der Titel sollte mindestens 10 und maximal 1000 Zeichen
+							enthalten.</div>
+					</div>
+					</md-input-container>
+
+
+					<md-autocomplete flex required
+						md-selected-item="selected.Hochschule"
+						md-search-text="searchTextH"
+						md-items="item in queryHS(searchTextH)" md-item-text="item.Name"
+						placeholder="Bitte eine Hochschule eingeben." md-require-match
+						md-floating-label="Hochschule auswählen"
+						md-selected-item-change="loadHSDozenten()"
+						md-select-on-match="true" md-match-case-insensitive="true">
+					<span md-highlight-text="searchText">{{item.Name}}</span> </md-autocomplete>
+
+					<md-autocomplete flex required md-selected-item="selected.Dozent"
+						md-search-text="searchTextD"
+						md-items="item in queryD(searchTextD)"
+						md-item-text="item.Vollname"
+						placeholder="Bitte einen Dozenten eingeben" md-require-match
+						md-floating-label="Dozenten auswählen"
+						md-selected-item-change="loadDModule()" md-select-on-match="true"
+						md-match-case-insensitive="true"> <span
+						md-highlight-text="searchTextD">{{dozentenNameObj(item)}}</span> </md-autocomplete>
+
+					<md-autocomplete flex required md-selected-item="selected.Modul"
+						md-search-text="searchTextM"
+						md-items="item in queryM(searchTextM)" md-item-text="item.Name"
+						placeholder="Bitte ein Modul eingeben" md-require-match
+						md-floating-label="Modul auswählen" md-select-on-match="true"
+						md-match-case-insensitive="true"> <span
+						md-highlight-text="searchTextM">{{item.Name}}</span> </md-autocomplete>
+
+					<md-input-container class="md-block"> <label>Frageninhalt</label>
+					<input required name="desc" ng-model="selected.Beschreibung"
+						minlength="10" maxlength="1000" />
+
+					<div ng-messages="fragenForm.desc.$error" role="alert">
+						<div ng-message-exp="['required', 'minlength', 'maxlength']">
+							Die Beschreibung sollte mindestens 10 und maximal 1000 Zeichen
+							enthalten.</div>
+					</div>
+					</md-input-container>
+
+					<div flex-gt-xs>
+						<h5>Klausurdatum auswählen</h5>
+						<md-datepicker ng-model="today" md-placeholder="Datum eingeben"
+							ng-blur="setDate()"></md-datepicker>
+					</div>
+
 				</div>
-				</md-input-container>
-
-
-				<md-autocomplete flex required
-					md-selected-item="selected.Hochschule" md-search-text="searchTextH"
-					md-items="item in queryHS(searchTextH)" md-item-text="item.Name"
-					placeholder="Bitte eine Hochschule eingeben." md-require-match
-					md-floating-label="Hochschule auswählen"
-					md-selected-item-change="loadHSDozenten()"
-					md-select-on-match="true" md-match-case-insensitive="true">
-				<span md-highlight-text="searchText">{{item.Name}}</span> </md-autocomplete>
-
-				<md-autocomplete flex required md-selected-item="selected.Dozent"
-					md-search-text="searchTextD" md-items="item in queryD(searchTextD)"
-					md-item-text="item.Vollname"
-					placeholder="Bitte einen Dozenten eingeben" md-require-match
-					md-floating-label="Dozenten auswählen"
-					md-selected-item-change="loadDModule()" md-select-on-match="true"
-					md-match-case-insensitive="true"> <span
-					md-highlight-text="searchTextD">{{dozentenNameObj(item)}}</span> </md-autocomplete>
-
-				<md-autocomplete flex required md-selected-item="selected.Modul"
-					md-search-text="searchTextM" md-items="item in queryM(searchTextM)"
-					md-item-text="item.Name" placeholder="Bitte ein Modul eingeben"
-					md-require-match md-floating-label="Modul auswählen"
-					md-select-on-match="true" md-match-case-insensitive="true">
-				<span md-highlight-text="searchTextM">{{item.Name}}</span> </md-autocomplete>
-
-				<md-input-container class="md-block"> <label>Frageninhalt</label>
-				<input required name="desc" ng-model="selected.Beschreibung"
-					minlength="10" maxlength="1000" />
-
-				<div ng-messages="fragenForm.desc.$error" role="alert">
-					<div ng-message-exp="['required', 'minlength', 'maxlength']">
-						Die Beschreibung sollte mindestens 10 und maximal 1000 Zeichen
-						enthalten.</div>
-				</div>
-				</md-input-container>
-				
-				<div flex-gt-xs>
-					<h5>Klausurdatum auswählen</h5>
-					<md-datepicker ng-model="today" md-placeholder="Datum eingeben"
-						ng-blur="setDate()"></md-datepicker>
-				</div>
-
-			</div>
-		</form>
+			</form>
 
 
 
 
-	</div>
-	<!-- Submit Button Formular -->
-	<div id="button-div">
-		<button type="submit" id="btn-add-question"
-			class="btn btn-primary btn-lg" ng-click="addFrage()">Frage
-			hinzufügen &raquo;</button>
-	</div>
+		</div>
+		<!-- Submit Button Formular -->
+		<div id="button-div">
+			<button type="submit" id="btn-add-question"
+				class="btn btn-primary btn-lg" ng-click="addFrage()">Frage
+				hinzufügen &raquo;</button>
+		</div>
 	</div>
 
 	<footer class="footer">

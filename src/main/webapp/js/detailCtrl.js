@@ -7,9 +7,11 @@ angular
 						'$scope',
 						'RequestFactory',
 						'AuthService',
-						function($http, $scope, RequestFactory, AuthService) {
+						'ProgService',
+						function($http, $scope, RequestFactory, AuthService, ProgService) {
 
 							$scope.startup = function() {
+								ProgService.state(true);
 								$scope.checkAuth();
 								$scope.loadQuestionDetails();
 							}
@@ -55,6 +57,7 @@ angular
 										.loadQuestionDetails(param)
 										.then(
 												function(data) {
+													ProgService.state(false);
 													if (data.data.successfull) {
 														$scope.questionDetails = data.data.data;
 													} else {
@@ -65,11 +68,12 @@ angular
 							}
 							
 							$scope.doQuestionLike = function() {
-								
+								ProgService.state(true);
 								RequestFactory
 										.doQuestionLike($scope.questionDetails[0].Fragendetails.FragenID)
 										.then(
 												function(data) {
+													ProgService.state(false);
 													if (data.data.successfull) {
 														$scope.loadQuestionDetails();
 													} else {
