@@ -53,7 +53,6 @@ angular
 													if (data.data.successfull) {
 														$scope.userData = data.data.data;
 													} else {
-														$scope.userData = data.data;
 														alert(data.data.data);
 														// $scope.$apply;
 													}

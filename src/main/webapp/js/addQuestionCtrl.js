@@ -9,6 +9,33 @@ angular
 						'AuthService',
 						function($http, $scope, RequestFactory, AuthService) {
 
+							$scope.checkAuth = function() {
+								token = AuthService.getUserToken();
+								if (AuthService.isAuthenticated && token) {
+
+									RequestFactory.checkAuthToken().then(
+											function(data) {
+												if (data.data.successfull) {
+
+												} else {
+													alert(data.data.token);
+													AuthService.logout();
+													window.location.href = "./login.html";
+												}
+											});
+
+								} else {
+									var loc = window.location.pathname;
+									var dir = loc.substring(loc
+											.lastIndexOf('/'), loc.length);
+									if (dir != "/login.html") {
+										if (dir != "/") {
+											window.location.href = "./login.html";
+										}
+									}
+								}
+							}
+							
 							$scope.today = new Date();
 							$scope.hochschulen = [];
 							$scope.dozenten;
@@ -42,10 +69,17 @@ angular
 										&& $scope.selected.Modul != ""
 										&& $scope.selected.Dozent != ""
 										&& $scope.selected.Beschreibung != "") {
-return true;
+									$scope.doSymbolCheck();
+									return true;
 								} else {
+									alert("Leider wurden nicht alle Felder angemessen ausgefüllt, bitte überprüfe deine Angaben.")
 									return false;
 								}
+							}
+
+							$scope.doSymbolCheck = function() {
+								$scope.selected.Beschreibung.replace("&",
+										" und ").replace("?", ".");
 							}
 
 							$scope.getHochschulen = function() {
@@ -68,10 +102,10 @@ return true;
 											.addFrage($scope.selected)
 											.then(
 													function(data) {
-														if (data.data) {
+														if (data.data.successfull) {
 															window.location.href = "./danke.html";
 														} else {
-															alert("Error");
+															alert(data.data.data);
 															// $scope.$apply;
 														}
 													});
@@ -120,31 +154,7 @@ return true;
 								}
 							}
 
-							$scope.checkAuth = function() {
-								token = AuthService.getUserToken();
-								if (AuthService.isAuthenticated && token) {
-
-									RequestFactory.checkAuthToken().then(
-											function(data) {
-												if (data.data.successfull) {
-
-												} else {
-													alert(data.data.token);
-													// $scope.$apply;
-												}
-											});
-
-								} else {
-									var loc = window.location.pathname;
-									var dir = loc.substring(loc
-											.lastIndexOf('/'), loc.length);
-									if (dir != "/login.html") {
-										if (dir != "/") {
-											window.location.href = "./login.html";
-										}
-									}
-								}
-							}
+							
 
 							$scope.dozentenName = function(index) {
 								return $scope.dozenten[index].Nachname + ", "
@@ -170,7 +180,7 @@ return true;
 												});
 							}
 
-							// _----------------------------------
+							// Querys
 
 							$scope.searchTextH = "";
 							$scope.searchTextD = "";

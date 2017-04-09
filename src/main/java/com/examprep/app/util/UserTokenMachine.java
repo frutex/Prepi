@@ -22,5 +22,12 @@ public class UserTokenMachine {
 		
 	}
 	
+	public static String getDurabilityFromToken(String token){
+		String dur = token.split("\\!")[2];
+		
+		return dur;
+		
+	}
+	
 	
 }

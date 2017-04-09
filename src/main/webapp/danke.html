@@ -36,6 +36,7 @@
 <script src="js/authCtrl.js"></script>
 <script src="js/dankeCtrl.js"></script>
 <script src="js/dashCtrl.js"></script>
+<script src="js/navCtrl.js"></script>
 
 <!-- Bootstrap core CSS & Angular Material CSS-->
 <link
@@ -53,27 +54,25 @@
 
 
 	<!-- Fixed Navbar with Brand logo, nav items and search form -->
-	<nav class="navbar navbar-inverse navbar-fixed-top">
+	<nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="NavCtrl">
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<a class="navbar-brand" href="dashboard.html"><img
 					src="images/exam preppar_logo_small.png" alt="ExPrep"></a>
 			</div>
 			<ul class="nav navbar-nav">
-				<li><a href="dashboard.html">Dashboard</a></li>
-				<li><a href="#">Explore</a></li>
-				<li><a href="#">Meine Fragen</a></li>
-				<li class="active"><a href="addQuestion.html">Frage
-						hinzufügen</a></li>
-				<li><a href="#">Optionen</a></li>
-				<li><a href="login.html">Logout</a></li>
+				<li ><a href="dashboard.html">Dashboard</a></li>
+				<li><a href="explore.html">Explore</a></li>
+				<li class="active"><a href="#">Frage hinzufügen</a></li>
+				<li><a href="profile.html">Profil</a></li>
+				<li><a href="#" ng-click="logout()">Logout</a></li>
 			</ul>
 			<form class="navbar-form navbar-right">
 				<div class="input-group">
-					<input type="text" class="form-control"
+					<input type="text" class="form-control" ng-model="searchText"
 						placeholder="Fragen durchsuchen">
 					<div class="input-group-btn">
-						<button class="btn btn-default" type="submit">
+						<button class="btn btn-default" type="submit" ng-click="newSearch()">
 							<i class="glyphicon glyphicon-search"></i>
 						</button>
 					</div>

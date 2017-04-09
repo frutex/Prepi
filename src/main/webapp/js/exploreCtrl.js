@@ -94,7 +94,7 @@ angular
 														idx = $scope
 																.getIndex(data.data.data.FragenID);
 														$scope.fragen[idx].isLikeable = false;
-														$scope.fragen[idx].Likes = $scope.fragen[idx].Likes +1;
+														$scope.fragen[idx].Likes = parseInt($scope.fragen[idx].Likes) + 1;
 													} else {
 														alert(data.data.data);
 

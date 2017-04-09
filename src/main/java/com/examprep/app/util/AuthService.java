@@ -5,8 +5,6 @@ import java.util.List;
 import com.examprep.app.bean.Nutzer;
 import com.examprep.app.persistencelayer.PersistenceQuery;
 
-
-
 public class AuthService {
 
 	private CryptoHelpClass cryp = new CryptoHelpClass();
@@ -17,10 +15,16 @@ public class AuthService {
 			String name = UserTokenMachine.getUserFromToken(token);
 			try {
 				Nutzer nutzer = PersistenceQuery.getOneNutzerByName(name);
-				String genToken = cryp.generateUserToken(nutzer, cryp.token);
-				if (genToken.equalsIgnoreCase(token)) {
-					int i = 0;
-					return true;
+				String genToken = cryp.generateUserToken(nutzer);
+				if (UserTokenMachine.getTokenFromToken(genToken)
+						.equalsIgnoreCase(UserTokenMachine.getTokenFromToken(token))) {
+					// check if token is still valid
+					if(cryp.checkDurability(token)){
+						return true;
+					} else {
+						return false;
+					}
+					
 				}
 			} catch (Exception e) {
 				return false;

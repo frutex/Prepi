@@ -41,7 +41,7 @@ public class LoginCmd extends AbstractCmdServlet {
 				Boolean successfull = nutzer.getPassword().matches(password);
 				if (successfull) {
 
-					res = "{\"successfull\":" + successfull + ",\"token\":\"" + cryp.generateUserToken(nutzer, cryp.token) + "\"}";
+					res = "{\"successfull\":" + successfull + ",\"token\":\"" + cryp.generateUserToken(nutzer) + "\"}";
 
 				} else {
 					res = "{\"successfull\":" + successfull + ",\"token\":\"Login Attempt failed. Please try again.\"}";
