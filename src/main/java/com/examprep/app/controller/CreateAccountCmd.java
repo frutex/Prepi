@@ -14,6 +14,7 @@ import com.examprep.app.persistencelayer.daoif.NutzerDao;
 import com.examprep.app.persistencelayer.daoimpl.HochschuleDaoImpl;
 import com.examprep.app.util.ErrorMessages;
 import com.examprep.app.util.JSONConverter;
+import com.examprep.app.util.JSONRespCreator;
 
 public class CreateAccountCmd extends AbstractCmdServlet {
 
@@ -33,18 +34,18 @@ public class CreateAccountCmd extends AbstractCmdServlet {
 		try {
 
 			// TODO: leere Hochschule einpflegen
-			Nutzer nutzer = PersistenceQuery.createNutzer(nachname, vorname, email, password,
-					PersistenceQuery.getAllHochschulen().get(0));
+			Nutzer nutzer = PersistenceQuery.createNutzer(nachname, vorname, email, password, null);
 
 			if (nutzer.getN_id() != 0) {
-				res = "{\"successfull\":" + "true" + ",\"data\":" + JSONConverter.toJSONN(nutzer) + "}";
-			} else {
+				res = JSONRespCreator.createWobj(true, JSONConverter.toJSONN(nutzer));
 
-				res = "{\"successfull\":" + "false" + ",\"data\":" + ErrorMessages.getInternalError() + "}";
+			} else {
+				res = JSONRespCreator.createWstring(false, ErrorMessages.getInternalError());
+
 			}
 
 		} catch (Exception e) {
-			res = "{\"successfull\":" + "false" + ",\"data\":\"" + ErrorMessages.getInternalError() + "\"}";
+			res = JSONRespCreator.createWstring(false, ErrorMessages.getInternalError());
 			e.printStackTrace();
 		} finally {
 			this.sendJsonResult(res);

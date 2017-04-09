@@ -8,6 +8,7 @@ import com.examprep.app.bean.Credibility;
 import com.examprep.app.persistencelayer.PersistenceQuery;
 import com.examprep.app.util.ErrorMessages;
 import com.examprep.app.util.JSONConverter;
+import com.examprep.app.util.JSONRespCreator;
 import com.examprep.app.util.UserTokenMachine;
 
 public class DoLikeCmd extends AbstractCmdServlet {
@@ -30,12 +31,12 @@ public class DoLikeCmd extends AbstractCmdServlet {
 					PersistenceQuery.getNutzerByName(nutzer).get(0));
 
 			if (cred != null) {
-				res = "{\"successfull\":" + "true" + ",\"data\":" + JSONConverter.toJSONL(cred) + "}";
+				res = JSONRespCreator.createWobj(true, JSONConverter.toJSONL(cred));
 			} else {
-				res = "{\"successfull\":" + "false" + ",\"data\":\"" + ErrorMessages.getInternalError() + "\"}";
+				res = JSONRespCreator.createWstring(false, ErrorMessages.getInternalError());
 			}
 		} catch (Exception e) {
-			res = "{\"successfull\":" + "false" + ",\"data\":\"" + ErrorMessages.getInternalError() + "\"}";
+			res = JSONRespCreator.createWstring(false, ErrorMessages.getInternalError());
 			e.printStackTrace();
 		} finally {
 			this.sendJsonResult(res);

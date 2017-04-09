@@ -14,6 +14,7 @@ import com.examprep.app.bean.Nutzer;
 import com.examprep.app.persistencelayer.PersistenceQuery;
 import com.examprep.app.util.ErrorMessages;
 import com.examprep.app.util.JSONConverter;
+import com.examprep.app.util.JSONRespCreator;
 import com.examprep.app.util.LevelCalc;
 
 public class DoSearchCmd extends AbstractCmdServlet {
@@ -53,12 +54,11 @@ public class DoSearchCmd extends AbstractCmdServlet {
 			}
 
 			List<KlausurFrage> kList = PersistenceQuery.getKlausurFrage(d, m, h, keywords);
-			
-			res = "{\"successfull\":" + "true" + ",\"data\":\"" + JSONConverter.toJSONF(kList) + "\"}";
-			
+
+			res = JSONRespCreator.createWobj(true, JSONConverter.toJSONF(kList));
 
 		} catch (Exception e) {
-			res = "{\"successfull\":" + "false" + ",\"data\":\"" + ErrorMessages.getInternalError() + "\"}";
+			res = JSONRespCreator.createWstring(false, ErrorMessages.getInternalError());
 			e.printStackTrace();
 		} finally {
 			this.sendJsonResult(res);

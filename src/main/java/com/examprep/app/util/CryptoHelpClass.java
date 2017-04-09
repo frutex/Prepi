@@ -119,10 +119,10 @@ public class CryptoHelpClass {
 
 		long dif = mls - mlsOld;
 
-		System.out.println(dif);
+		//System.out.println(dif);
 		long minu = TimeUnit.MILLISECONDS.toMinutes(dif);
 
-		if(minu > 60){
+		if(minu > 60 || minu < 0){
 			return false;
 		} else {
 			return true;

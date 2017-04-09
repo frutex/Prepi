@@ -11,9 +11,10 @@ import com.examprep.app.bean.Modul;
 import com.examprep.app.persistencelayer.PersistenceQuery;
 import com.examprep.app.util.ErrorMessages;
 import com.examprep.app.util.JSONConverter;
+import com.examprep.app.util.JSONRespCreator;
 
 public class GetModuleCmd extends AbstractCmdServlet {
-	
+
 	public GetModuleCmd(HttpServlet servlet, HttpServletRequest request, HttpServletResponse response) {
 		super(servlet, request, response);
 	}
@@ -26,11 +27,10 @@ public class GetModuleCmd extends AbstractCmdServlet {
 
 			List<Modul> modulList = PersistenceQuery.getAllModule();
 
-			res = "{\"successfull\":" + "true" + ",\"data\":" + JSONConverter.toJSONM(modulList) + "}";
+			res = JSONRespCreator.createWobj(true, JSONConverter.toJSONM(modulList));
 
 		} catch (Exception e) {
-			res = "{\"successfull\":" + "false" + ",\"data\":\""
-					+ ErrorMessages.getInternalError() + "\"}";
+			res = JSONRespCreator.createWstring(false, ErrorMessages.getInternalError());
 			e.printStackTrace();
 		} finally {
 			this.sendJsonResult(res);

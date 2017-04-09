@@ -56,7 +56,8 @@
 
 
 	<!-- Fixed Navbar with Brand logo, nav items and search form -->
-	<nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="NavCtrl">
+	<nav class="navbar navbar-inverse navbar-fixed-top"
+		ng-controller="NavCtrl">
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<a class="navbar-brand" href="#"><img
@@ -74,7 +75,8 @@
 					<input type="text" class="form-control" ng-model="searchText"
 						placeholder="Fragen durchsuchen">
 					<div class="input-group-btn">
-						<button class="btn btn-default" type="submit" ng-click="newSearch()">
+						<button class="btn btn-default" type="submit"
+							ng-click="newSearch()">
 							<i class="glyphicon glyphicon-search"></i>
 						</button>
 					</div>
@@ -161,6 +163,32 @@
 		</div>
 		<!-- end of container -->
 
+		<!-- Dialog -->
+		<div style="visibility: hidden">
+			<div class="md-dialog-container" id="hsDialog">
+				<md-dialog layout-padding>
+				<h2>Hochschule Auswählen</h2>
+				<p>
+					Wähle bitte deine Hochschule aus. <br /> <br />
+					<md-autocomplete flex required md-selected-item="selectedHS"
+						md-search-text="searchTextH"
+						md-items="item in queryHS(searchTextH)" md-item-text="item.Name"
+						placeholder="Bitte eine Hochschule eingeben." md-require-match
+						md-floating-label="Hochschule auswählen"
+						md-select-on-match="true" md-match-case-insensitive="true">
+					<span md-highlight-text="searchText">{{item.Name}}</span> </md-autocomplete>
+					
+				<div id="button-div">
+					<button id="btn-confirm-HS" class="btn btn-primary btn-lg"
+						ng-click="confirmHS()">Bestätigen. &raquo;</button>
+				</div>
+
+
+				</p>
+
+				</md-dialog>
+			</div>
+		</div>
 
 	</div>
 

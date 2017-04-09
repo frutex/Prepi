@@ -51,7 +51,7 @@ angular.module('ExPrep')
 	var login = function(res) {
 		return $q(function(resolve, reject) {
 			if (res.successfull) {
-				storeUserCredentials(name + res.token);
+				storeUserCredentials(name + res.data);
 				resolve('Login success.');
 			} else {
 				reject('Login Failed.');

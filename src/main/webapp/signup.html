@@ -66,72 +66,128 @@
 		</nav>
 
 		<!-- Content -->
-		<div class="container-fluid">
-			<section class="container">
-				<div class="container-page">
-					<div class="col-md-6">
-						<h3 class="dark-grey">Registrierung</h3>
+		<div class="container-fluid" name="signup">
+			<form name="signup" ng-submit="submit()">
+				<section class="container">
+					<div class="container-page">
+						<div class="col-md-6">
+							<h3 class="dark-grey">Registrierung</h3>
 
-						<div class="form-group col-lg-6">
-							<label>Vorname</label> <input type="" name=""
-								class="form-control" id="" value="" ng-model="data.Vorname">
+							<div class="form-group col-lg-6">
+								<md-input-container class="md-block"> <label>
+									Vorname</label> <input required name="Vorname" ng-model="data.Vorname"
+									minlength="3" maxlength="30" />
+
+								<div ng-messages="signup.Vorname.$error" role="alert">
+									<div ng-message-exp="['required', 'minlength', 'maxlength']">
+										Dein Name sollte zwischen 3 und 30 Zeichen lang sein.</div>
+								</div>
+								</md-input-container>
+							</div>
+
+							<div class="form-group col-lg-6">
+								<md-input-container class="md-block"> <label>
+									Name</label> <input required name="Name" ng-model="data.Name"
+									minlength="3" maxlength="30" />
+
+								<div ng-messages="signup.Name.$error" role="alert">
+									<div ng-message-exp="['required', 'minlength', 'maxlength']">
+										Dein Name sollte zwischen 3 und 30 Zeichen lang sein.</div>
+								</div>
+								</md-input-container>
+							</div>
+
+							<div class="form-group col-lg-6">
+								<md-input-container class="md-block"> <label>
+									Email</label> <input required type="email" name="Email"
+									ng-model="data.Email" minlength="5" maxlength="100"
+									ng-pattern="/^.+@.+\..+$/" />
+
+								<div ng-messages="signup.Email.$error" role="alert">
+									<div ng-message-exp="['required', 'minlength', 'maxlength']">
+										Deine E-Mail Adresse sollte zwischen 5 und 100 Zeichen lang
+										sein.</div>
+									<div ng-message-exp="['pattern']">Bitte gib eine valide
+										E-Mail Adresse an.</div>
+
+								</div>
+								</md-input-container>
+							</div>
+
+							<div class="form-group col-lg-6">
+								<md-input-container class="md-block"> <label>
+									Email</label> <input required type="email" name="EmailWied"
+									ng-model="data.EmailWied" minlength="5" maxlength="100"
+									ng-pattern="/^.+@.+\..+$/" />
+
+								<div ng-messages="signup.EmailWied.$error" role="alert">
+									<div ng-message-exp="['required', 'minlength', 'maxlength']">
+										Deine E-Mail Adresse sollte zwischen 5 und 100 Zeichen lang
+										sein.</div>
+									<div ng-message-exp="['pattern']">Bitte gib eine valide
+										E-Mail Adresse an.</div>
+								</div>
+								</md-input-container>
+							</div>
+
+							<div class="form-group col-lg-6">
+							<md-input-container class="md-block"> <label>
+									Passwort</label> <input required type="password" name="Passwort"
+									ng-model="data.Pass" minlength="5" maxlength="25"
+									 />
+
+								<div ng-messages="signup.Passwort.$error" role="alert">
+									<div ng-message-exp="['required', 'minlength', 'maxlength']">
+										Dein Passwort sollte zwischen 5 und 25 Zeichen lang sein.</div>
+									</div>
+								</md-input-container>
+							</div>
+
+							<div class="form-group col-lg-6">
+								<md-input-container class="md-block"> <label>
+									Passwort</label> <input required type="password" name="PasswortWied"
+									ng-model="data.PassWied" minlength="5" maxlength="25"
+									 />
+
+								<div ng-messages="signup.PasswortWied.$error" role="alert">
+									<div ng-message-exp="['required', 'minlength', 'maxlength']">
+										Dein Passwort sollte zwischen 5 und 25 Zeichen lang sein.</div>
+									</div>
+								</md-input-container>
+							</div>
+
+
+							<div class="col-sm-6">
+								<input type="checkbox" class="checkbox" />Newsletter abonnieren
+							</div>
+
 						</div>
 
-						<div class="form-group col-lg-6">
-							<label>Name</label> <input type="" name="" class="form-control"
-								id="" value="" ng-model="data.Name">
+						<div class="col-md-6">
+							<h3 class="dark-grey">Allgemeine Verhaltensrichtlinien</h3>
+							<p>Alle Mitglieder sollten sich gegenseitig mit Respekt
+								behandeln und stets freundlich und sachlich bleiben.</p>
+							<p>Verwenden Sie unsere Dienste nicht, um gefährliche und
+								illegale Handlungen zu fördern oder sich an illegalen
+								Aktivitäten zu beteiligen.</p>
+							<p>Es werden keine diskriminierenden, rassistischen,
+								sexistischen, nationalsozialistischen, oder anderweitig
+								anstößige Inhalte oder Beiträge auf unserer Plattform geduldet.
+								Dasselbe gilt für Nicknamen mit derartigen Hintergründen.
+								Sollten Sie auf Inhalte oder einen Nutzer stoßen, der Ihrer
+								Meinung nach die hier vorstehend deklarierten Richtlinien
+								verletzt, teilen Sie uns dies bitte mit.</p>
+							<p>Durch das Klicken auf "Registrieren" bestätigen Sie, dass
+								Sie die Richtlinien von ExPrep zur Kenntnis genommen haben und
+								diese akzeptieren.</p>
+
+							<div>
+								<md-button type="submit">Submit</md-button>
+							</div>
 						</div>
-
-						<div class="form-group col-lg-6">
-							<label>Email</label> <input type="" name="" class="form-control"
-								id="" value="" ng-model="data.Email">
-						</div>
-
-						<div class="form-group col-lg-6">
-							<label>Email wiederholen</label> <input type="" name=""
-								class="form-control" id="" value="" ng-model="data.EmailWied">
-						</div>
-
-						<div class="form-group col-lg-6">
-							<label>Passwort</label> <input type="password" name=""
-								class="form-control" id="" value="" ng-model="data.Pass">
-						</div>
-
-						<div class="form-group col-lg-6">
-							<label>Passwort wiederholen</label> <input type="password"
-								name="" class="form-control" id="" value=""
-								ng-model="data.PassWied">
-						</div>
-
-
-						<div class="col-sm-6">
-							<input type="checkbox" class="checkbox" />Newsletter abonnieren
-						</div>
-
 					</div>
-
-					<div class="col-md-6">
-						<h3 class="dark-grey">Allgemeine Verhaltensrichtlinien</h3>
-						<p>Alle Mitglieder sollten sich gegenseitig mit Respekt
-							behandeln und stets freundlich und sachlich bleiben.</p>
-						<p>Verwenden Sie unsere Dienste nicht, um gefährliche und
-							illegale Handlungen zu fördern oder sich an illegalen Aktivitäten
-							zu beteiligen.</p>
-						<p>Es werden keine diskriminierenden, rassistischen,
-							sexistischen, nationalsozialistischen, oder anderweitig anstößige
-							Inhalte oder Beiträge auf unserer Plattform geduldet. Dasselbe
-							gilt für Nicknamen mit derartigen Hintergründen. Sollten Sie auf
-							Inhalte oder einen Nutzer stoßen, der Ihrer Meinung nach die hier
-							vorstehend deklarierten Richtlinien verletzt, teilen Sie uns dies
-							bitte mit.</p>
-						<p>Durch das Klicken auf "Registrieren" bestätigen Sie, dass
-							Sie die Richtlinien von ExPrep zur Kenntnis genommen haben und
-							diese akzeptieren.</p>
-
-						<button type="submit" class="btn btn-primary" ng-click="submit()">Registrieren</button>
-					</div>
-				</div>
-			</section>
+				</section>
+			</form>
 		</div>
 
 

@@ -13,6 +13,7 @@ import com.examprep.app.bean.Modul;
 import com.examprep.app.bean.Nutzer;
 import com.examprep.app.persistencelayer.PersistenceQuery;
 import com.examprep.app.util.ErrorMessages;
+import com.examprep.app.util.JSONRespCreator;
 import com.examprep.app.util.UserTokenMachine;
 
 public class AddFrageCmd extends AbstractCmdServlet {
@@ -50,11 +51,11 @@ public class AddFrageCmd extends AbstractCmdServlet {
 		String res = "";
 		try {
 			if (frage != null) {
-				res = "{\"successfull\":" + "true" + ",\"data\":" + "\"Something\"}";
+				res = JSONRespCreator.createWstring(true, "Something");
 			}
 
 		} catch (Exception e) {
-			res = "{\"successfull\":" + "false" + ",\"data\":" + ErrorMessages.getInternalError() + "}";
+			res = JSONRespCreator.createWstring(false, ErrorMessages.getInternalError());
 		} finally {
 			this.sendJsonResult(res);
 		}

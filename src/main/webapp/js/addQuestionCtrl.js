@@ -18,7 +18,7 @@ angular
 												if (data.data.successfull) {
 
 												} else {
-													alert(data.data.token);
+													alert(data.data.data);
 													AuthService.logout();
 													window.location.href = "./login.html";
 												}

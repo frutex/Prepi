@@ -12,6 +12,7 @@ import com.examprep.app.bean.Nutzer;
 import com.examprep.app.persistencelayer.PersistenceQuery;
 import com.examprep.app.util.ErrorMessages;
 import com.examprep.app.util.JSONConverter;
+import com.examprep.app.util.JSONRespCreator;
 import com.examprep.app.util.LevelCalc;
 import com.examprep.app.util.UserTokenMachine;
 
@@ -32,7 +33,7 @@ public class GetUserDataCmd extends AbstractCmdServlet {
 			String nutzerJSON = JSONConverter.toJSONN(nutzer);
 
 			// ToDo: Reale Daten LAden
-			//int cred = (int) (Math.random() * 100);
+			// int cred = (int) (Math.random() * 100);
 			int cred = PersistenceQuery.getAllLikesForRegisteredQuestionsForOneUser(name);
 			int level = LevelCalc.calculateLevel(cred);
 
@@ -44,11 +45,10 @@ public class GetUserDataCmd extends AbstractCmdServlet {
 			String returnData = "[" + nRes + "," + fRes + "," + "{\"Credibility\":\"" + cred + "\",\"Level\":\"" + level
 					+ "\"}]";
 
-			res = "{\"successfull\":" + "true" + ",\"data\":" + returnData + "}";
+			res = JSONRespCreator.createWobj(true, returnData);
 
 		} catch (Exception e) {
-			res = "{\"successfull\":" + "false" + ",\"data\":\""
-					+ ErrorMessages.getInternalError() + "\"}";
+			res = JSONRespCreator.createWstring(false, ErrorMessages.getInternalError());
 			e.printStackTrace();
 		} finally {
 			this.sendJsonResult(res);
