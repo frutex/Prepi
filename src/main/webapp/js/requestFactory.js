@@ -91,16 +91,22 @@ angular.module('ExPrep').factory(
 						return send("c=doQuestionLike" + "&questionID=" + id);
 
 					}
-					
+
 					function getAllQuestions() {
 						return send("c=getAllQuestions");
 
 					}
-					
+
 					function doSearch(modul, hochschule, dozent, keywords) {
 						return send("c=doSearch" + "&modul=" + modul
 								+ "&hochschule=" + hochschule + "&dozent="
 								+ dozent + "&keywords=" + keywords);
+
+					}
+
+					function addHStoUser(hochschule) {
+						return send("c=addHStouser" + "&hochschule="
+								+ hochschule);
 
 					}
 
@@ -120,6 +126,7 @@ angular.module('ExPrep').factory(
 						doQuestionLike : doQuestionLike,
 						doSearch : doSearch,
 						getAllQuestions : getAllQuestions,
+						addHStoUser : addHStoUSer,
 
 					};
 				} ]);

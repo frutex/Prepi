@@ -7,7 +7,8 @@ angular
 						'$scope',
 						'RequestFactory',
 						'AuthService',
-						function($http, $scope, RequestFactory, AuthService) {
+						'$mdDialog',
+						function($http, $scope, RequestFactory, AuthService, $mdDialog) {
 
 							$scope.startup = function() {
 								$scope.checkAuth();
@@ -52,6 +53,9 @@ angular
 												function(data) {
 													if (data.data.successfull) {
 														$scope.userData = data.data.data;
+														if($scope.userData[0].Hochschule == "null"){
+															$scope.showHSDialog();
+														}
 													} else {
 														alert(data.data.data);
 														// $scope.$apply;
@@ -70,7 +74,13 @@ angular
 											}
 										});
 							}
+							
+							$scope.showHSDialog = function() {
+							    $mdDialog.show({
+							      contentElement: '#hsDialog',
+							      parent: angular.element(document.body),
+							      clickOutsideToClose: true
+							    });
+							  };
 
-						} ]
-
-		);
+						} ]);

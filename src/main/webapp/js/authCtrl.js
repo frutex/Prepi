@@ -31,11 +31,11 @@ angular
 															}
 														} else {
 															$scope.authenticated = false;
+															AuthService.logout();
 															alert(data.data.token);
 															var loc = window.location.pathname;
 
-															if (!loc
-																	.contains("login")) {
+															if (!loc.contains("login") && loc != "/prepa/") {
 																window.location.href = "./login.html";
 															}
 														}
