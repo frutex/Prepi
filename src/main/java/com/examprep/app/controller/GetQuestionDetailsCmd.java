@@ -13,6 +13,7 @@ import com.examprep.app.bean.Nutzer;
 import com.examprep.app.persistencelayer.PersistenceQuery;
 import com.examprep.app.util.ErrorMessages;
 import com.examprep.app.util.JSONConverter;
+import com.examprep.app.util.JSONRespCreator;
 import com.examprep.app.util.UserTokenMachine;
 
 public class GetQuestionDetailsCmd extends AbstractCmdServlet {
@@ -33,13 +34,12 @@ public class GetQuestionDetailsCmd extends AbstractCmdServlet {
 			Nutzer nutzer = PersistenceQuery.getOneNutzerByName(name);
 			int id = Integer.parseInt(qID);
 
-
 			KlausurFrage frage = PersistenceQuery.getFrageById(qID);
 
-			res = "{\"successfull\":" + "true" + ",\"data\":" + JSONConverter.toJSONFullF(frage, nutzer) + "}";
+			res = JSONRespCreator.createWobj(false, JSONConverter.toJSONFullF(frage, nutzer));
 
 		} catch (Exception e) {
-			res = "{\"successfull\":" + "false" + ",\"data\":\"" + ErrorMessages.getInternalError() + "\"}";
+			res = JSONRespCreator.createWstring(false, ErrorMessages.getInternalError());
 			e.printStackTrace();
 		} finally {
 			this.sendJsonResult(res);

@@ -13,6 +13,7 @@ import com.examprep.app.persistencelayer.daoif.HochschuleDao;
 import com.examprep.app.persistencelayer.daoimpl.HochschuleDaoImpl;
 import com.examprep.app.util.ErrorMessages;
 import com.examprep.app.util.JSONConverter;
+import com.examprep.app.util.JSONRespCreator;
 
 public class GetHochschulenCmd extends AbstractCmdServlet {
 
@@ -28,11 +29,10 @@ public class GetHochschulenCmd extends AbstractCmdServlet {
 
 			List<Hochschule> hsList = PersistenceQuery.getAllHochschulen();
 
-			res = "{\"successfull\":" + "true" + ",\"data\":" + JSONConverter.toJSONH(hsList) + "}";
+			res = JSONRespCreator.createWobj(true, JSONConverter.toJSONH(hsList));
 
 		} catch (Exception e) {
-			res = "{\"successfull\":" + "false" + ",\"data\":\""
-					+ ErrorMessages.getInternalError() + "\"}";
+			res = JSONRespCreator.createWstring(false, ErrorMessages.getInternalError());
 			e.printStackTrace();
 		} finally {
 			this.sendJsonResult(res);

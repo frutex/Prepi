@@ -10,6 +10,7 @@ import com.examprep.app.bean.Dozent;
 import com.examprep.app.persistencelayer.PersistenceQuery;
 import com.examprep.app.util.ErrorMessages;
 import com.examprep.app.util.JSONConverter;
+import com.examprep.app.util.JSONRespCreator;
 
 public class GetDozentenForHochschuleCmd extends AbstractCmdServlet {
 
@@ -27,11 +28,11 @@ public class GetDozentenForHochschuleCmd extends AbstractCmdServlet {
 			List<Dozent> dozenten = PersistenceQuery.getAllDozentenEinerHochschule(hochschule);
 
 			int i = 0;
-			res = "{\"successfull\":" + "true" + ",\"data\":" + JSONConverter.toJSOND(dozenten) + "}";
+
+			res = JSONRespCreator.createWobj(true, JSONConverter.toJSOND(dozenten));
 
 		} catch (Exception e) {
-			res = "{\"successfull\":" + "false" + ",\"data\":\""
-					+ ErrorMessages.getInternalError() + "\"}";
+			res = JSONRespCreator.createWstring(false, ErrorMessages.getInternalError());
 			e.printStackTrace();
 		} finally {
 			this.sendJsonResult(res);

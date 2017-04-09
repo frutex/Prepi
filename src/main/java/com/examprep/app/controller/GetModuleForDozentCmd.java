@@ -12,6 +12,7 @@ import com.examprep.app.persistencelayer.PersistenceQuery;
 import com.examprep.app.persistencelayer.daoif.DozentDao;
 import com.examprep.app.util.ErrorMessages;
 import com.examprep.app.util.JSONConverter;
+import com.examprep.app.util.JSONRespCreator;
 
 public class GetModuleForDozentCmd extends AbstractCmdServlet {
 
@@ -27,15 +28,14 @@ public class GetModuleForDozentCmd extends AbstractCmdServlet {
 		String res = "";
 
 		try {
-			
+
 			Dozent d = PersistenceQuery.getDozentByName(vorname, nachname);
 			List<Modul> mList = PersistenceQuery.getAllModuleVonDozent(d);
 
-			res = "{\"successfull\":" + "true" + ",\"data\":" + JSONConverter.toJSONM(mList) + "}";
+			res = JSONRespCreator.createWobj(false, JSONConverter.toJSONM(mList));
 
 		} catch (Exception e) {
-			res = "{\"successfull\":" + "false" + ",\"data\":\""
-					+ ErrorMessages.getInternalError() + "\"}";
+			res = JSONRespCreator.createWstring(false, ErrorMessages.getInternalError());
 			e.printStackTrace();
 		} finally {
 			this.sendJsonResult(res);

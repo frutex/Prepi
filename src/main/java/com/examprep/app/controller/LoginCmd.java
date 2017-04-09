@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.examprep.app.bean.Nutzer;
 import com.examprep.app.persistencelayer.PersistenceQuery;
 import com.examprep.app.util.CryptoHelpClass;
+import com.examprep.app.util.ErrorMessages;
+import com.examprep.app.util.JSONRespCreator;
 
 // class to get user data
 public class LoginCmd extends AbstractCmdServlet {
@@ -33,28 +35,26 @@ public class LoginCmd extends AbstractCmdServlet {
 
 			List<Nutzer> nutzerList = PersistenceQuery.getNutzerByName(name);
 			if (nutzerList.size() > 1) {
-				res = "{\"successfull\":false,\"token\":\"Too many users found, please contact the HelpDesk.\"}";
+				res = JSONRespCreator.createWstring(false, ErrorMessages.getTooManyUsersError());
 				this.sendJsonResult(res);
 			} else {
 				Nutzer nutzer = nutzerList.get(0);
 				password = cryp.generateHashPassword(name, password);
 				Boolean successfull = nutzer.getPassword().matches(password);
 				if (successfull) {
-
-					res = "{\"successfull\":" + successfull + ",\"token\":\"" + cryp.generateUserToken(nutzer) + "\"}";
+					res = JSONRespCreator.createWstring(successfull, cryp.generateUserToken(nutzer));
 
 				} else {
-					res = "{\"successfull\":" + successfull + ",\"token\":\"Login Attempt failed. Please try again.\"}";
+					res = JSONRespCreator.createWstring(false, ErrorMessages.getLoginFailedError());
 
 				}
 				this.sendJsonResult(res);
 			}
 		} catch (Exception e) {
-			this.sendJsonResult("{\"successfull\":false,\"token\":\"Internal Error, please contact the HelpDesk.\"}");
+			res = JSONRespCreator.createWstring(false, ErrorMessages.getInternalError());
 			e.printStackTrace();
 		}
 
 	}
 
-	
 }

@@ -11,8 +11,9 @@ import com.examprep.app.bean.Hochschule;
 import com.examprep.app.persistencelayer.PersistenceQuery;
 import com.examprep.app.util.ErrorMessages;
 import com.examprep.app.util.JSONConverter;
+import com.examprep.app.util.JSONRespCreator;
 
-public class GetDozentenCmd extends AbstractCmdServlet{
+public class GetDozentenCmd extends AbstractCmdServlet {
 
 	public GetDozentenCmd(HttpServlet servlet, HttpServletRequest request, HttpServletResponse response) {
 		super(servlet, request, response);
@@ -25,16 +26,13 @@ public class GetDozentenCmd extends AbstractCmdServlet{
 		try {
 
 			List<Dozent> dList;
-			
+
 			dList = PersistenceQuery.getAllDozenten();
 
-			res = "{\"successfull\":" + "true" + ",\"data\":" + JSONConverter.toJSOND(dList) + "}";
-			
-			//res = "{\"successfull\":" + "true" + ",\"data\":" + "[{\"Nachname\":\"Lustig\",\"Vorname\":\"Peter\"}]" + "}";
+			res = JSONRespCreator.createWobj(true, JSONConverter.toJSOND(dList));
 
 		} catch (Exception e) {
-			res = "{\"successfull\":" + "false" + ",\"data\":\""
-					+ ErrorMessages.getInternalError() + "\"}";
+			res = JSONRespCreator.createWstring(false, ErrorMessages.getInternalError());
 			e.printStackTrace();
 		} finally {
 			this.sendJsonResult(res);
