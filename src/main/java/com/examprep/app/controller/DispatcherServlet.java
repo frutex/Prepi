@@ -64,7 +64,7 @@ public class DispatcherServlet extends HttpServlet {
 				}
 			} else {
 				CmdServletIF cmd = getCommand(this, request, response);
-				cmd.sendJsonResult(JSONRespCreator.createWstring(true, ErrorMessages.getAuthenticationError()));
+				cmd.sendJsonResult(JSONRespCreator.createWstring(false, ErrorMessages.getAuthenticationTimeTokenError()));
 			}
 		}
 

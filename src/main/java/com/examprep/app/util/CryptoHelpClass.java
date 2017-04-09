@@ -121,7 +121,9 @@ public class CryptoHelpClass {
 
 		//System.out.println(dif);
 		long minu = TimeUnit.MILLISECONDS.toMinutes(dif);
-
+ 
+		//System.out.println("Remaining time on Token of User: " + UserTokenMachine.getUserFromToken(token) + ": " + (60-minu) + "min.");
+		
 		if(minu > 60 || minu < 0){
 			return false;
 		} else {

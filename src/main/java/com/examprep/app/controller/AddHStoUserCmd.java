@@ -6,10 +6,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.omg.CORBA.Request;
 
+import com.examprep.app.bean.Hochschule;
 import com.examprep.app.bean.Nutzer;
 import com.examprep.app.persistencelayer.PersistenceQuery;
 import com.examprep.app.util.ErrorMessages;
 import com.examprep.app.util.JSONConverter;
+import com.examprep.app.util.JSONRespCreator;
 import com.examprep.app.util.UserTokenMachine;
 
 public class AddHStoUserCmd extends AbstractCmdServlet {
@@ -24,16 +26,24 @@ public class AddHStoUserCmd extends AbstractCmdServlet {
 
 		String name = UserTokenMachine.getUserFromToken(request.getParameter("token"));
 
-		String hs = request.getParameter("hs");
+		String hs = request.getParameter("hochschule");
 		String res = "";
 
 		try {
 
 			Nutzer nutzer = PersistenceQuery.getOneNutzerByName(name);
 
-	//		PersistenceQuery.
+			Hochschule h = PersistenceQuery.getHochschuleByName(hs).get(0);
+
+			nutzer.setHochschule(h);
+
+			Nutzer nuNew = PersistenceQuery.update(nutzer);
+
+			res = JSONRespCreator.createWobj(true, JSONConverter.toJSONN(nuNew));
+
+			// PersistenceQuery.
 		} catch (Exception e) {
-			res = "{\"successfull\":" + "false" + ",\"data\":\"" + ErrorMessages.getInternalError() + "\"}";
+			res = JSONRespCreator.createWstring(false, ErrorMessages.getInternalError());
 			e.printStackTrace();
 		} finally {
 			this.sendJsonResult(res);
