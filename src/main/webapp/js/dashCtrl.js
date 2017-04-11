@@ -48,7 +48,9 @@ angular
 								}
 							}
 
-							$scope.userData = ["","",{"Progress":0}];
+							$scope.userData = [ "", "", {
+								"Progress" : 0
+							} ];
 							$scope.loadUserData = function() {
 								ProgService.state(true);
 								RequestFactory
@@ -61,10 +63,34 @@ angular
 														if ($scope.userData[0].Hochschule == "null") {
 															$scope.loadHS();
 														}
+														$scope.questionRb();
 													} else {
 														alert(data.data.data);
 													}
 												});
+							}
+
+							$scope.questionRb = function() {
+								q = [];
+
+								tmp = [];
+								i = 0;
+								z = 0;
+								for (b = 0; b < $scope.userData[1].length; b++) {
+									tmp.push($scope.userData[1][z]);
+
+									if (i == 2) {
+										q.push(tmp);
+										i = 0;
+										tmp = [];
+									} else {
+										i++;
+									}
+
+									z++;
+								}
+
+								$scope.userData[1] = q;
 							}
 
 							$scope.hochschulen
@@ -90,7 +116,7 @@ angular
 											ProgService.state(false);
 											if (data.data.successfull) {
 												$scope.loadUserData();
-												
+
 											} else {
 												alert(data.data.data);
 
@@ -138,7 +164,5 @@ angular
 													}
 												});
 							}
-							
-							
 
 						} ]);

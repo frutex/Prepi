@@ -134,8 +134,9 @@
 	</div>
 
 	<div class="container">
-		<div class="row">
-			<div class="col-md-4" ng-repeat="frage in userData[1]">
+		<table style="width: 100%">
+			<tr ng-repeat="collection in userData[1]">
+				<td style="width: 33%" ng-repeat="frage in collection">
 				<h2>{{frage.Titel}}</h2>
 				<p>{{frage.Beschreibung}}</p>
 				<div class="row">
@@ -163,7 +164,11 @@
 						</p>
 					</div>
 				</div>
-			</div>
+				
+				</td>
+				
+			</tr>
+		</table>
 
 		</div>
 		<!-- end of container -->

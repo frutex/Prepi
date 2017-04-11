@@ -41,11 +41,12 @@ angular.module('ExPrep')
 	}
 
 	function destroyUserCredentials() {
+		window.localStorage.removeItem(LOCAL_TOKEN_KEY);
 		authToken = undefined;
 		username = '';
 		isAuthenticated = false;
 		$http.defaults.headers.common['X-Auth-Token'] = undefined;
-		window.localStorage.removeItem(LOCAL_TOKEN_KEY);
+		
 	}
 
 	var login = function(res) {
