@@ -111,7 +111,7 @@ public class JSONConverter {
 		sb.append("\"Modul\":\"").append(frage.getModul().getModul()).append("\",");
 		sb.append("\"Nutzer\":\"").append(frage.getNutzer().getEmail()).append("\",");
 		sb.append("\"Titel\":\"").append(frage.getTitel()).append("\",");
-		sb.append("\"Likes\":\"").append(PersistenceQuery.getAllLikesForOneQuestionNumber(frage)).append("\",");
+		sb.append("\"Likes\":\"").append(frage.getCred().size()).append("\",");
 		sb.append("\"FragenID\":\"").append(frage.getF_id()).append("\",");
 		sb.append("\"isLikeable\":").append(LikeChecker.check(frage, nutzer)).append("");
 		sb.append("}");
@@ -131,7 +131,7 @@ public class JSONConverter {
 		sb.append("\"Nutzer\":\"").append(frage.getNutzer().getEmail()).append("\",");
 		sb.append("\"Titel\":\"").append(frage.getTitel()).append("\",");
 		sb.append("\"Likeable\":\"").append(true).append("\",");
-		sb.append("\"Likes\":\"").append(PersistenceQuery.getAllLikesForOneQuestionNumber(frage)).append("\",");
+		sb.append("\"Likes\":\"").append(frage.getCred().size()).append("\",");
 		sb.append("\"FragenID\":\"").append(frage.getF_id()).append("\"");
 		sb.append("}");
 		String res = sb.toString();

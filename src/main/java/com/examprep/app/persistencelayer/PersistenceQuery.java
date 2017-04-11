@@ -3,6 +3,8 @@ package com.examprep.app.persistencelayer;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.sql.SQLException;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +22,7 @@ import com.examprep.app.util.CryptoHelpClass;
 import com.examprep.app.util.SessionFactory;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
+import com.j256.ormlite.dao.GenericRawResults;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.Where;
@@ -90,16 +93,16 @@ public class PersistenceQuery {
 	public static int getAllLikesForOneQuestionNumber(KlausurFrage kfrage) {
 		List<Credibility> credList = new ArrayList<>();
 		int anzahl = 0;
-		try {
-			credDao = DaoManager.createDao(connSource, Credibility.class);
-			credList = credDao.queryBuilder().where().eq("kfgc_id", kfrage.getF_id()).query();
-		} catch (SQLException e) {
+		ArrayList<Credibility> credListreal = null;
+		try{
+			credListreal = new ArrayList<>(kfrage.getCred());
+		} catch (Exception e) {
 			reconnect();
 			anzahl = getAllLikesForOneQuestionNumber(kfrage);
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			anzahl = credList.size();
+			anzahl = credListreal.size();
 			return anzahl;
 
 		}
@@ -807,25 +810,31 @@ public class PersistenceQuery {
 	@SuppressWarnings("finally")
 	public static int getAllLikesForRegisteredQuestionsForOneUser(String name) {
 		Nutzer nutzer = getOneNutzerByName(name);
-		List<KlausurFrage> listFrage = new ArrayList<>();
-		int cred = 0;
+		String[] resultArray = null;
+		GenericRawResults<String[]> rawResults;
+//		ArrayList<KlausurFrage> frageList = new ArrayList<KlausurFrage>(nutzer.getKlausurfragen());
 		try {
-			klausurfDao = DaoManager.createDao(connSource, KlausurFrage.class);
-			listFrage = klausurfDao.queryBuilder().where().eq("nk_id", nutzer).query();
+//			ArrayList<Credibility> credList = new ArrayList<>();
+			
 			credDao = DaoManager.createDao(connSource, Credibility.class);
-			List<Credibility> credList = new ArrayList<>();
-			for (KlausurFrage tmp : listFrage) {
-				credList = credDao.queryBuilder().where().eq("kfgc_id", tmp.getF_id()).query();
-				cred = cred + credList.size();
-			}
-		} catch (SQLException e) {
+			rawResults = credDao.queryRaw("SELECT Count(GegebeneCred.gc_id) From GegebeneCred, Klausurfrage, Nutzer WHERE Nutzer.n_id = Klausurfrage.nk_id " +  
+					"AND Klausurfrage.k_id = GegebeneCred.kfgc_id AND Nutzer.n_id = " + nutzer.getN_id());
+			List<String[]> results = rawResults.getResults();
+			resultArray = results.get(0);
+			
+			
+//			for (KlausurFrage tmp : frageList) {
+//				credList = new ArrayList<Credibility>(tmp.getCred());
+//				rawResults = rawResults + credList.size();
+//			}
+		} catch (Exception e) {
 			reconnect();
-			cred = getAllLikesForRegisteredQuestionsForOneUser(name);
+			resultArray[0] = String.valueOf(getAllLikesForRegisteredQuestionsForOneUser(name));
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 
-			return cred;
+			return Integer.valueOf(resultArray[0]);
 		}
 	}
 
@@ -858,24 +867,26 @@ public class PersistenceQuery {
 	}
 
 	@SuppressWarnings("finally")
-	public static List<KlausurFrage> getAllQuestionsFromOneUser(String name) {
-		Nutzer nutzer = getOneNutzerByName(name);
-		List<KlausurFrage> frageList = new ArrayList<>();
-		try {
-			klausurfDao = DaoManager.createDao(connSource, KlausurFrage.class);
-			frageList = klausurfDao.queryBuilder().where().eq(KlausurFrage.NUTZER_ID_FIELD_NAME, nutzer.getN_id())
-					.query();
+	public static ArrayList<KlausurFrage> getAllQuestionsFromOneUser(String name) {
 
-		} catch (SQLException e) {
+		System.out.println();
+		Nutzer nutzer = getOneNutzerByName(name);
+
+		ArrayList<KlausurFrage> frageL = null;
+
+		try {
+
+			frageL = new ArrayList<KlausurFrage>(nutzer.getKlausurfragen());
+		} catch (Exception e) {
 			reconnect();
-			frageList = getAllQuestionsFromOneUser(name);
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			if (frageList.size() > 0) {
-				return frageList;
+			if (frageL.size() > 0) {
+
+				return frageL;
 			} else {
-				List<KlausurFrage> newList = new ArrayList<>();
+
+				ArrayList<KlausurFrage> newList = new ArrayList<>();
 				return newList;
 			}
 		}
