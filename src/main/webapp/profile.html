@@ -51,7 +51,8 @@
 <link href="css/dashboard.css" rel="stylesheet">
 </head>
 
-<body ng-app="ExPrep" ng-controller="ProfileCtrl" ng-init="startup()">
+<body ng-app="ExPrep" ng-controller="ProfileCtrl">
+	<!-- ng-init="startup()" 
 
 	<!-- Fixed Navbar with Brand logo, nav items and search form -->
 	<nav class="navbar navbar-inverse navbar-fixed-top"
@@ -95,7 +96,7 @@
 	<div class="container" id="editableCont" ng-show="editable">
 		<div id="form-div">
 			<form name="signup" ng-submit="submit()">
-				<h3 class="dark-grey">Registrierung</h3>
+				<h3 class="dark-grey">Profil ändern</h3>
 
 				<div class="form-group col-lg-6">
 					<md-input-container class="md-block"> <label>
@@ -139,7 +140,7 @@
 
 				<div class="form-group col-lg-6">
 					<md-input-container class="md-block"> <label>
-						Email</label> <input required type="email" name="EmailWied"
+						Email wiederholen</label> <input required type="email" name="EmailWied"
 						ng-model="data.EmailWied" minlength="5" maxlength="100"
 						ng-pattern="/^.+@.+\..+$/" />
 
@@ -165,7 +166,7 @@
 
 
 				<div class="form-group col-lg-3">
-					<button type="submit" class="btn btn-success">Speichern</button>
+					<button type="submit" class="btn btn-primary">Speichern</button>
 				</div>
 
 
@@ -179,30 +180,26 @@
 	</div>
 
 	<div class="container" id="notEditableCont" ng-show="!editable">
-		<h3 class="dark-grey">Registrierung</h3>
+		<h2 class="dark-grey">Profilinformationen</h2>
 
-		<div class="form-group col-lg-6">Vorname:
-			{{userData[0].Vorname}}</div>
-
-		<div class="form-group col-lg-6">Nachname: {{userData[0].Name}}</div>
-
-		<div class="form-group col-lg-6">Email-Adresse:
-			{{userData[0].Email}}</div>
-
-		<div class="form-group col-lg-6"></div>
-
-		<div class="form-group col-lg-6">Hochschule:
-			{{userData[0].Hochschule}}</div>
-
-		<div class="form-group col-lg-6">
-			<div id="button-div">
-				<p>
-					<a class="btn btn-primary btn-lg" id="btn-toggle-question" href="#"
-						role="button" ng-click="toggleEdit()">Profil Bearbeiten
-						&raquo;</a>
-				</p>
-			</div>
-		</div>
+		<p>Vorname: Christopher
+			{{userData[0].Vorname}}
+		</p>
+		<p>Nachname: Tunkel
+		{{userData[0].Name}}
+		</p>
+		<p>Email-Adresse: christunkel@hotmail.de
+			{{userData[0].Email}}
+		</p>
+		<p>Hochschule: HWR Berlin
+			{{userData[0].Hochschule}}
+		</p>
+			<p>
+				<a class="btn btn-primary" id="btn-toggle-question" href="#"
+						role="button" ng-click="toggleEdit()">Bearbeiten
+						&raquo;
+				</a>
+			</p>
 
 	</div>
 
