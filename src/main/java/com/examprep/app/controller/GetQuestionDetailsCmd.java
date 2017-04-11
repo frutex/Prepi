@@ -36,7 +36,7 @@ public class GetQuestionDetailsCmd extends AbstractCmdServlet {
 
 			KlausurFrage frage = PersistenceQuery.getFrageById(qID);
 
-			res = JSONRespCreator.createWobj(false, JSONConverter.toJSONFullF(frage, nutzer));
+			res = JSONRespCreator.createWobj(true, JSONConverter.toJSONFullF(frage, nutzer));
 
 		} catch (Exception e) {
 			res = JSONRespCreator.createWstring(false, ErrorMessages.getInternalError());
