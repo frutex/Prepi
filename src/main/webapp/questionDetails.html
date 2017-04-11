@@ -8,7 +8,7 @@
 <meta name="author" content="Christopher Tunkel">
 <!-- <link rel="icon" href="images/favicon.ico"> -->
 
-<title>Question details</title>
+<title>Fragendetails</title>
 
 <!-- Angular and Bootstrap JS -->
 <script
@@ -50,8 +50,8 @@
 <link href="css/dashboard.css" rel="stylesheet">
 </head>
 
-<body ng-app="ExPrep" ng-controller="DetailCtrl" ng-init="startup()">
-	<!-- > 
+<body ng-app="ExPrep" ng-controller="DetailCtrl" >
+	<!-- ng-init="startup()"> 
 
 		<!-- Fixed Navbar with Brand logo, nav items and search form -->
 	<nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="NavCtrl">
@@ -89,50 +89,46 @@
 	</div>
 
 	<div class="container">
-		<h1>Titel der Frage: {{questionDetails[0].Fragendetails.Titel}}</h1>
+		<h1>Titel{{questionDetails[0].Fragendetails.Titel}}</h1>
+		<hr>
 		<table>
 			<tr>
-				<td>Beschreibung</td>
-				<td>{{questionDetails[0].Fragendetails.Beschreibung}}</td>
+				<td style="text-align:right"><h2>Beschreibung:</h2></td>
+				<td><h3>{{questionDetails[0].Fragendetails.Beschreibung}}</h3></td>
 			</tr>
 			<tr>
-				<td>Modul</td>
-				<td>{{questionDetails[0].Fragendetails.Modul}}</td>
+				<td style="text-align:right"><h2>Modul:</h2></td>
+				<td><h3>{{questionDetails[0].Fragendetails.Modul}}</h3></td>
 			</tr>
 			<tr>
-				<td>Professor</td>
-				<td>{{questionDetails[0].Fragendetails.Dozent}}</td>
+				<td style="text-align:right"><h2>Professor:</h2></td>
+				<td><h3>{{questionDetails[0].Fragendetails.Dozent}}</h3></td>
 			</tr>
 			<tr>
-				<td>Hochschule</td>
-				<td>{{questionDetails[0].Fragendetails.Hochschule}}</td>
+				<td style="text-align:right"><h2>Hochschule:</h2></td>
+				<td><h3>{{questionDetails[0].Fragendetails.Hochschule}}</h3></td>
 			</tr>
 		</table>
-		<p>
+		
+		<hr>
+		
 			{{questionDetails[0].Fragendetails.Likes}}x
 			<button ng-show="questionDetails[0].Fragendetails.isLikeable"
 				href="#" class="btn btn-sm btn-danger" ng-click="doQuestionLike()">
 				Danke! <span class="glyphicon glyphicon-heart-empty"></span>
 			</button>
 
-			<button ng-show="!questionDetails[0].Fragendetails.isLikeable"
+				<button id="back-button" ng-show="!questionDetails[0].Fragendetails.isLikeable"
 				href="#" class="btn btn-sm btn-danger" ng-click="doQuestionLike()"
 				disabled>
-				Danke! <span class="glyphicon glyphicon-heart-empty"></span>
+				Danke! <span class="glyphicon glyphicon-heart"></span>
 			</button>
 
-		</p>
 
-
-
-
-
+	<a href="dashboard.html" class="btn btn-sm btn-danger">&laquo; Zurück</a>
 
 	</div>
 
-
-
-	<a href="dashboard.html" class="btn btn-sm btn-danger">Zurück</a>
 
 
 	<footer class="footer">
