@@ -109,6 +109,18 @@ angular.module('ExPrep').factory(
 								+ hochschule);
 
 					}
+					
+					function modifyAccount(data) {
+						return send( "c=modifyAccount" + "&vorname="
+										+ data.Vorname + "&nachname="
+										+ data.Name + "&password=" + data.Pass
+										+ "&email=" + data.Email + "&hochschule=" + data.Hochschule).then(
+								function(data) {
+									return data;
+								})
+
+					}
+
 
 					return {
 						send : send,
@@ -127,6 +139,7 @@ angular.module('ExPrep').factory(
 						doSearch : doSearch,
 						getAllQuestions : getAllQuestions,
 						addHStoUser : addHStoUser,
+						modifyAccount : modifyAccount,
 
 					};
 				} ]);

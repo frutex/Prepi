@@ -39,13 +39,15 @@ angular
 							}
 
 							$scope.submit = function() {
+
 								if (!$scope.checkmail()) {
 									alert("Fehler! Die angegebenen Emailadressen stimmen nicht überein.")
 								} else {
 									if (!$scope.checkpass()) {
 										alert("Fehler! Die angegebenen Passwörter stimmen nicht überein.")
 									} else {
-										// Email und Passwörter stimmen überein
+										// Email und Passwörter stimmen
+										// überein
 										RequestFactory
 												.createAccount($scope.data)
 												.then(

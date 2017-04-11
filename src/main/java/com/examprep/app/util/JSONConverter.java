@@ -19,7 +19,7 @@ public class JSONConverter {
 		sb.append("\"Email\":\"").append(nutzer.getEmail()).append("\",");
 		sb.append("\"Name\":\"").append(nutzer.getName()).append("\",");
 		sb.append("\"Vorname\":\"").append(nutzer.getVorname()).append("\",");
-		sb.append("\"Hochschule\":\"").append(nutzer.getHochschule()).append("\"");
+		sb.append("\"Hochschule\":\"").append(nutzer.getHochschule().getName()).append("\"");
 		sb.append("}");
 		String res = sb.toString();
 		return res;

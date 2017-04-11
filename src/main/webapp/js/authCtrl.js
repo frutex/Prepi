@@ -32,10 +32,11 @@ angular
 														} else {
 															$scope.authenticated = false;
 															AuthService.logout();
-															alert(data.data.data);
+															
 															var loc = window.location.pathname;
 
 															if (!loc.contains("login") && loc != "/prepa/") {
+																alert(data.data.data);
 																window.location.href = "./login.html";
 															}
 														}

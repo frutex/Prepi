@@ -59,12 +59,13 @@ public class DispatcherServlet extends HttpServlet {
 					}
 
 				} catch (Exception e) {
-					
+
 					e.printStackTrace();
 				}
 			} else {
 				CmdServletIF cmd = getCommand(this, request, response);
-				cmd.sendJsonResult(JSONRespCreator.createWstring(false, ErrorMessages.getAuthenticationTimeTokenError()));
+				cmd.sendJsonResult(
+						JSONRespCreator.createWstring(false, ErrorMessages.getAuthenticationTimeTokenError()));
 			}
 		}
 
@@ -116,6 +117,8 @@ public class DispatcherServlet extends HttpServlet {
 			result = new GetAllQuestionsCmd(servlet, request, response);
 		} else if (command.equalsIgnoreCase("addHStoUser")) {
 			result = new AddHStoUserCmd(servlet, request, response);
+		} else if (command.equalsIgnoreCase("modifyAccount")) {
+			result = new ModifyAccountCmd(servlet, request, response);
 		}
 		return result;
 	}
