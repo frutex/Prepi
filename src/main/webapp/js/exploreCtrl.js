@@ -7,7 +7,9 @@ angular
 						'$scope',
 						'RequestFactory',
 						'AuthService',
-						function($http, $scope, RequestFactory, AuthService) {
+						'ProgService',
+						function($http, $scope, RequestFactory, AuthService,
+								ProgService) {
 
 							$scope.startup = function() {
 								$scope.checkAuth();
@@ -51,10 +53,14 @@ angular
 							$scope.fragen;
 
 							$scope.doSearch = function() {
-								RequestFactory.doSearch(null, null, null,
+								ProgService.state(true);
+								RequestFactory.doSearch($scope.hochschule,
+										$scope.modul, $scope.dozent,
 										$scope.keywords).then(function(data) {
+									ProgService.state(false);
 									if (data.data.successfull) {
-										alert("YAY!")
+										$scope.fragen = data.data.data;
+										alert("YAY!");
 									} else {
 										alert(data.data.data);
 
@@ -63,10 +69,18 @@ angular
 							}
 
 							$scope.getParam = function() {
+
 								var loc = window.location.search;
-								var keywords = loc.substring(loc
-										.lastIndexOf("=") + 1, loc.length);
-								if (keywords == "") {
+								var keywords = "";
+								keywords = loc.substring(
+										loc.lastIndexOf("=") + 1, loc.length);
+								if (keywords != ""
+										&& loc.substring(0,
+												loc.lastIndexOf("=") + 1)
+												.contains("keyword")) {
+									$scope.keywords = keywords;
+									$scope.doSearch();
+								} else {
 									RequestFactory
 											.getAllQuestions()
 											.then(
@@ -78,11 +92,8 @@ angular
 
 														}
 													});
-								} else {
-
-									$scope.keywords = keywords;
-									// doSearch()
 								}
+
 							}
 
 							$scope.doQuestionLike = function(id) {
