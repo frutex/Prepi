@@ -70,13 +70,16 @@ angular
 												});
 							}
 
+							$scope.totalQuestions = 0;
 							$scope.questionRb = function() {
 								q = [];
 
 								tmp = [];
+								total = 0;
 								i = 0;
 								z = 0;
 								for (b = 0; b < $scope.userData[1].length; b++) {
+									total ++;
 									tmp.push($scope.userData[1][z]);
 
 									if (i == 2) {
@@ -89,8 +92,10 @@ angular
 
 									z++;
 								}
+								q.push(tmp);
 
 								$scope.userData[1] = q;
+								$scope.totalQuestions = total;
 							}
 
 							$scope.hochschulen
