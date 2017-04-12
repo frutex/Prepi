@@ -1,5 +1,6 @@
 package com.examprep.app.util;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.examprep.app.bean.Credibility;
@@ -10,7 +11,7 @@ import com.examprep.app.persistencelayer.PersistenceQuery;
 public class LikeChecker {
 
 	public static boolean check(KlausurFrage frage, Nutzer nutzer) {
-		List<Credibility> cList = PersistenceQuery.getAllLikesForOneQuestion(frage);
+		ArrayList<Credibility> cList = new ArrayList<>(frage.getCred());
 		return check(cList, nutzer);
 	}
 

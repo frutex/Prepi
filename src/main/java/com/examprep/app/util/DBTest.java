@@ -43,6 +43,8 @@ public class DBTest {
 		cred.setKlausurf_id(kfrage);
 		cred.setNutzc_id(nutzer);
 		
+		PersistenceQuery.getAllLikesForRegisteredQuestionsForOneUser("bjarne.obst@de.ibm.com");
+		
 		PersistenceQuery.createCredibility(kfrage, nutzer);
 //		System.out.println(nutzer.getEmail());
 		

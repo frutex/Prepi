@@ -51,6 +51,10 @@
 
 	<!-- Register Page  -->
 	<div id="signupPage">
+	
+	
+
+	
 		<!-- Navbar containing Brand logo and Login Register Button -->
 		<nav class="navbar navbar-inverse navbar-fixed-top">
 			<div class="container-fluid">
@@ -64,6 +68,39 @@
 				</ul>
 			</div>
 		</nav>
+		
+		
+		<!-- TODO ng-show navbar if logged in --> 
+		<!-- Fixed Navbar with Brand logo, nav items and search form -->
+	<nav class="navbar navbar-inverse navbar-fixed-top"
+		ng-controller="NavCtrl">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="dashboard.html"><img
+					src="images/exam preppar_logo_small.png" alt="ExPrep"></a>
+			</div>
+			<ul class="nav navbar-nav">
+				<li><a href="dashboard.html">Dashboard</a></li>
+				<li><a href="explore.html">Explore</a></li>
+				<li><a href="#">Frage hinzufügen</a></li>
+				<li><a href="profile.html">Profil</a></li>
+				<li><a href="#" ng-click="logout()">Logout</a></li>
+			</ul>
+			<form class="navbar-form navbar-right">
+				<div class="input-group">
+					<input type="text" class="form-control" ng-model="searchText"
+						placeholder="Fragen durchsuchen">
+					<div class="input-group-btn">
+						<button class="btn btn-default" type="submit"
+							ng-click="newSearch()">
+							<i class="glyphicon glyphicon-search"></i>
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		<md-progress-linear ng-show="progActive()" md-mode="indeterminate"></md-progress-linear>
+	</nav>
 
 		<!-- Content -->
 		<div class="container-fluid" name="signup">
@@ -71,96 +108,19 @@
 				<section class="container">
 					<div class="container-page">
 						<div class="col-md-6">
-							<h3 class="dark-grey">Registrierung</h3>
-
-							<div class="form-group col-lg-6">
-								<md-input-container class="md-block"> <label>
-									Vorname</label> <input required name="Vorname" ng-model="data.Vorname"
-									minlength="3" maxlength="30" />
-
-								<div ng-messages="signup.Vorname.$error" role="alert">
-									<div ng-message-exp="['required', 'minlength', 'maxlength']">
-										Dein Name sollte zwischen 3 und 30 Zeichen lang sein.</div>
-								</div>
-								</md-input-container>
-							</div>
-
-							<div class="form-group col-lg-6">
-								<md-input-container class="md-block"> <label>
-									Name</label> <input required name="Name" ng-model="data.Name"
-									minlength="3" maxlength="30" />
-
-								<div ng-messages="signup.Name.$error" role="alert">
-									<div ng-message-exp="['required', 'minlength', 'maxlength']">
-										Dein Name sollte zwischen 3 und 30 Zeichen lang sein.</div>
-								</div>
-								</md-input-container>
-							</div>
-
-							<div class="form-group col-lg-6">
-								<md-input-container class="md-block"> <label>
-									Email</label> <input required type="email" name="Email"
-									ng-model="data.Email" minlength="5" maxlength="100"
-									ng-pattern="/^.+@.+\..+$/" />
-
-								<div ng-messages="signup.Email.$error" role="alert">
-									<div ng-message-exp="['required', 'minlength', 'maxlength']">
-										Deine E-Mail Adresse sollte zwischen 5 und 100 Zeichen lang
-										sein.</div>
-									<div ng-message-exp="['pattern']">Bitte gib eine valide
-										E-Mail Adresse an.</div>
-
-								</div>
-								</md-input-container>
-							</div>
-
-							<div class="form-group col-lg-6">
-								<md-input-container class="md-block"> <label>
-									Email wiederholen</label> <input required type="email" name="EmailWied"
-									ng-model="data.EmailWied" minlength="5" maxlength="100"
-									ng-pattern="/^.+@.+\..+$/" />
-
-								<div ng-messages="signup.EmailWied.$error" role="alert">
-									<div ng-message-exp="['required', 'minlength', 'maxlength']">
-										Deine E-Mail Adresse sollte zwischen 5 und 100 Zeichen lang
-										sein.</div>
-									<div ng-message-exp="['pattern']">Bitte gib eine valide
-										E-Mail Adresse an.</div>
-								</div>
-								</md-input-container>
-							</div>
-
-							<div class="form-group col-lg-6">
-							<md-input-container class="md-block"> <label>
-									Passwort</label> <input required type="password" name="Passwort"
-									ng-model="data.Pass" minlength="5" maxlength="25"
-									 />
-
-								<div ng-messages="signup.Passwort.$error" role="alert">
-									<div ng-message-exp="['required', 'minlength', 'maxlength']">
-										Dein Passwort sollte zwischen 5 und 25 Zeichen lang sein.</div>
-									</div>
-								</md-input-container>
-							</div>
-
-							<div class="form-group col-lg-6">
-								<md-input-container class="md-block"> <label>
-									Passwort wiederholen</label> <input required type="password" name="PasswortWied"
-									ng-model="data.PassWied" minlength="5" maxlength="25"
-									 />
-
-								<div ng-messages="signup.PasswortWied.$error" role="alert">
-									<div ng-message-exp="['required', 'minlength', 'maxlength']">
-										Dein Passwort sollte zwischen 5 und 25 Zeichen lang sein.</div>
-									</div>
-								</md-input-container>
-							</div>
-
-
-							<div class="col-sm-6">
-								<input type="checkbox" class="checkbox" />Newsletter abonnieren
-							</div>
-
+							<h3 class="dark-grey">Impressum</h3>
+							<h4 class="dark-grey">Anbieter</h4>
+							<p>Die Webseiten unter www.exprep.de und die auf diesen Seiten vorgehaltenen Dienste werden dir angeboten von: </p>
+							<p>ExPrep GbR</p>
+							
+							<p>Christopher Tunkel</p>
+							<p>Baußnernweg 5c</p>
+							<p>12279 Berlin</p>
+							<p>Deutschland</p>
+							<h4 class="dark-grey">Kontakt</h4>
+							<p>Telefon: +49 1573 1330591</p>
+							<p>e-Mail: christunkel@googlemail.com</p>
+							
 						</div>
 
 						<div class="col-md-6">
@@ -181,9 +141,6 @@
 								Sie die Richtlinien von ExPrep zur Kenntnis genommen haben und
 								diese akzeptieren.</p>
 
-							<div>
-								<md-button class="md-raised md-primary" type="submit">Submit</md-button>
-							</div>
 						</div>
 					</div>
 				</section>

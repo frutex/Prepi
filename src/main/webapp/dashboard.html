@@ -105,7 +105,7 @@
 					Danke!
 				</div>
 				<div class="col-md-4" id="status-div3">
-					<h2>{{userData[1].length}}</h2>
+					<h2>{{totalQuestions}}</h2>
 					Fragen
 				</div>
 			</div>
@@ -134,8 +134,9 @@
 	</div>
 
 	<div class="container">
-		<div class="row">
-			<div class="col-md-4" ng-repeat="frage in userData[1]">
+		<table style="width: 100%">
+			<tr ng-repeat="collection in userData[1]">
+				<td style="width: 33%" ng-repeat="frage in collection">
 				<h2>{{frage.Titel}}</h2>
 				<p>{{frage.Beschreibung}}</p>
 				<div class="row">
@@ -158,12 +159,16 @@
 							<button href="#" ng-show="!frage.isLikeable"
 								class="btn btn-sm btn-danger"
 								ng-click="doQuestionLike(frage.FragenID)" disabled>
-								Danke! <span class="glyphicon glyphicon-heart-empty"></span>
+								Danke! <span class="glyphicon glyphicon-heart"></span>
 							</button>
 						</p>
 					</div>
 				</div>
-			</div>
+				
+				</td>
+				
+			</tr>
+		</table>
 
 		</div>
 		<!-- end of container -->
@@ -194,12 +199,10 @@
 			</div>
 		</div>
 
-	</div>
-
 	<footer class="footer">
 		<div class="container">
-			<span class="text-muted">&copy; ExPrep 2017 - Bjarne Obst,
-				Christopher Tunkel, Daniel Köhler</span>
+			<span class="text-muted">© 2017 ExPrep   -   Bjarne Obst,
+				Christopher Tunkel, Daniel Köhler   - <a href="impressum.html">Impressum &raquo;</a></span>
 		</div>
 	</footer>
 </body>

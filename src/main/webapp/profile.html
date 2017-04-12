@@ -33,7 +33,7 @@
 <script src="js/app.js"></script>
 <script src="js/authenticator.js"></script>
 <script src="js/requestFactory.js"></script>
-<script src="js/addQuestionCtrl.js"></script>
+<script src="js/profileCtrl.js"></script>
 <script src="js/navCtrl.js"></script>
 
 <!-- Bootstrap core CSS & Angular Material CSS-->
@@ -51,8 +51,8 @@
 <link href="css/dashboard.css" rel="stylesheet">
 </head>
 
-<body ng-app="ExPrep" ng-controller="AddQuestionCtrl">
-	<!-- ng-init="startup()">
+<body ng-app="ExPrep" ng-controller="ProfileCtrl">
+	<!-- ng-init="startup()" 
 
 	<!-- Fixed Navbar with Brand logo, nav items and search form -->
 	<nav class="navbar navbar-inverse navbar-fixed-top"
@@ -82,6 +82,7 @@
 				</div>
 			</form>
 		</div>
+		<md-progress-linear ng-show="progActive()" md-mode="indeterminate"></md-progress-linear>
 	</nav>
 
 
@@ -92,55 +93,122 @@
 		</div>
 	</div>
 
-	<div class="container">
-	<!-- Add Question Formular -->
-	<div id="form-div">
-			
-			<div class="form-group col-lg-6">
-							<label>Vorname</label> <input type="" name=""
-								class="form-control" id="" value="" ng-model="data.Vorname">
-						</div>
+	<div class="container" id="editableCont" ng-show="editable">
+		<div id="form-div">
+			<form name="signup" ng-submit="submit()">
+				<h3 class="dark-grey">Profil ändern</h3>
 
-						<div class="form-group col-lg-6">
-							<label>Name</label> <input type="" name="" class="form-control"
-								id="" value="" ng-model="data.Name">
-						</div>
+				<div class="form-group col-lg-6">
+					<md-input-container class="md-block"> <label>
+						Vorname</label> <input required name="Vorname" ng-model="data.Vorname"
+						minlength="3" maxlength="30" />
 
-						<div class="form-group col-lg-6">
-							<label>Email</label> <input type="" name="" class="form-control"
-								id="" value="" ng-model="data.Email">
-						</div>
+					<div ng-messages="signup.Vorname.$error" role="alert">
+						<div ng-message-exp="['required', 'minlength', 'maxlength']">
+							Dein Name sollte zwischen 3 und 30 Zeichen lang sein.</div>
+					</div>
+					</md-input-container>
+				</div>
 
-						<div class="form-group col-lg-6">
-							<label>Email wiederholen</label> <input type="" name=""
-								class="form-control" id="" value="" ng-model="data.EmailWied">
-						</div>
+				<div class="form-group col-lg-6">
+					<md-input-container class="md-block"> <label>
+						Name</label> <input required name="Name" ng-model="data.Name"
+						minlength="3" maxlength="30" />
 
-						<div class="form-group col-lg-6">
-							<label>Passwort</label> <input type="password" name=""
-								class="form-control" id="" value="" ng-model="data.Pass">
-						</div>
+					<div ng-messages="signup.Name.$error" role="alert">
+						<div ng-message-exp="['required', 'minlength', 'maxlength']">
+							Dein Name sollte zwischen 3 und 30 Zeichen lang sein.</div>
+					</div>
+					</md-input-container>
+				</div>
 
-						<div class="form-group col-lg-6">
-							<label>Passwort wiederholen</label> <input type="password"
-								name="" class="form-control" id="" value=""
-								ng-model="data.PassWied">
-						</div>
+				<div class="form-group col-lg-6">
+					<md-input-container class="md-block"> <label>
+						Email</label> <input required type="email" name="Email"
+						ng-model="data.Email" minlength="5" maxlength="100"
+						ng-pattern="/^.+@.+\..+$/" />
+
+					<div ng-messages="signup.Email.$error" role="alert">
+						<div ng-message-exp="['required', 'minlength', 'maxlength']">
+							Deine E-Mail Adresse sollte zwischen 5 und 100 Zeichen lang sein.</div>
+						<div ng-message-exp="['pattern']">Bitte gib eine valide
+							E-Mail Adresse an.</div>
+
+					</div>
+					</md-input-container>
+				</div>
+
+				<div class="form-group col-lg-6">
+					<md-input-container class="md-block"> <label>
+						Email wiederholen</label> <input required type="email" name="EmailWied"
+						ng-model="data.EmailWied" minlength="5" maxlength="100"
+						ng-pattern="/^.+@.+\..+$/" />
+
+					<div ng-messages="signup.EmailWied.$error" role="alert">
+						<div ng-message-exp="['required', 'minlength', 'maxlength']">
+							Deine E-Mail Adresse sollte zwischen 5 und 100 Zeichen lang sein.</div>
+						<div ng-message-exp="['pattern']">Bitte gib eine valide
+							E-Mail Adresse an.</div>
+					</div>
+					</md-input-container>
+				</div>
+
+				<div class="form-group col-lg-6">
+					<md-autocomplete flex required md-selected-item="data.Hochschule"
+						md-search-text="searchTextH"
+						md-items="item in queryHS(searchTextH)" md-item-text="item.Name"
+						placeholder="Bitte eine Hochschule eingeben." md-require-match
+						md-floating-label="Hochschule auswählen" md-select-on-match="true"
+						md-match-case-insensitive="true"> <span
+						md-highlight-text="searchText">{{item.Name}}</span> </md-autocomplete>
+				</div>
+
+
+
+				<div class="form-group col-lg-3">
+					<button type="submit" class="btn btn-primary">Speichern</button>
+				</div>
+
+
+
+				<div class="form-group col-lg-3">
+					<button class="btn btn-danger" ng-click="toggleEdit()">
+						Abbrechen</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<div class="container" id="notEditableCont" ng-show="!editable">
+		<h2 class="dark-grey">Profilinformationen</h2>
+
+		<p>Vorname: Christopher
+			{{userData[0].Vorname}}
+		</p>
+		<p>Nachname: Tunkel
+		{{userData[0].Name}}
+		</p>
+		<p>Email-Adresse: christunkel@hotmail.de
+			{{userData[0].Email}}
+		</p>
+		<p>Hochschule: HWR Berlin
+			{{userData[0].Hochschule}}
+		</p>
+			<p>
+				<a class="btn btn-primary" id="btn-toggle-question" href="#"
+						role="button" ng-click="toggleEdit()">Bearbeiten
+						&raquo;
+				</a>
+			</p>
 
 	</div>
-	<!-- Submit Button Formular -->
-	<div id="button-div">
-		<button type="submit" id="btn-add-question"
-			class="btn btn-primary btn-lg" ng-click="addFrage()">Änderungen speichern &raquo;</button>
-	</div>
-	</div>
+
 
 	<footer class="footer">
 		<div class="container">
-			<span class="text-muted">&copy; ExPrep 2017 - Bjarne Obst,
-				Christopher Tunkel, Daniel Köhler</span>
+			<span class="text-muted">© 2017 ExPrep   -   Bjarne Obst,
+				Christopher Tunkel, Daniel Köhler   - <a href="impressum.html">Impressum &raquo;</a></span>
 		</div>
 	</footer>
-
 </body>
 </html>

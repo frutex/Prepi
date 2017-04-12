@@ -7,6 +7,7 @@ public class ErrorMessages {
 	private static String timeoutError = "Your Session has timeouted. Please Login again.";
 	private static String loginFailed = "We are sorry, your Login Attempt has failed. Please try again.";
 	private static String timeTokenError = "Authentication token is wrong or has expired. You are being logged out.";
+	private static String noResult = "No Results for your Search found. Please try another search!";
 
 	public static String getTooManyUsersError() {
 		return tooManyUsersError;
@@ -30,6 +31,10 @@ public class ErrorMessages {
 
 	public static String getAuthenticationTimeTokenError() {
 		return timeTokenError;
+	}
+
+	public static String noResultFound() {
+		return noResult;
 	}
 
 }

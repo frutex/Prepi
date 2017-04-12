@@ -41,29 +41,43 @@ public class DoSearchCmd extends AbstractCmdServlet {
 			Modul m = null;
 			Hochschule h = null;
 
-			if (!(dname.equalsIgnoreCase("") || dname.equalsIgnoreCase("null") || dname == null)) {
+			if (isFilled(dname)) {
 				d = PersistenceQuery.getDozentByName(dname.split(",")[1].trim(), dname.split(",")[0].trim());
 			}
 
-			if (!(mname.equalsIgnoreCase("") || mname.equalsIgnoreCase("null") || mname == null)) {
+			if (isFilled(mname)) {
 				m = PersistenceQuery.getModulByName(mname).get(0);
 			}
 
-			if (!(hs.equalsIgnoreCase("") || hs.equalsIgnoreCase("null") || hs == null)) {
+			if (isFilled(hs)) {
 				h = PersistenceQuery.getHochschuleByName(hs).get(0);
 			}
 
 			List<KlausurFrage> kList = PersistenceQuery.getKlausurFrage(d, m, h, keywords);
 
-			res = JSONRespCreator.createWobj(true, JSONConverter.toJSONF(kList));
+			if(kList.size() != 0){
+				res = JSONRespCreator.createWobj(true, JSONConverter.toJSONF(kList));
+			} else {
+				res = JSONRespCreator.createWobj(false, JSONConverter.toJSONF(kList));
+			}
+			
 
 		} catch (Exception e) {
-			res = JSONRespCreator.createWstring(false, ErrorMessages.getInternalError());
+			res = JSONRespCreator.createWstring(false, ErrorMessages.noResultFound());
 			e.printStackTrace();
 		} finally {
 			this.sendJsonResult(res);
 		}
 
+	}
+
+	private boolean isFilled(String input) {
+		if (!(input.equalsIgnoreCase("") || input.equalsIgnoreCase("null") || input == null
+				|| input.equalsIgnoreCase("undefined"))) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }
