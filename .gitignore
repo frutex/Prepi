@@ -34,3 +34,5 @@ local.properties
 *.properties
 
 *.component
+
+src/main/webapp/images/Thumbs\.db
