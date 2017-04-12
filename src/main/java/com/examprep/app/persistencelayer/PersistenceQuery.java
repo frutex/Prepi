@@ -405,7 +405,8 @@ public class PersistenceQuery {
 
 		} catch (SQLException e) {
 			reconnect();
-			listFrage = getAllQuestions();
+			klausurfDao = DaoManager.createDao(connSource, KlausurFrage.class);
+			listFrage = klausurfDao.queryForAll();
 			e.printStackTrace();
 		} finally {
 			if (listFrage.size() > 0) {
