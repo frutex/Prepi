@@ -131,28 +131,27 @@
 							</div>
 
 							<div class="form-group col-lg-6">
-							<md-input-container class="md-block"> <label>
+								<md-input-container class="md-block"> <label>
 									Passwort</label> <input required type="password" name="Passwort"
-									ng-model="data.Pass" minlength="5" maxlength="25"
-									 />
+									ng-model="data.Pass" minlength="5" maxlength="25" />
 
 								<div ng-messages="signup.Passwort.$error" role="alert">
 									<div ng-message-exp="['required', 'minlength', 'maxlength']">
 										Dein Passwort sollte zwischen 5 und 25 Zeichen lang sein.</div>
-									</div>
+								</div>
 								</md-input-container>
 							</div>
 
 							<div class="form-group col-lg-6">
 								<md-input-container class="md-block"> <label>
-									Passwort wiederholen</label> <input required type="password" name="PasswortWied"
-									ng-model="data.PassWied" minlength="5" maxlength="25"
-									 />
+									Passwort wiederholen</label> <input required type="password"
+									name="PasswortWied" ng-model="data.PassWied" minlength="5"
+									maxlength="25" />
 
 								<div ng-messages="signup.PasswortWied.$error" role="alert">
 									<div ng-message-exp="['required', 'minlength', 'maxlength']">
 										Dein Passwort sollte zwischen 5 und 25 Zeichen lang sein.</div>
-									</div>
+								</div>
 								</md-input-container>
 							</div>
 
@@ -197,9 +196,13 @@
 
 	<!-- Footer -->
 	<footer class="footer">
-		<div class="container">
-			<span class="text-muted">© 2017 ExPrep   -   Bjarne Obst,
-				Christopher Tunkel, Daniel Köhler   - <a href="impressum.html">Impressum &raquo;</a></span>
+		<div class="footer-contents">
+			<div class="container">
+				<span class="text-muted">© 2017 ExPrep - Bjarne Obst,
+					Christopher Tunkel, Daniel Köhler - <a href="impressum.html">Impressum
+						&raquo;</a>
+				</span>
+			</div>
 		</div>
 	</footer>
 </body>

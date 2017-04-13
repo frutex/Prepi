@@ -182,32 +182,26 @@
 	<div class="container" id="notEditableCont" ng-show="!editable">
 		<h2 class="dark-grey">Profilinformationen</h2>
 
-		<p>Vorname: Christopher
-			{{userData[0].Vorname}}
+		<p>Vorname: Christopher {{userData[0].Vorname}}</p>
+		<p>Nachname: Tunkel {{userData[0].Name}}</p>
+		<p>Email-Adresse: christunkel@hotmail.de {{userData[0].Email}}</p>
+		<p>Hochschule: HWR Berlin {{userData[0].Hochschule}}</p>
+		<p>
+			<a class="btn btn-primary" id="btn-toggle-question" href="#"
+				role="button" ng-click="toggleEdit()">Bearbeiten &raquo; </a>
 		</p>
-		<p>Nachname: Tunkel
-		{{userData[0].Name}}
-		</p>
-		<p>Email-Adresse: christunkel@hotmail.de
-			{{userData[0].Email}}
-		</p>
-		<p>Hochschule: HWR Berlin
-			{{userData[0].Hochschule}}
-		</p>
-			<p>
-				<a class="btn btn-primary" id="btn-toggle-question" href="#"
-						role="button" ng-click="toggleEdit()">Bearbeiten
-						&raquo;
-				</a>
-			</p>
 
 	</div>
 
 
 	<footer class="footer">
-		<div class="container">
-			<span class="text-muted">© 2017 ExPrep   -   Bjarne Obst,
-				Christopher Tunkel, Daniel Köhler   - <a href="impressum.html">Impressum &raquo;</a></span>
+		<div class="footer-contents">
+			<div class="container">
+				<span class="text-muted">© 2017 ExPrep - Bjarne Obst,
+					Christopher Tunkel, Daniel Köhler - <a href="impressum.html">Impressum
+						&raquo;</a>
+				</span>
+			</div>
 		</div>
 	</footer>
 </body>

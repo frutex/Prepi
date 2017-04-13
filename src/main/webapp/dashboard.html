@@ -137,73 +137,79 @@
 		<table style="width: 100%">
 			<tr ng-repeat="collection in userData[1]">
 				<td style="width: 33%" ng-repeat="frage in collection">
-				<h2>{{frage.Titel}}</h2>
-				<p>{{frage.Beschreibung}}</p>
-				<div class="row">
-					<div class="col-md-7">
-						<p>
-							<a class="btn btn-sm btn-secondary"
-								href="questionDetails.html?questionID={{frage.FragenID}}"
-								role="button">Details anzeigen &raquo;</a>
-						</p>
-					</div>
-					<div class="col-md-5">
-						<p>
-							{{frage.Likes}}x
-							<button href="#" ng-show="frage.isLikeable"
-								class="btn btn-sm btn-danger"
-								ng-click="doQuestionLike(frage.FragenID)">
-								Danke! <span class="glyphicon glyphicon-heart-empty"></span>
-							</button>
+					<h2>{{frage.Titel}}</h2>
+					<p>{{frage.Beschreibung}}</p>
+					<div class="row">
+						<div class="col-md-7">
+							<p>
+								<a class="btn btn-sm btn-secondary"
+									href="questionDetails.html?questionID={{frage.FragenID}}"
+									role="button">Details anzeigen &raquo;</a>
+							</p>
+						</div>
+						<div class="col-md-5">
+							<p>
+								{{frage.Likes}}x
+								<button href="#" ng-show="frage.isLikeable"
+									class="btn btn-sm btn-danger"
+									ng-click="doQuestionLike(frage.FragenID)">
+									Danke! <span class="glyphicon glyphicon-heart-empty"></span>
+								</button>
 
-							<button href="#" ng-show="!frage.isLikeable"
-								class="btn btn-sm btn-danger"
-								ng-click="doQuestionLike(frage.FragenID)" disabled>
-								Danke! <span class="glyphicon glyphicon-heart"></span>
-							</button>
-						</p>
+								<button href="#" ng-show="!frage.isLikeable"
+									class="btn btn-sm btn-danger"
+									ng-click="doQuestionLike(frage.FragenID)" disabled>
+									Danke! <span class="glyphicon glyphicon-heart"></span>
+								</button>
+							</p>
+						</div>
 					</div>
-				</div>
-				
+
 				</td>
-				
+
 			</tr>
 		</table>
 
-		</div>
-		<!-- end of container -->
+	</div>
+	<!-- end of container -->
 
-		<!-- Dialog -->
-		<div style="visibility: hidden">
-			<div class="md-dialog-container" id="hsDialog">
-				<md-dialog layout-padding>
-				<h2>Hochschule Auswählen</h2>
-				<p>
-					Wähle bitte deine Hochschule aus. <br /> <br />
-					<md-autocomplete flex required md-selected-item="selectedHS"
-						md-search-text="searchTextH"
-						md-items="item in queryHS(searchTextH)" md-item-text="item.Name"
-						placeholder="Bitte eine Hochschule eingeben." md-require-match
-						md-floating-label="Hochschule auswählen" md-select-on-match="true"
-						md-match-case-insensitive="true"> <span
-						md-highlight-text="searchText">{{item.Name}}</span> </md-autocomplete>
-				<div id="button-div">
-					<button id="btn-confirm-HS" class="btn btn-primary btn-lg"
-						ng-click="confirmHS()">Bestätigen. &raquo;</button>
-				</div>
-
-
-				</p>
-
-				</md-dialog>
+	<!-- Dialog -->
+	<div style="visibility: hidden">
+		<div class="md-dialog-container" id="hsDialog">
+			<md-dialog layout-padding>
+			<h2>Hochschule Auswählen</h2>
+			<p>
+				Wähle bitte deine Hochschule aus. <br /> <br />
+				<md-autocomplete flex required md-selected-item="selectedHS"
+					md-search-text="searchTextH"
+					md-items="item in queryHS(searchTextH)" md-item-text="item.Name"
+					placeholder="Bitte eine Hochschule eingeben." md-require-match
+					md-floating-label="Hochschule auswählen" md-select-on-match="true"
+					md-match-case-insensitive="true"> <span
+					md-highlight-text="searchText">{{item.Name}}</span> </md-autocomplete>
+			<div id="button-div">
+				<button id="btn-confirm-HS" class="btn btn-primary btn-lg"
+					ng-click="confirmHS()">Bestätigen. &raquo;</button>
 			</div>
-		</div>
 
-	<footer class="footer">
-		<div class="container">
-			<span class="text-muted">© 2017 ExPrep   -   Bjarne Obst,
-				Christopher Tunkel, Daniel Köhler   - <a href="impressum.html">Impressum &raquo;</a></span>
+
+			</p>
+
+			</md-dialog>
 		</div>
-	</footer>
+	</div>
+
 </body>
+
+
+<footer class="footer">
+	<div class="footer-contents">
+		<div class="container">
+			<span class="text-muted">© 2017 ExPrep - Bjarne Obst,
+				Christopher Tunkel, Daniel Köhler - <a href="impressum.html">Impressum
+					&raquo;</a>
+			</span>
+		</div>
+	</div>
+</footer>
 </html>
