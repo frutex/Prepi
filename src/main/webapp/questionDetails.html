@@ -54,14 +54,15 @@
 	<!-- > 
 
 		<!-- Fixed Navbar with Brand logo, nav items and search form -->
-	<nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="NavCtrl">
+	<nav class="navbar navbar-inverse navbar-fixed-top"
+		ng-controller="NavCtrl">
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<a class="navbar-brand" href="dashboard.html"><img
 					src="images/exam preppar_logo_small.png" alt="ExPrep"></a>
 			</div>
 			<ul class="nav navbar-nav">
-				<li ><a href="dashboard.html">Dashboard</a></li>
+				<li><a href="dashboard.html">Dashboard</a></li>
 				<li><a href="explore.html">Explore</a></li>
 				<li><a href="addQuestion.html">Frage hinzufügen</a></li>
 				<li><a href="profile.html">Profil</a></li>
@@ -72,7 +73,8 @@
 					<input type="text" class="form-control" ng-model="searchText"
 						placeholder="Fragen durchsuchen">
 					<div class="input-group-btn">
-						<button class="btn btn-default" type="submit" ng-click="newSearch()">
+						<button class="btn btn-default" type="submit"
+							ng-click="newSearch()">
 							<i class="glyphicon glyphicon-search"></i>
 						</button>
 					</div>
@@ -89,52 +91,57 @@
 	</div>
 
 	<div class="container">
-		<h1>Titel{{questionDetails[0].Fragendetails.Titel}}</h1>
+		<h1>{{questionDetails[0].Fragendetails.Titel}}</h1>
 		<hr>
 		<table>
 			<tr>
-				<td style="text-align:right"><h2>Beschreibung:</h2></td>
+				<td style="text-align: right"><h2>Beschreibung:</h2></td>
 				<td><h2>{{questionDetails[0].Fragendetails.Beschreibung}}</h2></td>
 			</tr>
 			<tr>
-				<td style="text-align:right"><h2>Modul:</h2></td>
+				<td style="text-align: right"><h2>Modul:</h2></td>
 				<td><h2>{{questionDetails[0].Fragendetails.Modul}}</h2></td>
 			</tr>
 			<tr>
-				<td style="text-align:right"><h2>Professor:</h2></td>
+				<td style="text-align: right"><h2>Professor:</h2></td>
 				<td><h2>{{questionDetails[0].Fragendetails.Dozent}}</h2></td>
 			</tr>
 			<tr>
-				<td style="text-align:right"><h2>Hochschule:</h2></td>
+				<td style="text-align: right"><h2>Hochschule:</h2></td>
 				<td><h2>{{questionDetails[0].Fragendetails.Hochschule}}</h2></td>
 			</tr>
 		</table>
-		
+
 		<hr>
-		
-			{{questionDetails[0].Fragendetails.Likes}}x
-			<button ng-show="questionDetails[0].Fragendetails.isLikeable"
-				href="#" class="btn btn-sm btn-danger" ng-click="doQuestionLike()">
-				Danke! <span class="glyphicon glyphicon-heart-empty"></span>
-			</button>
 
-				<button id="back-button" ng-show="!questionDetails[0].Fragendetails.isLikeable"
-				href="#" class="btn btn-sm btn-danger" ng-click="doQuestionLike()"
-				disabled>
-				Danke! <span class="glyphicon glyphicon-heart"></span>
-			</button>
+		{{questionDetails[0].Fragendetails.Likes}}x
+		<button ng-show="questionDetails[0].Fragendetails.isLikeable" href="#"
+			class="btn btn-sm btn-danger" ng-click="doQuestionLike()">
+			Danke! <span class="glyphicon glyphicon-heart-empty"></span>
+		</button>
+
+		<button id="back-button"
+			ng-show="!questionDetails[0].Fragendetails.isLikeable" href="#"
+			class="btn btn-sm btn-danger" ng-click="doQuestionLike()" disabled>
+			Danke! <span class="glyphicon glyphicon-heart"></span>
+		</button>
 
 
-	<a href="dashboard.html" class="btn btn-sm btn-danger">&laquo; Zurück</a>
+		<a href="dashboard.html" class="btn btn-sm btn-danger">&laquo;
+			Zurück</a>
 
 	</div>
 
 
 
 	<footer class="footer">
-		<div class="container">
-			<span class="text-muted">© 2017 ExPrep   -   Bjarne Obst,
-				Christopher Tunkel, Daniel Köhler   - <a href="impressum.html">Impressum &raquo;</a></span>
+		<div class="footer-contents">
+			<div class="container">
+				<span class="text-muted">© 2017 ExPrep - Bjarne Obst,
+					Christopher Tunkel, Daniel Köhler - <a href="impressum.html">Impressum
+						&raquo;</a>
+				</span>
+			</div>
 		</div>
 	</footer>
 

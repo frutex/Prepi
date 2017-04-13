@@ -105,7 +105,7 @@ angular
 							}
 
 							$scope.getParam = function() {
-
+								ProgService.state(true);
 								var loc = window.location.search;
 								var keywords = "";
 								keywords = loc.substring(
@@ -121,6 +121,7 @@ angular
 											.getAllQuestions()
 											.then(
 													function(data) {
+														ProgService.state(false);
 														if (data.data.successfull) {
 															$scope.fragen = data.data.data;
 															$scope.questionRb();
@@ -139,10 +140,8 @@ angular
 										.then(
 												function(data) {
 													if (data.data.successfull) {
-														idx = $scope
-																.getIndex(data.data.data.FragenID);
-														$scope.fragen[idx].isLikeable = false;
-														$scope.fragen[idx].Likes = parseInt($scope.fragen[idx].Likes) + 1;
+														$scope
+																.addLike(data.data.data.FragenID);
 													} else {
 														alert(data.data.data);
 
@@ -150,10 +149,15 @@ angular
 												});
 							}
 
-							$scope.getIndex = function(id) {
+							$scope.addLike = function(id) {
 								for (i = 0; i < $scope.fragen.length; i++) {
-									if ($scope.fragen[i].FragenID == id) {
-										return i;
+									var collection = $scope.fragen[i];
+
+									for (z = 0; z < collection.length; z++) {
+										if (collection[z].FragenID == id) {
+											collection[z].isLikeable = false;
+											collection[z].Likes = parseInt($scope.fragen[idx].Likes) + 1;
+										}
 									}
 								}
 								return -1;
@@ -164,7 +168,6 @@ angular
 										.getHochschulen()
 										.then(
 												function(data) {
-													ProgService.state(false);
 													if (data.data.successfull) {
 														$scope.hochschulen = data.data.data;
 
